@@ -1,0 +1,822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Deploy-DLL-logAPI|x64">
+      <Configuration>Deploy-DLL-logAPI</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Deploy-EXE|x64">
+      <Configuration>Deploy-EXE</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Deploy-DLL|x64">
+      <Configuration>Deploy-DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Test-Debug|x64">
+      <Configuration>Test-Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Shell-Debug|x64">
+      <Configuration>Shell-Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Shell-Release|x64">
+      <Configuration>Shell-Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Test-Release|x64">
+      <Configuration>Test-Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\aggregates\AggregateFunctionEvaluator.cpp" />
+    <ClCompile Include="src\aggregates\AggregateTupleIterator.cpp" />
+    <ClCompile Include="src\aggregates\Count.cpp" />
+    <ClCompile Include="src\aggregates\Min.cpp" />
+    <ClCompile Include="src\all.cpp" />
+    <ClCompile Include="src\api\RDFoxDataStore.cpp" />
+    <ClCompile Include="src\api\RDFoxDataStoreDictionary.cpp" />
+    <ClCompile Include="src\api\RDFoxDataStoreTupleIterator.cpp" />
+    <ClCompile Include="src\builtins\BindTupleIterator.cpp" />
+    <ClCompile Include="src\builtins\BuiltinExpressionEvaluator.cpp" />
+    <ClCompile Include="src\builtins\CastingFunctions.cpp" />
+    <ClCompile Include="src\builtins\CommonOperators.cpp" />
+    <ClCompile Include="src\builtins\DateTimeFunctions.cpp" />
+    <ClCompile Include="src\builtins\FilterTupleIterator.cpp" />
+    <ClCompile Include="src\builtins\FunctionalForms.cpp" />
+    <ClCompile Include="src\builtins\NumericFunctions.cpp" />
+    <ClCompile Include="src\builtins\ProprietaryBuiltinExtensions.cpp" />
+    <ClCompile Include="src\builtins\RDFTermFunctions.cpp" />
+    <ClCompile Include="src\builtins\StringFunctions.cpp" />
+    <ClCompile Include="src\Common.cpp" />
+    <ClCompile Include="src\dictionary\BlankNodeDatatype.cpp" />
+    <ClCompile Include="src\dictionary\BooleanDatatype.cpp" />
+    <ClCompile Include="src\dictionary\DataPool.cpp" />
+    <ClCompile Include="src\dictionary\Datatype.cpp" />
+    <ClCompile Include="src\dictionary\DateTimeDatatype.cpp" />
+    <ClCompile Include="src\dictionary\Dictionary.cpp" />
+    <ClCompile Include="src\dictionary\DoubleDatatype.cpp" />
+    <ClCompile Include="src\dictionary\DurationDatatype.cpp" />
+    <ClCompile Include="src\dictionary\FloatDatatype.cpp" />
+    <ClCompile Include="src\dictionary\IRIReferenceDatatype.cpp" />
+    <ClCompile Include="src\dictionary\NumberDatatype.cpp" />
+    <ClCompile Include="src\dictionary\ResourceValueCache.cpp" />
+    <ClCompile Include="src\dictionary\StringDatatype.cpp" />
+    <ClCompile Include="src\endpoint\SPARQLEndPoint.cpp" />
+    <ClCompile Include="src\equality\EqualityManager.cpp" />
+    <ClCompile Include="src\formats\datalog\DatalogFormatHandler.cpp" />
+    <ClCompile Include="src\formats\datalog\DatalogParser.cpp" />
+    <ClCompile Include="src\formats\InputConsumer.cpp" />
+    <ClCompile Include="src\formats\InputOutput.cpp" />
+    <ClCompile Include="src\formats\InputSource.cpp" />
+    <ClCompile Include="src\formats\sources\MemoryMappedFileSource.cpp" />
+    <ClCompile Include="src\formats\sources\MemorySource.cpp" />
+    <ClCompile Include="src\formats\turtle\SPARQLParser.cpp" />
+    <ClCompile Include="src\formats\turtle\TurtleFormatHandler.cpp" />
+    <ClCompile Include="src\formats\turtle\TurtleParser.cpp" />
+    <ClCompile Include="src\formats\turtle\TurtleSyntax.cpp" />
+    <ClCompile Include="src\formats\turtle\TurtleTokenizer.cpp" />
+    <ClCompile Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_DataStore.cpp" />
+    <ClCompile Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_Dictionary.cpp" />
+    <ClCompile Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_ExtendedBuffer.cpp" />
+    <ClCompile Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_TupleIterator.cpp" />
+    <ClCompile Include="src\logic\Aggregate.cpp" />
+    <ClCompile Include="src\logic\AggregateBind.cpp" />
+    <ClCompile Include="src\logic\Atom.cpp" />
+    <ClCompile Include="src\logic\AtomicFormula.cpp" />
+    <ClCompile Include="src\logic\Bind.cpp" />
+    <ClCompile Include="src\logic\BuiltinExpression.cpp" />
+    <ClCompile Include="src\logic\BuiltinFunctionCall.cpp" />
+    <ClCompile Include="src\logic\Conjunction.cpp" />
+    <ClCompile Include="src\logic\Disjunction.cpp" />
+    <ClCompile Include="src\logic\ExistenceExpression.cpp" />
+    <ClCompile Include="src\logic\Filter.cpp" />
+    <ClCompile Include="src\logic\Formula.cpp" />
+    <ClCompile Include="src\logic\GroundTerm.cpp" />
+    <ClCompile Include="src\logic\Literal.cpp" />
+    <ClCompile Include="src\logic\LogicFactory.cpp" />
+    <ClCompile Include="src\logic\LogicObject.cpp" />
+    <ClCompile Include="src\logic\Minus.cpp" />
+    <ClCompile Include="src\logic\Negation.cpp" />
+    <ClCompile Include="src\logic\Optional.cpp" />
+    <ClCompile Include="src\logic\Predicate.cpp" />
+    <ClCompile Include="src\logic\Query.cpp" />
+    <ClCompile Include="src\logic\ResourceByID.cpp" />
+    <ClCompile Include="src\logic\ResourceByName.cpp" />
+    <ClCompile Include="src\logic\Rule.cpp" />
+    <ClCompile Include="src\logic\Term.cpp" />
+    <ClCompile Include="src\logic\Values.cpp" />
+    <ClCompile Include="src\logic\Variable.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\node-server\MessageBuffer.cpp" />
+    <ClCompile Include="src\node-server\NodeServer.cpp" />
+    <ClCompile Include="src\node-server\OccurrenceManager.cpp" />
+    <ClCompile Include="src\node-server\QueryEvaluator.cpp" />
+    <ClCompile Include="src\node-server\QueryInfo.cpp" />
+    <ClCompile Include="src\node-server\ResourceIDMapper.cpp" />
+    <ClCompile Include="src\partition\HashPartitioner.cpp" />
+    <ClCompile Include="src\partition\MetisPartitioner.cpp" />
+    <ClCompile Include="src\partition\ResourceIDGraph.cpp" />
+    <ClCompile Include="src\partition\ResourceIDGraphBuilder.cpp" />
+    <ClCompile Include="src\query-answer-format\QueryAnswerFormat.cpp" />
+    <ClCompile Include="src\querying\DifferenceIterator.cpp" />
+    <ClCompile Include="src\querying\DistinctIterator.cpp" />
+    <ClCompile Include="src\querying\EmptyTupleIterator.cpp" />
+    <ClCompile Include="src\querying\EqualityExpansionIterator.cpp" />
+    <ClCompile Include="src\querying\GroupIterator.cpp" />
+    <ClCompile Include="src\querying\LeftJoinIterator.cpp" />
+    <ClCompile Include="src\querying\LimitOneIterator.cpp" />
+    <ClCompile Include="src\querying\NegationIterator.cpp" />
+    <ClCompile Include="src\querying\NestedIndexLoopJoinIterator.cpp" />
+    <ClCompile Include="src\querying\QueryCompiler.cpp" />
+    <ClCompile Include="src\querying\QueryDecomposition.cpp" />
+    <ClCompile Include="src\querying\QueryIterator.cpp" />
+    <ClCompile Include="src\querying\TermArray.cpp" />
+    <ClCompile Include="src\querying\UnionIterator.cpp" />
+    <ClCompile Include="src\querying\ValuesIterator.cpp" />
+    <ClCompile Include="src\RDFStoreException.cpp" />
+    <ClCompile Include="src\reasoning\AbstractDeletionTask.cpp" />
+    <ClCompile Include="src\reasoning\AbstractMaterializationTask.cpp" />
+    <ClCompile Include="src\reasoning\DatalogEngine.cpp" />
+    <ClCompile Include="src\reasoning\DatalogExplanation.cpp" />
+    <ClCompile Include="src\reasoning\DependencyGraph.cpp" />
+    <ClCompile Include="src\reasoning\DRedDeletionTask.cpp" />
+    <ClCompile Include="src\reasoning\DRedRederivationTask.cpp" />
+    <ClCompile Include="src\reasoning\EnsureThreadsReadyTask.cpp" />
+    <ClCompile Include="src\reasoning\EvaluateDeletionQueueTask.cpp" />
+    <ClCompile Include="src\reasoning\EvaluateInsertionQueueTask.cpp" />
+    <ClCompile Include="src\reasoning\FBFDeletionTask.cpp" />
+    <ClCompile Include="src\reasoning\IncrementalReasoningState.cpp" />
+    <ClCompile Include="src\reasoning\InitializeDeletedTask.cpp" />
+    <ClCompile Include="src\reasoning\InitializeInsertedTask.cpp" />
+    <ClCompile Include="src\reasoning\InsertionTask.cpp" />
+    <ClCompile Include="src\reasoning\MaterializationTask.cpp" />
+    <ClCompile Include="src\reasoning\PropagateChangesTask.cpp" />
+    <ClCompile Include="src\reasoning\ReasoningTask.cpp" />
+    <ClCompile Include="src\reasoning\RuleIndex.cpp" />
+    <ClCompile Include="src\reasoning\UpdateEqualityManagerTask.cpp" />
+    <ClCompile Include="src\shell\Analyze.cpp" />
+    <ClCompile Include="src\shell\DataStatistics.cpp" />
+    <ClCompile Include="src\shell\Decompose.cpp" />
+    <ClCompile Include="src\shell\Diff.cpp" />
+    <ClCompile Include="src\shell\Drop.cpp" />
+    <ClCompile Include="src\shell\Echo.cpp" />
+    <ClCompile Include="src\shell\EndPoint.cpp" />
+    <ClCompile Include="src\shell\Execute.cpp" />
+    <ClCompile Include="src\shell\Explain.cpp" />
+    <ClCompile Include="src\shell\Explicate.cpp" />
+    <ClCompile Include="src\shell\Export.cpp" />
+    <ClCompile Include="src\shell\FormattedSave.cpp" />
+    <ClCompile Include="src\shell\Help.cpp" />
+    <ClCompile Include="src\shell\Import.cpp" />
+    <ClCompile Include="src\shell\Initialize.cpp" />
+    <ClCompile Include="src\shell\IsNormalized.cpp" />
+    <ClCompile Include="src\shell\ListEquals.cpp" />
+    <ClCompile Include="src\shell\Load.cpp" />
+    <ClCompile Include="src\shell\Lookup.cpp" />
+    <ClCompile Include="src\shell\Materialize.cpp" />
+    <ClCompile Include="src\shell\OWLimRules.cpp" />
+    <ClCompile Include="src\shell\Partition.cpp" />
+    <ClCompile Include="src\shell\Prefix.cpp" />
+    <ClCompile Include="src\shell\Print.cpp" />
+    <ClCompile Include="src\shell\Quit.cpp" />
+    <ClCompile Include="src\shell\RecompileRules.cpp" />
+    <ClCompile Include="src\shell\Reindex.cpp" />
+    <ClCompile Include="src\shell\Resolve.cpp" />
+    <ClCompile Include="src\shell\Root.cpp" />
+    <ClCompile Include="src\shell\RulePlan.cpp" />
+    <ClCompile Include="src\shell\RuleStatistics.cpp" />
+    <ClCompile Include="src\shell\Run.cpp" />
+    <ClCompile Include="src\shell\Sample.cpp" />
+    <ClCompile Include="src\shell\Select.cpp" />
+    <ClCompile Include="src\shell\Server.cpp" />
+    <ClCompile Include="src\shell\Set.cpp" />
+    <ClCompile Include="src\shell\Shell.cpp" />
+    <ClCompile Include="src\shell\ShellCommand.cpp" />
+    <ClCompile Include="src\shell\Sleep.cpp" />
+    <ClCompile Include="src\shell\Statistics.cpp" />
+    <ClCompile Include="src\shell\Threads.cpp" />
+    <ClCompile Include="src\shell\TraceMaterialize.cpp" />
+    <ClCompile Include="src\shell\TStamp.cpp" />
+    <ClCompile Include="src\shell\UnformattedSave.cpp" />
+    <ClCompile Include="src\shell\UpdateStatistics.cpp" />
+    <ClCompile Include="src\storage\DataStoreType.cpp" />
+    <ClCompile Include="src\storage\Parameters.cpp" />
+    <ClCompile Include="src\tasks\Tasks.cpp" />
+    <ClCompile Include="src\triple-storage\RDFStoreRulePlanIterator.cpp" />
+    <ClCompile Include="src\triple-storage\stores\ParallelComplexRDFStore.cpp" />
+    <ClCompile Include="src\triple-storage\stores\ParallelSimpleRDFStore.cpp" />
+    <ClCompile Include="src\triple-storage\stores\SequentialRDFStore.cpp" />
+    <ClCompile Include="src\triple-storage\TripleTable.cpp" />
+    <ClCompile Include="src\util\AbstractStatistics.cpp" />
+    <ClCompile Include="src\util\APILogEntry.cpp" />
+    <ClCompile Include="src\util\BufferedOutputStream.cpp" />
+    <ClCompile Include="src\util\BuiltinExpressionVariableCollector.cpp" />
+    <ClCompile Include="src\util\ComponentStatistics.cpp" />
+    <ClCompile Include="src\util\DatalogProgramDecomposer.cpp" />
+    <ClCompile Include="src\util\dlib.cpp" />
+    <ClCompile Include="src\util\File.cpp" />
+    <ClCompile Include="src\util\FileDescriptor.cpp" />
+    <ClCompile Include="src\util\IncrementalStatistics.cpp" />
+    <ClCompile Include="src\util\IncrementalTracer.cpp" />
+    <ClCompile Include="src\util\InputImporter.cpp" />
+    <ClCompile Include="src\util\IteratorPrinting.cpp" />
+    <ClCompile Include="src\util\LogicObjectWalker.cpp" />
+    <ClCompile Include="src\util\MaterializationStatistics.cpp" />
+    <ClCompile Include="src\util\MaterializationTracer.cpp" />
+    <ClCompile Include="src\util\MemoryOutputStream.cpp" />
+    <ClCompile Include="src\util\NodeServerStatistics.cpp" />
+    <ClCompile Include="src\util\ParallelHashTable.cpp" />
+    <ClCompile Include="src\util\Prefixes.cpp" />
+    <ClCompile Include="src\util\PrintLine.cpp" />
+    <ClCompile Include="src\util\Socket.cpp" />
+    <ClCompile Include="src\util\StatisticsCounters.cpp" />
+    <ClCompile Include="src\util\Thread.cpp" />
+    <ClCompile Include="src\util\ThreadContext.cpp" />
+    <ClCompile Include="src\util\Vocabulary.cpp" />
+    <ClCompile Include="src\util\XSDDateTime.cpp" />
+    <ClCompile Include="src\util\XSDDuration.cpp" />
+    <ClCompile Include="test\dictionary\BlankNodeDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\DateTimeDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\DictionaryTest.cpp" />
+    <ClCompile Include="test\dictionary\DoubleDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\DurationDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\FloatDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\IRIReferenceDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\NumberDatatypeTest.cpp" />
+    <ClCompile Include="test\dictionary\ResourceValueCacheTest.cpp" />
+    <ClCompile Include="test\dictionary\StringDatatypeTest.cpp" />
+    <ClCompile Include="test\formats\AbstractParserTest.cpp" />
+    <ClCompile Include="test\formats\DatalogParserTest.cpp" />
+    <ClCompile Include="test\formats\InputTest.cpp" />
+    <ClCompile Include="test\formats\OutputTest.cpp" />
+    <ClCompile Include="test\formats\SPARQLParserTest.cpp" />
+    <ClCompile Include="test\formats\TurtleParserTest.cpp" />
+    <ClCompile Include="test\formats\TurtleTokenizerTest.cpp" />
+    <ClCompile Include="test\logic\LogicFactoryTest.cpp" />
+    <ClCompile Include="test\node-server\MessageBufferTest.cpp" />
+    <ClCompile Include="test\node-server\MessagePassingTest.cpp" />
+    <ClCompile Include="test\node-server\NodeServerTest.cpp" />
+    <ClCompile Include="test\querying\DataStoreFacilitiesTest.cpp" />
+    <ClCompile Include="test\querying\DataStoreTest.cpp" />
+    <ClCompile Include="test\querying\QueryBuiltinsTest.cpp" />
+    <ClCompile Include="test\querying\QueryDecompositionTest.cpp" />
+    <ClCompile Include="test\querying\QueryTestNoDecomposition.cpp" />
+    <ClCompile Include="test\querying\QueryTestWithPrimalGraph.cpp" />
+    <ClCompile Include="test\querying\TermArrayTest.cpp" />
+    <ClCompile Include="test\querying\ValuationCacheTest.cpp" />
+    <ClCompile Include="test\reasoning\DatalogEngineEqualityTest.cpp" />
+    <ClCompile Include="test\reasoning\DatalogEngineTest.cpp" />
+    <ClCompile Include="test\reasoning\DependencyGraphTest.cpp" />
+    <ClCompile Include="test\reasoning\ExplanationTest.cpp" />
+    <ClCompile Include="test\reasoning\IncrementalEqualityTest.cpp" />
+    <ClCompile Include="test\reasoning\IncrementalNegationTest.cpp" />
+    <ClCompile Include="test\reasoning\IncrementalTest.cpp" />
+    <ClCompile Include="test\storage\ArgumentIndexSetTest.cpp" />
+    <ClCompile Include="test\triple-storage\MultiThreadedTest.cpp" />
+    <ClCompile Include="test\triple-storage\OneKeyIndexTest.cpp" />
+    <ClCompile Include="test\triple-storage\ThreeKeysIndexTest.cpp" />
+    <ClCompile Include="test\triple-storage\ThreeKeysManagerTest.cpp" />
+    <ClCompile Include="test\triple-storage\TripleData.cpp" />
+    <ClCompile Include="test\triple-storage\TripleListTest.cpp" />
+    <ClCompile Include="test\triple-storage\TripleTableByOneTest.cpp" />
+    <ClCompile Include="test\triple-storage\TripleTableTest.cpp" />
+    <ClCompile Include="test\triple-storage\TwoKeysIndexTest.cpp" />
+    <ClCompile Include="test\triple-storage\TwoKeysManagerGroupByOneTest.cpp" />
+    <ClCompile Include="test\triple-storage\TwoKeysManagerGroupByTwoTest.cpp" />
+    <ClCompile Include="test\util\HashTableTest.cpp" />
+    <ClCompile Include="test\util\InterningManagerTest.cpp" />
+    <ClCompile Include="test\util\SmartPointerTest.cpp" />
+    <ClCompile Include="test\util\SocketTest.cpp" />
+    <ClCompile Include="test\util\XSDDateTimeTest.cpp" />
+    <ClCompile Include="test\util\XSDDurationTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\RDFoxDataStore.h" />
+    <ClInclude Include="src\aggregates\AggregateFunctionEvaluator.h" />
+    <ClInclude Include="src\aggregates\AggregateTupleIterator.h" />
+    <ClInclude Include="src\all.h" />
+    <ClInclude Include="src\api\api.h" />
+    <ClInclude Include="src\builtins\BindTupleIterator.h" />
+    <ClInclude Include="src\builtins\BuiltinExpressionEvaluator.h" />
+    <ClInclude Include="src\builtins\CommonBuiltinExpressionEvaluators.h" />
+    <ClInclude Include="src\builtins\FilterTupleIterator.h" />
+    <ClInclude Include="src\Common.h" />
+    <ClInclude Include="src\dictionary\DataPool.h" />
+    <ClInclude Include="src\dictionary\DataPoolImpl.h" />
+    <ClInclude Include="src\dictionary\Datatype.h" />
+    <ClInclude Include="src\dictionary\Dictionary.h" />
+    <ClInclude Include="src\dictionary\DictionaryUsageContext.h" />
+    <ClInclude Include="src\dictionary\ResourceValueCache.h" />
+    <ClInclude Include="src\dictionary\ResourceValueCacheImpl.h" />
+    <ClInclude Include="src\dictionary\ResourceValueResolver.h" />
+    <ClInclude Include="src\dictionary\StringPolicies.h" />
+    <ClInclude Include="src\endpoint\SPARQLEndPoint.h" />
+    <ClInclude Include="src\equality\EqualityManager.h" />
+    <ClInclude Include="src\formats\datalog\DatalogParser.h" />
+    <ClInclude Include="src\formats\InputConsumer.h" />
+    <ClInclude Include="src\formats\InputOutput.h" />
+    <ClInclude Include="src\formats\InputSource.h" />
+    <ClInclude Include="src\formats\sources\InputStreamSource.h" />
+    <ClInclude Include="src\formats\sources\MemoryMappedFileSource.h" />
+    <ClInclude Include="src\formats\sources\MemorySource.h" />
+    <ClInclude Include="src\formats\turtle\AbstractParser.h" />
+    <ClInclude Include="src\formats\turtle\AbstractParserImpl.h" />
+    <ClInclude Include="src\formats\turtle\SPARQLParser.h" />
+    <ClInclude Include="src\formats\turtle\TurtleParser.h" />
+    <ClInclude Include="src\formats\turtle\TurtleSyntax.h" />
+    <ClInclude Include="src\formats\turtle\TurtleTokenizer.h" />
+    <ClInclude Include="src\java-bridge\JRDFoxCommon.h" />
+    <ClInclude Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_DataStore.h" />
+    <ClInclude Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_Dictionary.h" />
+    <ClInclude Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_ExtendedBuffer.h" />
+    <ClInclude Include="src\java-bridge\uk_ac_ox_cs_JRDFox_store_TupleIterator.h" />
+    <ClInclude Include="src\logic\Aggregate.h" />
+    <ClInclude Include="src\logic\AggregateBind.h" />
+    <ClInclude Include="src\logic\Atom.h" />
+    <ClInclude Include="src\logic\AtomicFormula.h" />
+    <ClInclude Include="src\logic\Bind.h" />
+    <ClInclude Include="src\logic\BuiltinExpression.h" />
+    <ClInclude Include="src\logic\BuiltinFunctionCall.h" />
+    <ClInclude Include="src\logic\Conjunction.h" />
+    <ClInclude Include="src\logic\Disjunction.h" />
+    <ClInclude Include="src\logic\ExistenceExpression.h" />
+    <ClInclude Include="src\logic\Filter.h" />
+    <ClInclude Include="src\logic\Formula.h" />
+    <ClInclude Include="src\logic\GroundTerm.h" />
+    <ClInclude Include="src\logic\Literal.h" />
+    <ClInclude Include="src\logic\Logic.h" />
+    <ClInclude Include="src\logic\LogicFactory.h" />
+    <ClInclude Include="src\logic\LogicObject.h" />
+    <ClInclude Include="src\logic\LogicObjectVisitor.h" />
+    <ClInclude Include="src\logic\Minus.h" />
+    <ClInclude Include="src\logic\Negation.h" />
+    <ClInclude Include="src\logic\Optional.h" />
+    <ClInclude Include="src\logic\Predicate.h" />
+    <ClInclude Include="src\logic\Query.h" />
+    <ClInclude Include="src\logic\ResourceByID.h" />
+    <ClInclude Include="src\logic\ResourceByName.h" />
+    <ClInclude Include="src\logic\Rule.h" />
+    <ClInclude Include="src\logic\Term.h" />
+    <ClInclude Include="src\logic\Values.h" />
+    <ClInclude Include="src\logic\Variable.h" />
+    <ClInclude Include="src\node-server\MessageBuffer.h" />
+    <ClInclude Include="src\node-server\MessageBufferImpl.h" />
+    <ClInclude Include="src\node-server\MessagePassing.h" />
+    <ClInclude Include="src\node-server\MessagePassingImpl.h" />
+    <ClInclude Include="src\node-server\NodeServer.h" />
+    <ClInclude Include="src\node-server\NodeServerImpl.h" />
+    <ClInclude Include="src\node-server\NodeServerListener.h" />
+    <ClInclude Include="src\node-server\NodeServerMonitor.h" />
+    <ClInclude Include="src\node-server\NodeServerQueryListener.h" />
+    <ClInclude Include="src\node-server\OccurrenceManager.h" />
+    <ClInclude Include="src\node-server\OccurrenceManagerImpl.h" />
+    <ClInclude Include="src\node-server\QueryEvaluator.h" />
+    <ClInclude Include="src\node-server\QueryEvaluatorImpl.h" />
+    <ClInclude Include="src\node-server\QueryInfo.h" />
+    <ClInclude Include="src\node-server\QueryInfoImpl.h" />
+    <ClInclude Include="src\node-server\ResourceIDMapper.h" />
+    <ClInclude Include="src\node-server\ResourceIDMapperImpl.h" />
+    <ClInclude Include="src\partition\HashPartitioner.h" />
+    <ClInclude Include="src\partition\MetisPartitioner.h" />
+    <ClInclude Include="src\partition\PartitionBuilder.h" />
+    <ClInclude Include="src\partition\PartitionBuilderImpl.h" />
+    <ClInclude Include="src\partition\ResourceIDGraph.h" />
+    <ClInclude Include="src\partition\ResourceIDGraphBuilder.h" />
+    <ClInclude Include="src\query-answer-format\QueryAnswerFormat.h" />
+    <ClInclude Include="src\querying\DifferenceIterator.h" />
+    <ClInclude Include="src\querying\DistinctIterator.h" />
+    <ClInclude Include="src\querying\EmptyTupleIterator.h" />
+    <ClInclude Include="src\querying\EqualityExpansionIterator.h" />
+    <ClInclude Include="src\querying\GroupIterator.h" />
+    <ClInclude Include="src\querying\LeftJoinIterator.h" />
+    <ClInclude Include="src\querying\LimitOneIterator.h" />
+    <ClInclude Include="src\querying\NegationIterator.h" />
+    <ClInclude Include="src\querying\NestedIndexLoopJoinIterator.h" />
+    <ClInclude Include="src\querying\QueryCompiler.h" />
+    <ClInclude Include="src\querying\QueryDecomposition.h" />
+    <ClInclude Include="src\querying\QueryIterator.h" />
+    <ClInclude Include="src\querying\TermArray.h" />
+    <ClInclude Include="src\querying\UnionIterator.h" />
+    <ClInclude Include="src\querying\ValuationCache.h" />
+    <ClInclude Include="src\querying\ValuationCacheImpl.h" />
+    <ClInclude Include="src\querying\ValuesIterator.h" />
+    <ClInclude Include="src\RDFStoreException.h" />
+    <ClInclude Include="src\reasoning\AbstractDeletionTask.h" />
+    <ClInclude Include="src\reasoning\AbstractDeletionTaskImpl.h" />
+    <ClInclude Include="src\reasoning\AbstractMaterializationTask.h" />
+    <ClInclude Include="src\reasoning\AbstractMaterializationTaskImpl.h" />
+    <ClInclude Include="src\reasoning\DatalogEngine.h" />
+    <ClInclude Include="src\reasoning\DatalogEngineWorker.h" />
+    <ClInclude Include="src\reasoning\DatalogEngineWorkerImpl.h" />
+    <ClInclude Include="src\reasoning\DatalogExplanation.h" />
+    <ClInclude Include="src\reasoning\DependencyGraph.h" />
+    <ClInclude Include="src\reasoning\DRedDeletionTask.h" />
+    <ClInclude Include="src\reasoning\DRedRederivationTask.h" />
+    <ClInclude Include="src\reasoning\EnsureThreadsReadyTask.h" />
+    <ClInclude Include="src\reasoning\EvaluateDeletionQueueTask.h" />
+    <ClInclude Include="src\reasoning\EvaluateInsertionQueueTask.h" />
+    <ClInclude Include="src\reasoning\FBFDeletionTask.h" />
+    <ClInclude Include="src\reasoning\IncrementalMonitor.h" />
+    <ClInclude Include="src\reasoning\IncrementalReasoningState.h" />
+    <ClInclude Include="src\reasoning\InitializeDeletedTask.h" />
+    <ClInclude Include="src\reasoning\InitializeInsertedTask.h" />
+    <ClInclude Include="src\reasoning\InsertionTask.h" />
+    <ClInclude Include="src\reasoning\MaterializationMonitor.h" />
+    <ClInclude Include="src\reasoning\MaterializationTask.h" />
+    <ClInclude Include="src\reasoning\PropagateChangesTask.h" />
+    <ClInclude Include="src\reasoning\ReasoningTask.h" />
+    <ClInclude Include="src\reasoning\RuleIndex.h" />
+    <ClInclude Include="src\reasoning\RuleIndexImpl.h" />
+    <ClInclude Include="src\reasoning\UpdateEqualityManagerTask.h" />
+    <ClInclude Include="src\shell\Shell.h" />
+    <ClInclude Include="src\shell\ShellCommand.h" />
+    <ClInclude Include="src\storage\ArgumentIndexSet.h" />
+    <ClInclude Include="src\storage\DataStore.h" />
+    <ClInclude Include="src\storage\DataStoreType.h" />
+    <ClInclude Include="src\storage\Explanation.h" />
+    <ClInclude Include="src\storage\Parameters.h" />
+    <ClInclude Include="src\storage\RuleIterator.h" />
+    <ClInclude Include="src\storage\RulePlanIterator.h" />
+    <ClInclude Include="src\storage\TupleFilter.h" />
+    <ClInclude Include="src\storage\TupleIterator.h" />
+    <ClInclude Include="src\storage\TupleIteratorMonitor.h" />
+    <ClInclude Include="src\storage\TupleReceiver.h" />
+    <ClInclude Include="src\storage\TupleTable.h" />
+    <ClInclude Include="src\storage\TupleTableProxy.h" />
+    <ClInclude Include="src\tasks\Tasks.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentOneKeyIndex.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentOneKeyIndexImpl.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentThreeKeysIndexPolicy.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentThreeKeysIndexPolicyImpl.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentTripleList.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentTripleListImpl.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentTwoKeysIndexPolicy.h" />
+    <ClInclude Include="src\triple-storage\concurrent\ConcurrentTwoKeysIndexPolicyImpl.h" />
+    <ClInclude Include="src\triple-storage\managers\ThreeKeysManager.h" />
+    <ClInclude Include="src\triple-storage\managers\ThreeKeysManagerImpl.h" />
+    <ClInclude Include="src\triple-storage\managers\TwoKeysManagerGroupByOne.h" />
+    <ClInclude Include="src\triple-storage\managers\TwoKeysManagerGroupByOneImpl.h" />
+    <ClInclude Include="src\triple-storage\managers\TwoKeysManagerGroupByTwo.h" />
+    <ClInclude Include="src\triple-storage\managers\TwoKeysManagerGroupByTwoImpl.h" />
+    <ClInclude Include="src\triple-storage\QueryPatternHandlers.h" />
+    <ClInclude Include="src\triple-storage\RDFStore.h" />
+    <ClInclude Include="src\triple-storage\RDFStoreImpl.h" />
+    <ClInclude Include="src\triple-storage\RDFStoreRulePlanIterator.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialOneKeyIndex.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialOneKeyIndexImpl.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialThreeKeysIndexPolicy.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialThreeKeysIndexPolicyImpl.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialTripleList.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialTripleListImpl.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialTwoKeysIndexPolicy.h" />
+    <ClInclude Include="src\triple-storage\sequential\SequentialTwoKeysIndexPolicyImpl.h" />
+    <ClInclude Include="src\triple-storage\TripleTable.h" />
+    <ClInclude Include="src\triple-storage\TripleTableImpl.h" />
+    <ClInclude Include="src\triple-storage\TripleTableIterator.h" />
+    <ClInclude Include="src\triple-storage\TripleTableIteratorImpl.h" />
+    <ClInclude Include="src\triple-storage\TripleTableProxy.h" />
+    <ClInclude Include="src\triple-storage\TripleTableProxyImpl.h" />
+    <ClInclude Include="src\util\AbstractStatistics.h" />
+    <ClInclude Include="src\util\AbstractStatisticsImpl.h" />
+    <ClInclude Include="src\util\AbstractTracer.h" />
+    <ClInclude Include="src\util\AbstractTracerImpl.h" />
+    <ClInclude Include="src\util\APILogEntry.h" />
+    <ClInclude Include="src\util\BufferedOutputStream.h" />
+    <ClInclude Include="src\util\BuiltinExpressionVariableCollector.h" />
+    <ClInclude Include="src\util\CodePoint.h" />
+    <ClInclude Include="src\util\ComponentStatistics.h" />
+    <ClInclude Include="src\util\Condition.h" />
+    <ClInclude Include="src\util\DatalogProgramDecomposer.h" />
+    <ClInclude Include="src\util\File.h" />
+    <ClInclude Include="src\util\FileDescriptor.h" />
+    <ClInclude Include="src\util\HashTable.h" />
+    <ClInclude Include="src\util\HashTableImpl.h" />
+    <ClInclude Include="src\util\IncrementalStatistics.h" />
+    <ClInclude Include="src\util\IncrementalTracer.h" />
+    <ClInclude Include="src\util\InputImporter.h" />
+    <ClInclude Include="src\util\InputStream.h" />
+    <ClInclude Include="src\util\InterningManager.h" />
+    <ClInclude Include="src\util\InterningManagerImpl.h" />
+    <ClInclude Include="src\util\IteratorPrinting.h" />
+    <ClInclude Include="src\util\LockFreeBitSet.h" />
+    <ClInclude Include="src\util\LockFreeQueue.h" />
+    <ClInclude Include="src\util\LogicObjectWalker.h" />
+    <ClInclude Include="src\util\MaterializationStatistics.h" />
+    <ClInclude Include="src\util\MaterializationTracer.h" />
+    <ClInclude Include="src\util\MemoryManager.h" />
+    <ClInclude Include="src\util\MemoryMappedFileView.h" />
+    <ClInclude Include="src\util\MemoryOutputStream.h" />
+    <ClInclude Include="src\util\MemoryRegion.h" />
+    <ClInclude Include="src\util\Mutex.h" />
+    <ClInclude Include="src\util\NodeServerStatistics.h" />
+    <ClInclude Include="src\util\NonReentrantSpinLock.h" />
+    <ClInclude Include="src\util\OutputStream.h" />
+    <ClInclude Include="src\util\ParallelHashTable.h" />
+    <ClInclude Include="src\util\ParallelHashTableImpl.h" />
+    <ClInclude Include="src\util\Prefixes.h" />
+    <ClInclude Include="src\util\PrintLine.h" />
+    <ClInclude Include="src\util\Random.h" />
+    <ClInclude Include="src\util\SequentialHashTable.h" />
+    <ClInclude Include="src\util\SequentialHashTableImpl.h" />
+    <ClInclude Include="src\util\SmartPointer.h" />
+    <ClInclude Include="src\util\Socket.h" />
+    <ClInclude Include="src\util\StatisticsCounters.h" />
+    <ClInclude Include="src\util\Thread.h" />
+    <ClInclude Include="src\util\ThreadContext.h" />
+    <ClInclude Include="src\util\ThreadLocalPointer.h" />
+    <ClInclude Include="src\util\Vocabulary.h" />
+    <ClInclude Include="src\util\XSDDateTime.h" />
+    <ClInclude Include="src\util\XSDDuration.h" />
+    <ClInclude Include="test\dictionary\AbstractDatatypeTest.h" />
+    <ClInclude Include="test\formats\AbstractParserTest.h" />
+    <ClInclude Include="test\logic\AbstractLogicTest.h" />
+    <ClInclude Include="test\querying\DataStoreTest.h" />
+    <ClInclude Include="test\triple-storage\TripleData.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7F48393C-148B-48A4-B81C-402EB3309644}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RDFstore</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test-Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test-Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-EXE|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL-logAPI|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Test-Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Test-Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-EXE|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL-logAPI|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test-Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test-Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Release\</OutDir>
+    <IntDir>Release\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Release\</OutDir>
+    <IntDir>Release\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-EXE|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Deploy\</OutDir>
+    <IntDir>Deploy\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Deploy\</OutDir>
+    <IntDir>Deploy\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL-logAPI|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Deploy-logAPI\</OutDir>
+    <IntDir>Deploy-logAPI\</IntDir>
+    <TargetName>$(ProjectName)-logAPI</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)Debug\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)Release\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test-Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WITH_TEST;DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32;..\CppTest\src</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>metisD.lib;Shlwapi.lib;CppTest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;..\CppTest\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WITH_TEST;DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32;..\CppTest\src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>metisD.lib;Shlwapi.lib;CppTest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;..\CppTest\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test-Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WITH_TEST;DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32;..\CppTest\src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;..\CppTest\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>metis.lib;Shlwapi.lib;CppTest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Shell-Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WITH_TEST;DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32;..\CppTest\src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;..\CppTest\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>metis.lib;Shlwapi.lib;CppTest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-EXE|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>metis.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>
+      </Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);DLIB_NO_GUI_SUPPORT;EXPORT_API</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>metis.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>
+      </Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Deploy-DLL-logAPI|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);DLIB_NO_GUI_SUPPORT;EXPORT_API;APILOGGING</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>external\dlib-18.17;external\xerces-c-3.1.2\windows\include;external\metis-5.1.0\include;external\jdk1.8.0\include;external\jdk1.8.0\include\win32</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>external\metis-5.1.0\lib\windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>metis.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>
+      </Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
