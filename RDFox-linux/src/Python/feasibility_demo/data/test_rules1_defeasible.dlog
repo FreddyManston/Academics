@@ -1,0 +1,8 @@
+PREFIX animal: <http://animals.test.example/hons/animal#>
+PREFIX ability: <http://animals.test.example/hons/ability#>
+PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ability:Fly(?X) :- animal:Bird(?X) .
+neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .

@@ -1,0 +1,49 @@
+PREFIX a1: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ruleml: <http://www.w3.org/2003/11/ruleml#>
+PREFIX swrl: <http://www.w3.org/2003/11/swrl#>
+PREFIX swrlb: <http://www.w3.org/2003/11/swrlb#>
+PREFIX swrlx: <http://www.w3.org/2003/11/swrlx#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<http://www.Department0.University0.edu/NewProfessor> rdf:type a1:FullProfessor .
+<http://www.Department0.University0.edu/NewProfessor> a1:name "FullProfessor1" .
+<http://www.Department0.University0.edu/NewProfessor> a1:teacherOf <http://www.Department0.University0.edu/Course1> .
+<http://www.Department0.University0.edu/NewProfessor> a1:teacherOf <http://www.Department0.University0.edu/GraduateCourse2> .
+<http://www.Department0.University0.edu/NewProfessor> a1:undergraduateDegreeFrom <http://www.University260.edu> .
+<http://www.Department0.University0.edu/NewProfessor> a1:mastersDegreeFrom <http://www.University503.edu> .
+<http://www.Department0.University0.edu/NewProfessor> a1:doctoralDegreeFrom <http://www.University882.edu> .
+<http://www.Department0.University0.edu/NewProfessor> a1:worksFor <http://www.Department0.University0.edu> .
+<http://www.Department0.University0.edu/NewProfessor> a1:emailAddress "FullProfessor1@Department0.University0.edu" .
+<http://www.Department0.University0.edu/NewProfessor> a1:telephone "xxx-xxx-xxxx" .
+<http://www.Department0.University0.edu/NewProfessor> a1:researchInterest "Research12" .
+<http://www.Department0.University0.edu/UndergraduateStudent118> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/UndergraduateStudent275> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/UndergraduateStudent303> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/UndergraduateStudent382> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/UndergraduateStudent392> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/UndergraduateStudent472> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/GraduateStudent98> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/GraduateStudent130> a1:advisor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication0> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication1> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication2> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication3> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication4> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication5> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication6> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication7> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication8> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication9> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication10> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication11> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication12> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication13> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication14> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication15> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication16> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication17> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication18> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .
+<http://www.Department0.University0.edu/NewProfessor/Publication19> a1:publicationAuthor <http://www.Department0.University0.edu/NewProfessor> .

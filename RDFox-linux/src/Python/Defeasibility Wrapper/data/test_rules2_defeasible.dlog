@@ -1,0 +1,10 @@
+PREFIX dis: <http://disease.test.example/hons/disease#>
+PREFIX bmstr: <http://disease.test.example/hons/disease/BactMen#>
+PREFIX mort: <http://disease.test.example/hons/mortality#>
+PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+neg:False(?X) :- dis:Men(?X), mort:Fatal(?X) .
+mort:Fatal(?X) :- dis:BactMen(?X) .
+neg:False(?X) :- bmstr:Strain0(?X), mort:Fatal(?X) .

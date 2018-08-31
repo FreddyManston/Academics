@@ -1,0 +1,11 @@
+PREFIX dis: <http://disease.test.example/hons/disease#>
+PREFIX bmstr: <http://disease.test.example/hons/disease/BactMen#>
+PREFIX mort: <http://disease.test.example/hons/mortality#>
+PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+<http://Disease0.org/CaseZero> rdf:type dis:Men .
+<http://Disease1.org/Icky> rdf:type dis:BactMen .
+<http://Disease2.org/Wicky> rdf:type bmstr:Strain0 .
+<http://Disease3.org/Eewy> rdf:type dis:VirMen .
