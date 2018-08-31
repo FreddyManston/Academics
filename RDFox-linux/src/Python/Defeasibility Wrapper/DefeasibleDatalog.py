@@ -2,18 +2,11 @@
 # Date:			July 2018
 #Description:	The implementation of the Rational Closure algorithm (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.) as a Python Wrapper for RDFox (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
 # Licence: RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
-
 # Note: This program makes use of datalog (.dlog files) for the TBox, as well as 
 #		the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 
-
-### IMPORTS ###
-
 import shutil, os, sys, re, io
 from PRDFox import DataStore, DataStoreType, TupleIterator, Datatype, ResourceType, UpdateType, Prefixes
-
-
-### GLOBAL VARIABLES ###
 
 DD_DATALOG_FILE = "PRDFoxDW_RankedRules.dlog"
 DD_TURTLE_FILE = "PRDFoxDW_MatTest.ttl"
@@ -45,11 +38,22 @@ def getQueryResult(tupleIterator):
 		multiplicity = tupleIterator.getNext()
 	return(result)
 
+# Performs materialisation using RDFox and returns the results as a string
+def performRDFoxMaterialisation(turtle_file, datalog_file):
+	#print("\nDOING MATERIALISATION....")
+	DataStore.loadLibrary('../../../lib/libCppRDFox.so')
+	with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
+		dataStore.importFile(turtle_file)
+		dataStore.importFile(datalog_file)
+		dataStore.applyRules();
+		with TupleIterator(dataStore, 'select ?x ?y ?z where { ?x ?y ?z }', {'query.domain' : 'IDB'}) as allTupleIterator:
+			return(getQueryResult(allTupleIterator))
+
 
 ### FUNCTIONS FOR THE DEFEASIBLE DATALOG WRAPPER ###
 
-# Imports the rules from the datalog file and initialises DD_DATALOG_FILE and DD_TURTLE_FILE with
-# the PREFIXES so that they can be used for testing
+# Imports the rules from the datalog file and initialises DD_DATALOG_FILE and DD_TURTLE_FILE
+# with the PREFIXES so that they can be used for testing
 def initialise(PATH):
 	try:
 		#os.makedirs("DefeasibleDatalog_TestData")
@@ -59,7 +63,7 @@ def initialise(PATH):
 		with open(PATH, "r") as C_TBOX_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE, open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE:
 			CLASSICAL_TBOX = C_TBOX_FILE.readlines()
 
-			# Importing the .dlog file
+			# IMPORTING THE DATALOG RULES (i.e. the .dlog file)
 			section = ""
 			for line in CLASSICAL_TBOX:
 				# If line contains a PREFIX...
@@ -85,19 +89,8 @@ def initialise(PATH):
 
 		return([C_TBOX, D_TBOX])
 
-	except IOError:
-		print("The file cannot be read.")
-
-# Performs materialisation using RDFox and returns the results as a string
-def performRDFoxMaterialisation(turtle_file, datalog_file):
-	#print("\nDOING MATERIALISATION....")
-	DataStore.loadLibrary('../../../lib/libCppRDFox.so')
-	with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
-		dataStore.importFile(turtle_file)
-		dataStore.importFile(datalog_file)
-		dataStore.applyRules();
-		with TupleIterator(dataStore, 'select ?x ?y ?z where { ?x ?y ?z }', {'query.domain' : 'IDB'}) as allTupleIterator:
-			return(getQueryResult(allTupleIterator))
+	except:
+		print("Error when importing the datalog rules (.dlog file).")
 
 # Checks if a given antecedent can be entailed from a given knowledge base
 def doesEntail(knowledge_base, query):
@@ -156,24 +149,7 @@ def doesEntail(knowledge_base, query):
 	#print("Does it entail: " + str(ENTAILS))
 	return ENTAILS
 
-## Acquires all the antecedents, given an array of datalog rules
-## Note: Improve by only returning distinct antecedents
-def getAntecedents(dlog_rules):
-	antecedents = []
-
-	# Text cleaning...
-	for rule in dlog_rules:
-		rule = re.sub("(\(\?.\))", "", rule)	# Getting rid of all variables (e.g. (?X))
-		rule = re.sub("[\s\.]*", "", rule)		# Getting rid of all white space and dots
-		rule = rule.split(":-")[1]				# Getting rid of the consequent
-		rule = rule.split(",")[0]				# For rules such as: 'neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .'
-
-		antecedents.append(rule)
-
-	return antecedents
-
-## Acquires the antecedent, given a single datalog rule
-## Note: Improve by only returning distinct antecedents
+# Acquires the antecedent, given a single datalog rule
 def getAntecedent(dlog_rule):
 	# Text cleaning...
 	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
@@ -183,6 +159,8 @@ def getAntecedent(dlog_rule):
 
 	return antecedent
 
+# Flags all exceptionalities, given a set of classical and defeasible rules.
+# Returns all defeasible rules that are exceptional
 def checkExceptionality(C_TBOX, D_TBOX):
 	EXCEPTIONS = []
 	FULL_TBOX = C_TBOX + D_TBOX
@@ -197,9 +175,11 @@ def checkExceptionality(C_TBOX, D_TBOX):
 	#print EXCEPTIONS
 	return EXCEPTIONS
 
+# Ranks all the defeasible rules according to exceptionality,
+# using the Ranking algorithm found in Introducing Defeasibility into OWL Ontologies, G. Casini et. al.
 def rankRules(C_TBOX, D_TBOX):
 	RANKS = []
-	
+
 	# INITIAL EXCEPTIONALITY CHECK
 	E0 = D_TBOX
 	E1 = checkExceptionality(C_TBOX, E0)
@@ -243,11 +223,16 @@ def rankRules(C_TBOX, D_TBOX):
 
 	return RANKS
 
+# Deletes all files and/or folders that were created by this program
+def cleanUp():
+	os.remove(DD_DATALOG_FILE) 
+	os.remove(DD_TURTLE_FILE) 
+	#shutil.rmtree("DefeasibleDatalog_TestData")
 
 ### START OF MAIN ###
 
-CLASSICAL_TBOX_PATH = "data/test_rules1_classical.dlog"
-DEFEASIBLE_TBOX_PATH = "data/test_rules1_defeasible.dlog"
+CLASSICAL_TBOX_PATH = "data/test_rules2_classical.dlog"
+DEFEASIBLE_TBOX_PATH = "data/test_rules2_defeasible.dlog"
 
 print("\nSTARTING PROGRAMMING...")
 print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
@@ -271,7 +256,9 @@ print("Level " + u"\u221E" + ":")						# Infinite/Classical level
 for rule in RANKED_RULES[0]:
 	print("\t" + rule)
 if(len(RANKED_RULES) > 1):
-	for level in range(len(RANKED_RULES) - 1):				# Exceptional/Defeasible levels
+	for level in range(len(RANKED_RULES) - 1):			# Exceptional/Defeasible levels
 		print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
 		for rule in RANKED_RULES[level + 1]:
 			print("\t" + rule)
+
+cleanUp()
