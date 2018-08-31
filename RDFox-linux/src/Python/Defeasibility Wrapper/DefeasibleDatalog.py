@@ -1,4 +1,3 @@
-# Notes: 		URN vs. URL 
 # Author:		Joshua J. Abraham
 # Date:			July 2018
 #Description:	The implementation of the Rational Closure algorithm (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.) as a Python Wrapper for RDFox (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
