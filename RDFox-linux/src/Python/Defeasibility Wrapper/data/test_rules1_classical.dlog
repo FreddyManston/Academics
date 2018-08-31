@@ -12,4 +12,5 @@ animal:Bird(?X) :- animal:Robin(?X) .
 ### DEFEASIBLE STATEMENTS ###
 
 ability:Fly(?X) :- animal:Bird(?X) .
+#ability:Fly(?X) :- animal:Penguin(?X) .
 neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .

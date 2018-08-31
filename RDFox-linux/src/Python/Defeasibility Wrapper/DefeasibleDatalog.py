@@ -90,7 +90,7 @@ def initialise(PATH):
 
 # Performs materialisation using RDFox and returns the results as a string
 def performRDFoxMaterialisation(turtle_file, datalog_file):
-	print("\nDOING MATERIALISATION....")
+	#print("\nDOING MATERIALISATION....")
 	DataStore.loadLibrary('../../../lib/libCppRDFox.so')
 	with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
 		dataStore.importFile(turtle_file)
@@ -112,8 +112,8 @@ def doesEntail(knowledge_base, query):
 	#print TURTLE_TEST
 	#print("\nKNOWLEDGE BASE:")
 	#print knowledge_base
-	print("\nQUERY:")
-	print query
+	#print("\nQUERY:")
+	#print query
 
 	for rule in knowledge_base:
 		DLOG_RANKS.append(rule)
@@ -153,7 +153,7 @@ def doesEntail(knowledge_base, query):
 			if "\n" not in line:
 				TURTLE_TEST_FILE.write("\n")
 
-	print("Does it entail: " + str(ENTAILS))
+	#print("Does it entail: " + str(ENTAILS))
 	return ENTAILS
 
 ## Acquires all the antecedents, given an array of datalog rules
@@ -193,8 +193,8 @@ def checkExceptionality(C_TBOX, D_TBOX):
 		if not doesEntail(FULL_TBOX, antecedent):
 			EXCEPTIONS.append(rule)
 
-	print("\nTHE EXCEPTIONS ARE.... ")
-	print EXCEPTIONS
+	#print("\nTHE EXCEPTIONS ARE.... ")
+	#print EXCEPTIONS
 	return EXCEPTIONS
 
 def rankRules(C_TBOX, D_TBOX):
@@ -203,58 +203,75 @@ def rankRules(C_TBOX, D_TBOX):
 	# INITIAL EXCEPTIONALITY CHECK
 	E0 = D_TBOX
 	E1 = checkExceptionality(C_TBOX, E0)
-	print("\nE0 and E1, respectively:")
-	print E0
-	print E1
+	#print("\nE0 and E1, respectively:")
+	#print E0
+	#print E1
+	if(len(E1) == 0):								# i.e. no contradictions found
+		for rule in E0:
+			C_TBOX.append(rule)
+		return C_TBOX
+	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
+		RANKS.append(E1)
+		RANKS.append(C_TBOX)
+		return RANKS
+	#print("\nCURRENT RANKS:")
+	#print RANKS
 
-	if(len(E1) == 0):
-		pass
-	RANKS.append(list(set(E0) - set(E1)))		# Gives an error if either E0 or E1 are empty
-	print("\nCURRENT RANKS:")
-	print RANKS
-
-	# FURTHER EXCEPTIONALITY TESTS
-	while(set(E0) != set(E1) and len(E0) != 0):
+	# FOLLOWING EXCEPTIONALITY CHECKS
+	while(set(E1) != set(E0) and len(E1) != 0):
+		#print("\nE0 and E1, respectively:")
+		#print E0
+		#print E1
+		RANKS.append(list(set(E0) - set(E1)))
+		#print("\nCURRENT RANKS:")
+		#print RANKS
 		E0 = E1
 		E1 = checkExceptionality(C_TBOX, E0)
-		print("\nE0 and E1, respectively:")
-		print E0
-		print E1
-		RANKS.append(list(set(E0) - set(E1)))
 		
-		print("\nCURRENT RANKS:")
-		print RANKS
-
-	if(len(E1) == 0):
-		# Put E1 with classical statements
-		pass
-	elif(set(E0) == set(E1)):
-		# Put E1 in the last defeasible rank
-		pass
+	# ADDING THE LAST EXCEPTIONAL RANK
+	if(len(E1) == 0):								# i.e. no contradictions found
+		for rule in E0:
+			C_TBOX.append(rule)
+	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
+		RANKS.append(E1)
 	else:
 		print("Unexpected exit in rankRules().")
 		sys.exit()
 
+	# ADDING THE CLASSICAL RULES, i.e. the infinite level
 	RANKS.append(C_TBOX)
+
 	return RANKS
 
-### START OF PROGRAM ###
 
-CLASSICAL_TBOX_PATH = "data/test_rules2_classical.dlog"
-DEFEASIBLE_TBOX_PATH = "data/test_rules2_defeasible.dlog"
+### START OF MAIN ###
 
-print("\nSTARTING PROGRAMMING....")
-print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)....")
+CLASSICAL_TBOX_PATH = "data/test_rules1_classical.dlog"
+DEFEASIBLE_TBOX_PATH = "data/test_rules1_defeasible.dlog"
+
+print("\nSTARTING PROGRAMMING...")
+print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
 
 K = initialise(CLASSICAL_TBOX_PATH)
 C_TBOX = K[0]
 D_TBOX = K[1]
-#print C_TBOX
-#print D_TBOX
+print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
+for rule in C_TBOX:
+	print("\t" + rule)
+print("THE IMPORTED DEFEASIBLE DATALOG RULES ARE:")
+for rule in D_TBOX:
+	print("\t" + rule)
 
 print("\nRANKING THE RULES...")
 RANKED_RULES = rankRules(C_TBOX, D_TBOX)
+
 print("\nRULES HAVE BEEN RANKED AS FOLLOWS:")
 RANKED_RULES.reverse()
-for level in RANKED_RULES:
-	print(level)
+print("Level " + u"\u221E" + ":")						# Infinite/Classical level
+for rule in RANKED_RULES[0]:
+	print("\t" + rule)
+if(len(RANKED_RULES) > 1):
+	for level in range(len(RANKED_RULES) - 1):				# Exceptional/Defeasible levels
+		print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
+		for rule in RANKED_RULES[level + 1]:
+			print("\t" + rule)
