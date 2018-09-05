@@ -1,9 +1,11 @@
 # Author:		Joshua J. Abraham
 # Date:			July 2018
-#Description:	The implementation of the Rational Closure algorithm (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.) as a Python Wrapper for RDFox (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
-# Licence: RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
-# Note: This program makes use of datalog (.dlog files) for the TBox, as well as 
-#		the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
+#Description:	The implementation of the Rational Closure 
+#				  algorithm (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.) 
+#				  as a Python Wrapper for RDFox (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
+# Licence:		RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
+# Note:			This program makes use of datalog (.dlog files) for the TBox, as well as 
+#				  the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 
 import shutil, os, sys, re, io
 from PRDFox import DataStore, DataStoreType, TupleIterator, Datatype, ResourceType, UpdateType, Prefixes
@@ -40,8 +42,8 @@ def getQueryResult(tupleIterator):
 
 # Performs materialisation using RDFox and returns the results as a string
 def performRDFoxMaterialisation(turtle_file, datalog_file):
-	#print("\nDOING MATERIALISATION....")
 	DataStore.loadLibrary('../../../lib/libCppRDFox.so')
+
 	with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
 		dataStore.importFile(turtle_file)
 		dataStore.importFile(datalog_file)
@@ -59,6 +61,9 @@ def initialise(PATH):
 		#os.makedirs("DefeasibleDatalog_TestData")
 		C_TBOX = []
 		D_TBOX = []
+
+		if not os.path.isfile(PATH):
+			raise Exception(PATH + " does not exist.")
 
 		with open(PATH, "r") as C_TBOX_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE, open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE:
 			CLASSICAL_TBOX = C_TBOX_FILE.readlines()
@@ -89,8 +94,10 @@ def initialise(PATH):
 
 		return([C_TBOX, D_TBOX])
 
-	except:
+	except Exception as exception:
 		print("Error when importing the datalog rules (.dlog file).")
+		print("ERROR: " + str(exception))
+		sys.exit(0)
 
 # Checks if a given antecedent can be entailed from a given knowledge base
 def doesEntail(knowledge_base, query):
@@ -100,21 +107,10 @@ def doesEntail(knowledge_base, query):
 		DLOG_RANKS = DLOG_RANK_FILE.readlines()
 		TURTLE_TEST = TURTLE_TEST_FILE.readlines()
 
-	#print("\nPRINTING THE FILES:")
-	#print DLOG_RANKS
-	#print TURTLE_TEST
-	#print("\nKNOWLEDGE BASE:")
-	#print knowledge_base
-	#print("\nQUERY:")
-	#print query
-
 	for rule in knowledge_base:
 		DLOG_RANKS.append(rule)
-	#print("\nDLOG RANKS ARRAY")
-	#print DLOG_RANKS
+
 	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + query + " .")
-	#print("\nTURTLE TEST ARRAY")
-	#print TURTLE_TEST
 
 	# ADDING RULES AND TEST TRIPLE TO THE FILES
 	with open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
@@ -146,7 +142,6 @@ def doesEntail(knowledge_base, query):
 			if "\n" not in line:
 				TURTLE_TEST_FILE.write("\n")
 
-	#print("Does it entail: " + str(ENTAILS))
 	return ENTAILS
 
 # Acquires the antecedent, given a single datalog rule
@@ -168,11 +163,10 @@ def checkExceptionality(C_TBOX, D_TBOX):
 	for rule in D_TBOX:
 		antecedent = getAntecedent(rule)
 
+		# Check if not the antecedent holds
 		if not doesEntail(FULL_TBOX, antecedent):
 			EXCEPTIONS.append(rule)
 
-	#print("\nTHE EXCEPTIONS ARE.... ")
-	#print EXCEPTIONS
 	return EXCEPTIONS
 
 # Ranks all the defeasible rules according to exceptionality,
@@ -183,9 +177,7 @@ def rankRules(C_TBOX, D_TBOX):
 	# INITIAL EXCEPTIONALITY CHECK
 	E0 = D_TBOX
 	E1 = checkExceptionality(C_TBOX, E0)
-	#print("\nE0 and E1, respectively:")
-	#print E0
-	#print E1
+
 	if(len(E1) == 0):								# i.e. no contradictions found
 		for rule in E0:
 			C_TBOX.append(rule)
@@ -194,17 +186,10 @@ def rankRules(C_TBOX, D_TBOX):
 		RANKS.append(E1)
 		RANKS.append(C_TBOX)
 		return RANKS
-	#print("\nCURRENT RANKS:")
-	#print RANKS
 
 	# FOLLOWING EXCEPTIONALITY CHECKS
 	while(set(E1) != set(E0) and len(E1) != 0):
-		#print("\nE0 and E1, respectively:")
-		#print E0
-		#print E1
 		RANKS.append(list(set(E0) - set(E1)))
-		#print("\nCURRENT RANKS:")
-		#print RANKS
 		E0 = E1
 		E1 = checkExceptionality(C_TBOX, E0)
 		
@@ -223,21 +208,58 @@ def rankRules(C_TBOX, D_TBOX):
 
 	return RANKS
 
+# Answers a query (classical or defeasible) to a defeasible knowledge base
+# Knowledge base is a datalog file (.dlog) and query is a datalog rule
+def rationalClosure(ranked_rules, query):
+	antecedent = getAntecedent(query)
+	i = len(ranked_rules) - 1
+	ENTAILS = None
+
+	while(i >= 0):
+		knowledge_base = []
+		for rank in ranked_rules:
+			for rule in rank:
+				knowledge_base.append(rule)
+
+		if not (doesEntail(knowledge_base, antecedent)):
+			'''print("\n\t" + str(i))
+			print query
+			print knowledge_base
+			print ranked_rules'''
+			del ranked_rules[i]
+			'''print ranked_rules
+			print"IM HEEERREE"'''
+			i -= 1
+
+		else:
+			if(query in knowledge_base):
+				ENTAILS = True
+			else:
+				ENTAILS = False
+			break
+
+	return ENTAILS
+
 # Deletes all files and/or folders that were created by this program
 def cleanUp():
+	print("\nCOMMENCING CLEAN UP...")
+	print("...")
+	print("..")
+	print(".")
 	os.remove(DD_DATALOG_FILE) 
 	os.remove(DD_TURTLE_FILE) 
 	#shutil.rmtree("DefeasibleDatalog_TestData")
+	print("CLEAN UP COMPLETED")
 
 ### START OF MAIN ###
 
-CLASSICAL_TBOX_PATH = "data/test_rules2_classical.dlog"
-DEFEASIBLE_TBOX_PATH = "data/test_rules2_defeasible.dlog"
+TBOX_PATH = "data/test_rules1.dlog"
 
 print("\nSTARTING PROGRAMMING...")
 print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
 
-K = initialise(CLASSICAL_TBOX_PATH)
+K = initialise(TBOX_PATH)
+print K
 C_TBOX = K[0]
 D_TBOX = K[1]
 print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
@@ -260,5 +282,14 @@ if(len(RANKED_RULES) > 1):
 		print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
 		for rule in RANKED_RULES[level + 1]:
 			print("\t" + rule)
+
+QUERY = "ability:Fly(?X) :- animal:Robin(?X)"
+print("\nDoes " + QUERY + " entail from the knowledge base?")
+if (rationalClosure(RANKED_RULES, QUERY) == None):
+	print("ERROR: Unexpected exit from rationalClosure() function.")
+elif (rationalClosure(RANKED_RULES, QUERY)):
+	print("Yessa")
+else:
+	print("Nosir")
 
 cleanUp()
