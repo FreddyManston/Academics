@@ -112,6 +112,11 @@ def doesEntail(knowledge_base, query):
 
 	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + query + " .")
 
+	print "\nCURRENT TURTLE TEST"
+	print TURTLE_TEST
+	print "\nDLOG RULES"
+	print DLOG_RANKS
+
 	# ADDING RULES AND TEST TRIPLE TO THE FILES
 	with open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
 		for line in DLOG_RANKS:
@@ -125,6 +130,8 @@ def doesEntail(knowledge_base, query):
 
 	# CHECKING FOR ENTAILMENT
 	MATERIALISATION = performRDFoxMaterialisation(DD_TURTLE_FILE, DD_DATALOG_FILE)
+	print("\nCURRENT MATERIALISATIONS")
+	print MATERIALISATION
 	for triple in MATERIALISATION:
 		if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
 			ENTAILS = False
@@ -220,15 +227,18 @@ def rationalClosure(ranked_rules, query):
 		for rank in ranked_rules:
 			for rule in rank:
 				knowledge_base.append(rule)
-
+		print "\nCURRENT KB:"
+		print knowledge_base
+		print doesEntail(knowledge_base, antecedent)
+		#print antecedent
 		if not (doesEntail(knowledge_base, antecedent)):
-			'''print("\n\t" + str(i))
-			print query
-			print knowledge_base
-			print ranked_rules'''
+			#print("\n\t" + str(i))
+			#print query
+			#print knowledge_base
+			#print ranked_rules
 			del ranked_rules[i]
-			'''print ranked_rules
-			print"IM HEEERREE"'''
+			#print ranked_rules
+			#print"IM HEEERREE"
 			i -= 1
 
 		else:
@@ -283,7 +293,7 @@ if(len(RANKED_RULES) > 1):
 		for rule in RANKED_RULES[level + 1]:
 			print("\t" + rule)
 
-QUERY = "ability:Fly(?X) :- animal:Robin(?X)"
+QUERY = "ability:Fly(?X) :- animal:Bird(?X)"
 print("\nDoes " + QUERY + " entail from the knowledge base?")
 if (rationalClosure(RANKED_RULES, QUERY) == None):
 	print("ERROR: Unexpected exit from rationalClosure() function.")
