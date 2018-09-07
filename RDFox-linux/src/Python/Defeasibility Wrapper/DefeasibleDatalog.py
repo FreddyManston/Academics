@@ -247,6 +247,7 @@ def rationalClosure(ranked_rules, query):
 				print rule
 				if(query in rule):
 					ENTAILS = True
+					break
 				else:
 					ENTAILS = False
 			break
@@ -298,7 +299,7 @@ if (len(RANKED_RULES) > 1):
 			print("\t" + rule)
 
 #QUERY = "ability:Fly(?X) :- animal:Penguin(?X)"
-QUERY = "mort:Fatal(?X) :- dis:BactMenStrain0(?X)"
+QUERY = "dis:Men(?X) :- dis:VirMen(?X)"
 print("\nDoes " + QUERY + " entail from the knowledge base?")
 if (rationalClosure(RANKED_RULES, QUERY) == None):
 	print("ERROR: Unexpected exit from rationalClosure() function.")
