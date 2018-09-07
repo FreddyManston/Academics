@@ -1,19 +1,16 @@
-PREFIX dis: <http://disease.test.example/hons/disease#>
-PREFIX mort: <http://disease.test.example/hons/mortality#>
+PREFIX animal: <http://animals.test.example/hons/animal#>
+PREFIX ability: <http://animals.test.example/hons/ability#>
 PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 ### CLASSICAL STATEMENTS ###
 
-dis:Men(?X) :- dis:BactMen(?X) .
-dis:BactMen(?X) :- dis:BactMenStrain0(?X) .
-dis:Men(?X) :- dis:VirMen(?X) .
-dis:VirMen(?X) :- dis:VirMenStrain0(?X) .
+animal:Bird(?X) :- animal:Penguin(?X) .
+animal:Bird(?X) :- animal:Robin(?X) .
 
 ### DEFEASIBLE STATEMENTS ###
 
-neg:False(?X) :- dis:Men(?X), mort:Fatal(?X) .
-mort:Fatal(?X) :- dis:BactMen(?X) .
-neg:False(?X) :- dis:BactMenStrain0(?X), mort:Fatal(?X) .
-mort:Fatal(?X) :- dis:VirMenStrain0(?X) .
+ability:Fly(?X) :- animal:Bird(?X) .
+ability:Fly(?X) :- animal:Penguin(?X) .
+neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .

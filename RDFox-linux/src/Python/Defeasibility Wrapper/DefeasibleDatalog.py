@@ -112,10 +112,12 @@ def doesEntail(knowledge_base, query):
 
 	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + query + " .")
 
+	'''
 	print "\nCURRENT TURTLE TEST"
 	print TURTLE_TEST
 	print "\nDLOG RULES"
 	print DLOG_RANKS
+	'''
 
 	# ADDING RULES AND TEST TRIPLE TO THE FILES
 	with open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
@@ -130,8 +132,8 @@ def doesEntail(knowledge_base, query):
 
 	# CHECKING FOR ENTAILMENT
 	MATERIALISATION = performRDFoxMaterialisation(DD_TURTLE_FILE, DD_DATALOG_FILE)
-	print("\nCURRENT MATERIALISATIONS")
-	print MATERIALISATION
+	#print("\nCURRENT MATERIALISATIONS")
+	#print MATERIALISATION
 	for triple in MATERIALISATION:
 		if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
 			ENTAILS = False
@@ -167,10 +169,13 @@ def checkExceptionality(C_TBOX, D_TBOX):
 	EXCEPTIONS = []
 	FULL_TBOX = C_TBOX + D_TBOX
 
+	print("\nTHE CURRENT TBOX:" + str(FULL_TBOX))
+
 	for rule in D_TBOX:
 		antecedent = getAntecedent(rule)
-
+		print("\n" + str(antecedent) + str(doesEntail(FULL_TBOX, antecedent)))
 		# Check if not the antecedent holds
+		print("\n")
 		if not doesEntail(FULL_TBOX, antecedent):
 			EXCEPTIONS.append(rule)
 
@@ -186,13 +191,14 @@ def rankRules(C_TBOX, D_TBOX):
 	E1 = checkExceptionality(C_TBOX, E0)
 
 	if(len(E1) == 0):								# i.e. no contradictions found
-		for rule in E0:
-			C_TBOX.append(rule)
-		return C_TBOX
-	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
 		RANKS.append(E1)
 		RANKS.append(C_TBOX)
 		return RANKS
+
+	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
+		for rule in E1:
+			C_TBOX.append(rule)
+		return C_TBOX
 
 	# FOLLOWING EXCEPTIONALITY CHECKS
 	while(set(E1) != set(E0) and len(E1) != 0):
@@ -202,10 +208,10 @@ def rankRules(C_TBOX, D_TBOX):
 		
 	# ADDING THE LAST EXCEPTIONAL RANK
 	if(len(E1) == 0):								# i.e. no contradictions found
+		RANKS.append(E1)
+	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
 		for rule in E0:
 			C_TBOX.append(rule)
-	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
-		RANKS.append(E1)
 	else:
 		print("Unexpected exit in rankRules().")
 		sys.exit()
@@ -263,7 +269,7 @@ def cleanUp():
 
 ### START OF MAIN ###
 
-TBOX_PATH = "data/test_rules1.dlog"
+TBOX_PATH = "data/test_rules3.dlog"
 
 print("\nSTARTING PROGRAMMING...")
 print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
@@ -293,6 +299,7 @@ if(len(RANKED_RULES) > 1):
 		for rule in RANKED_RULES[level + 1]:
 			print("\t" + rule)
 
+'''
 QUERY = "ability:Fly(?X) :- animal:Bird(?X)"
 print("\nDoes " + QUERY + " entail from the knowledge base?")
 if (rationalClosure(RANKED_RULES, QUERY) == None):
@@ -301,5 +308,5 @@ elif (rationalClosure(RANKED_RULES, QUERY)):
 	print("Yessa")
 else:
 	print("Nosir")
-
+'''
 cleanUp()
