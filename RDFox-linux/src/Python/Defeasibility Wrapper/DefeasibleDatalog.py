@@ -112,13 +112,6 @@ def doesEntail(knowledge_base, query):
 
 	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + query + " .")
 
-	'''
-	print "\nCURRENT TURTLE TEST"
-	print TURTLE_TEST
-	print "\nDLOG RULES"
-	print DLOG_RANKS
-	'''
-
 	# ADDING RULES AND TEST TRIPLE TO THE FILES
 	with open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
 		for line in DLOG_RANKS:
@@ -169,13 +162,12 @@ def checkExceptionality(C_TBOX, D_TBOX):
 	EXCEPTIONS = []
 	FULL_TBOX = C_TBOX + D_TBOX
 
-	print("\nTHE CURRENT TBOX:" + str(FULL_TBOX))
+	#print("\nTHE CURRENT TBOX:" + str(FULL_TBOX))
 
 	for rule in D_TBOX:
 		antecedent = getAntecedent(rule)
-		print("\n" + str(antecedent) + str(doesEntail(FULL_TBOX, antecedent)))
+		#print("\n" + str(antecedent) + " --> " + str(doesEntail(FULL_TBOX, antecedent)))
 		# Check if not the antecedent holds
-		print("\n")
 		if not doesEntail(FULL_TBOX, antecedent):
 			EXCEPTIONS.append(rule)
 
@@ -191,14 +183,16 @@ def rankRules(C_TBOX, D_TBOX):
 	E1 = checkExceptionality(C_TBOX, E0)
 
 	if(len(E1) == 0):								# i.e. no contradictions found
-		RANKS.append(E1)
+		if(len(E0) > 0):
+			RANKS.append(E0)
 		RANKS.append(C_TBOX)
 		return RANKS
 
 	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
 		for rule in E1:
 			C_TBOX.append(rule)
-		return C_TBOX
+		RANKS.append(C_TBOX)
+		return RANKS
 
 	# FOLLOWING EXCEPTIONALITY CHECKS
 	while(set(E1) != set(E0) and len(E1) != 0):
@@ -208,9 +202,9 @@ def rankRules(C_TBOX, D_TBOX):
 		
 	# ADDING THE LAST EXCEPTIONAL RANK
 	if(len(E1) == 0):								# i.e. no contradictions found
-		RANKS.append(E1)
+		RANKS.append(E0)
 	elif(set(E1) == set(E0)):						# i.e. all defeasible rules give a contradiction
-		for rule in E0:
+		for rule in E1:
 			C_TBOX.append(rule)
 	else:
 		print("Unexpected exit in rankRules().")
@@ -229,6 +223,7 @@ def rationalClosure(ranked_rules, query):
 	ENTAILS = None
 
 	while(i >= 0):
+		print i
 		knowledge_base = []
 		for rank in ranked_rules:
 			for rule in rank:
@@ -244,15 +239,18 @@ def rationalClosure(ranked_rules, query):
 			#print ranked_rules
 			del ranked_rules[i]
 			#print ranked_rules
-			#print"IM HEEERREE"
+			print"IM HEEERREE"
 			i -= 1
-
 		else:
-			if(query in knowledge_base):
-				ENTAILS = True
-			else:
-				ENTAILS = False
+			print"NOOOWW IM HEEERREE"
+			for rule in knowledge_base:
+				print rule
+				if(query in rule):
+					ENTAILS = True
+				else:
+					ENTAILS = False
 			break
+		print "JUST FINISHED THE LOOP"
 
 	return ENTAILS
 
@@ -293,14 +291,14 @@ RANKED_RULES.reverse()
 print("Level " + u"\u221E" + ":")						# Infinite/Classical level
 for rule in RANKED_RULES[0]:
 	print("\t" + rule)
-if(len(RANKED_RULES) > 1):
+if (len(RANKED_RULES) > 1):
 	for level in range(len(RANKED_RULES) - 1):			# Exceptional/Defeasible levels
 		print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
 		for rule in RANKED_RULES[level + 1]:
 			print("\t" + rule)
 
-'''
-QUERY = "ability:Fly(?X) :- animal:Bird(?X)"
+#QUERY = "ability:Fly(?X) :- animal:Penguin(?X)"
+QUERY = "mort:Fatal(?X) :- dis:BactMenStrain0(?X)"
 print("\nDoes " + QUERY + " entail from the knowledge base?")
 if (rationalClosure(RANKED_RULES, QUERY) == None):
 	print("ERROR: Unexpected exit from rationalClosure() function.")
@@ -308,5 +306,5 @@ elif (rationalClosure(RANKED_RULES, QUERY)):
 	print("Yessa")
 else:
 	print("Nosir")
-'''
+
 cleanUp()

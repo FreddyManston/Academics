@@ -1,5 +1,3 @@
-#NOTE: Test case where BMS isnt Fatal is the ONLY Defeasible statement ... its giving some weird output
-
 PREFIX dis: <http://disease.test.example/hons/disease#>
 PREFIX mort: <http://disease.test.example/hons/mortality#>
 PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
