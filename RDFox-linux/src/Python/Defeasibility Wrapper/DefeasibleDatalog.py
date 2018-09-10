@@ -8,7 +8,7 @@
 # Note:			This program makes use of datalog (.dlog files) for the TBox, as well as 
 #				  the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 '''
-import shutil, os, sys, re, io
+import shutil, os, sys, platform, io, errno, re
 from PRDFox import DataStore, DataStoreType, TupleIterator, Datatype, ResourceType, UpdateType, Prefixes
 
 PREFIXES = []
@@ -42,16 +42,35 @@ def getQueryResult(tupleIterator):
 		multiplicity = tupleIterator.getNext()
 	return(result)
 
-# Performs materialisation using RDFox and returns the results as a string
+'''
+Performs materialisation using RDFox and returns the results as a string
+'''
 def performRDFoxMaterialisation(turtle_file, datalog_file):
-	DataStore.loadLibrary('../../../lib/libCppRDFox.so')
+	try:
+		library_path = ''
+		if(platform.system() == 'Linux'):
+			library_path = '../../../lib/libCppRDFox.so'
+		elif(platform.system() == 'Darwin'):	# i.e. Mac
+			library_path = '../../../lib/libCppRDFox.dylib'
+		else:
+			raise Exception("OS mismatch error. The materialisations have not been catered to perform on your operating system as yet. Sorry. Please use either a Linux (preferable) or Mac machine.")
 
-	with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
-		dataStore.importFile(turtle_file)
-		dataStore.importFile(datalog_file)
-		dataStore.applyRules();
-		with TupleIterator(dataStore, 'select ?x ?y ?z where { ?x ?y ?z }', {'query.domain' : 'IDB'}) as allTupleIterator:
-			return(getQueryResult(allTupleIterator))
+		if os.path.isfile(library_path):
+			DataStore.loadLibrary(library_path)
+		else:
+			raise IOError(errno.ENOENT, os.strerror(errno.ENOENT), library_path)
+
+		with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality" : "off"}) as dataStore:
+			dataStore.importFile(turtle_file)
+			dataStore.importFile(datalog_file)
+			dataStore.applyRules();
+			with TupleIterator(dataStore, 'select ?x ?y ?z where { ?x ?y ?z }', {'query.domain' : 'IDB'}) as allTupleIterator:
+				return(getQueryResult(allTupleIterator))
+
+	except Exception as exception:
+		print("ERROR WHEN PERFORMING RDFOX MATERIALISATION.")
+		print("ERROR: " + str(exception))
+		sys.exit(0)
 
 
 ### FUNCTIONS FOR THE DEFEASIBLE DATALOG WRAPPER ###
@@ -99,7 +118,7 @@ def initialise(PATH):
 		return([C_TBOX, D_TBOX])
 
 	except Exception as exception:
-		print("Error when importing the datalog rules (.dlog file).")
+		print("ERROR WHEN IMPORTING THE DATALOG RULES (.DLOG FILE).")
 		print("ERROR: " + str(exception))
 		sys.exit(0)
 
@@ -299,7 +318,7 @@ print("\nSTARTING PROGRAMMING...")
 print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
 
 K = initialise(TBOX_PATH)
-print K
+#print K
 C_TBOX = K[0]
 D_TBOX = K[1]
 print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
