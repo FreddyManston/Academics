@@ -182,7 +182,9 @@ def doesEntail(knowledge_base, antecedent, consequent=None):
 
 	return ENTAILS
 
-# Acquires the antecedent, given a single datalog rule
+'''
+Acquires the antecedent, given a single datalog rule
+'''
 def getAntecedent(dlog_rule):
 	# Text cleaning...
 	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
@@ -192,7 +194,9 @@ def getAntecedent(dlog_rule):
 
 	return antecedent
 
-# Acquires the consequent, given a single datalog rule
+'''
+Acquires the consequent, given a single datalog rule
+'''
 def getConsequent(dlog_rule):
 	# Text cleaning...
 	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
@@ -201,8 +205,10 @@ def getConsequent(dlog_rule):
 
 	return consequent
 
-# Flags all exceptionalities, given a set of classical and defeasible rules.
-# Returns all defeasible rules that are exceptional
+'''
+Flags all exceptionalities, given a set of classical and defeasible rules.
+Returns all defeasible rules that are exceptional
+'''
 def checkExceptionality(C_TBOX, D_TBOX):
 	EXCEPTIONS = []
 	FULL_TBOX = C_TBOX + D_TBOX
@@ -218,8 +224,10 @@ def checkExceptionality(C_TBOX, D_TBOX):
 
 	return EXCEPTIONS
 
-# Ranks all the defeasible rules according to exceptionality,
-# using the Ranking algorithm found in Introducing Defeasibility into OWL Ontologies, G. Casini et. al.
+'''
+Ranks all the defeasible rules according to exceptionality,
+using the Ranking algorithm found in Introducing Defeasibility into OWL Ontologies, G. Casini et. al.
+'''
 def rankRules(C_TBOX, D_TBOX):
 	RANKS = []
 
@@ -260,8 +268,10 @@ def rankRules(C_TBOX, D_TBOX):
 
 	return RANKS
 
-# Answers a query (classical or defeasible) to a defeasible knowledge base
-# Knowledge base is a datalog file (.dlog) and query is a datalog rule
+'''
+Answers a query (classical or defeasible) to a defeasible knowledge base
+Knowledge base is a datalog file (.dlog) and query is a datalog rule
+'''
 def rationalClosure(ranked_rules, query):
 	antecedent = getAntecedent(query)
 	consequent = getConsequent(query)
