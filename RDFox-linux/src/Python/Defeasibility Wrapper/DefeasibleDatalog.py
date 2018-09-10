@@ -1,3 +1,4 @@
+'''
 # Author:		Joshua J. Abraham
 # Date:			July 2018
 #Description:	The implementation of the Rational Closure 
@@ -6,10 +7,11 @@
 # Licence:		RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
 # Note:			This program makes use of datalog (.dlog files) for the TBox, as well as 
 #				  the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
-
+'''
 import shutil, os, sys, re, io
 from PRDFox import DataStore, DataStoreType, TupleIterator, Datatype, ResourceType, UpdateType, Prefixes
 
+PREFIXES = []
 DD_DATALOG_FILE = "PRDFoxDW_RankedRules.dlog"
 DD_TURTLE_FILE = "PRDFoxDW_MatTest.ttl"
 
@@ -54,8 +56,10 @@ def performRDFoxMaterialisation(turtle_file, datalog_file):
 
 ### FUNCTIONS FOR THE DEFEASIBLE DATALOG WRAPPER ###
 
-# Imports the rules from the datalog file and initialises DD_DATALOG_FILE and DD_TURTLE_FILE
-# with the PREFIXES so that they can be used for testing
+'''
+Imports the rules from the datalog file and initialises DD_DATALOG_FILE and DD_TURTLE_FILE
+with the PREFIXES so that they can be used for testing
+'''
 def initialise(PATH):
 	try:
 		#os.makedirs("DefeasibleDatalog_TestData")
@@ -99,8 +103,13 @@ def initialise(PATH):
 		print("ERROR: " + str(exception))
 		sys.exit(0)
 
-# Checks if a given antecedent can be entailed from a given knowledge base
-def doesEntail(knowledge_base, query):
+'''
+If no consequent is given then,
+		checks if the given antecedent can be entailed from the given knowledge base
+If a consequent is given then,
+ 		checks if the consequent can be entailed from the the given antecedent
+'''
+def doesEntail(knowledge_base, antecedent, consequent=None):
 	ENTAILS = True
 
 	with open(DD_DATALOG_FILE, "r") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "r") as TURTLE_TEST_FILE:
@@ -110,7 +119,7 @@ def doesEntail(knowledge_base, query):
 	for rule in knowledge_base:
 		DLOG_RANKS.append(rule)
 
-	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + query + " .")
+	TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + antecedent + " .")
 
 	# ADDING RULES AND TEST TRIPLE TO THE FILES
 	with open(DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
@@ -127,9 +136,17 @@ def doesEntail(knowledge_base, query):
 	MATERIALISATION = performRDFoxMaterialisation(DD_TURTLE_FILE, DD_DATALOG_FILE)
 	#print("\nCURRENT MATERIALISATIONS")
 	#print MATERIALISATION
-	for triple in MATERIALISATION:
-		if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
-			ENTAILS = False
+
+	if consequent is None:
+		for triple in MATERIALISATION:
+			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
+				ENTAILS = False
+				break
+	else:
+		for triple in MATERIALISATION:
+			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "+ consequent + " ." in triple:
+				ENTAILS = False
+				break
 
 	# CLEANING THE FILES AFTER USE:
 	DLOG_RANKS = [line for line in DLOG_RANKS if "PREFIX" in line]
@@ -155,6 +172,15 @@ def getAntecedent(dlog_rule):
 	antecedent = antecedent.split(",")[0]			# For rules such as: 'neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .'
 
 	return antecedent
+
+# Acquires the consequent, given a single datalog rule
+def getConsequent(dlog_rule):
+	# Text cleaning...
+	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
+	dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
+	consequent = dlog_rule.split(":-")[0]			# Getting rid of the antecedent
+
+	return consequent
 
 # Flags all exceptionalities, given a set of classical and defeasible rules.
 # Returns all defeasible rules that are exceptional
@@ -219,19 +245,24 @@ def rankRules(C_TBOX, D_TBOX):
 # Knowledge base is a datalog file (.dlog) and query is a datalog rule
 def rationalClosure(ranked_rules, query):
 	antecedent = getAntecedent(query)
+	consequent = getConsequent(query)
+	#print "\nTHE CURRENT ANTECEDENT IS: " + antecedent
+	#print "\nTHE CURRENT CONSEQUENT IS: " + consequent
 	i = len(ranked_rules) - 1
 	ENTAILS = None
 
 	while(i >= 0):
-		print i
+		#print i
 		knowledge_base = []
 		for rank in ranked_rules:
 			for rule in rank:
 				knowledge_base.append(rule)
-		print "\nCURRENT KB:"
-		print knowledge_base
-		print doesEntail(knowledge_base, antecedent)
+		#print "\nCURRENT KB:"
+		#print knowledge_base
+		#print doesEntail(knowledge_base, antecedent)
 		#print antecedent
+
+		# FINDING THE CORRECT RANK
 		if not (doesEntail(knowledge_base, antecedent)):
 			#print("\n\t" + str(i))
 			#print query
@@ -239,19 +270,13 @@ def rationalClosure(ranked_rules, query):
 			#print ranked_rules
 			del ranked_rules[i]
 			#print ranked_rules
-			print"IM HEEERREE"
-			i -= 1
+			#print"IM HEEERREE"
+		# CHECKING THE ENTAILMENT, ONCE THE CORRECT RANK HAS BEEN FOUND
 		else:
-			print"NOOOWW IM HEEERREE"
-			for rule in knowledge_base:
-				print rule
-				if(query in rule):
-					ENTAILS = True
-					break
-				else:
-					ENTAILS = False
-			break
-		print "JUST FINISHED THE LOOP"
+			#print"NOOOWW IM HEEERREE"
+			ENTAILS = doesEntail(knowledge_base, antecedent, consequent)
+		i -= 1
+		#print "JUST FINISHED THE LOOP"
 
 	return ENTAILS
 
@@ -299,13 +324,15 @@ if (len(RANKED_RULES) > 1):
 			print("\t" + rule)
 
 #QUERY = "ability:Fly(?X) :- animal:Penguin(?X)"
-QUERY = "dis:Men(?X) :- dis:VirMen(?X)"
+QUERY = "<http://disease.test.example/hons/disease#Men>(?X) :- dis:VirMen(?X)"
 print("\nDoes " + QUERY + " entail from the knowledge base?")
-if (rationalClosure(RANKED_RULES, QUERY) == None):
-	print("ERROR: Unexpected exit from rationalClosure() function.")
-elif (rationalClosure(RANKED_RULES, QUERY)):
-	print("Yessa")
+ANSWER = rationalClosure(RANKED_RULES, QUERY)
+
+if ANSWER:
+	print("YES")
+elif not ANSWER:
+	print("NO")
 else:
-	print("Nosir")
+	print("ERROR: Unexpected exit from rationalClosure() function.")
 
 cleanUp()
