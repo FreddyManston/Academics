@@ -153,7 +153,6 @@ def doesEntail(knowledge_base, antecedent, consequent=None):
 
 	# CHECKING FOR ENTAILMENT
 	MATERIALISATION = performRDFoxMaterialisation(DD_TURTLE_FILE, DD_DATALOG_FILE)
-	print consequent
 	if consequent is None:
 		for triple in MATERIALISATION:
 			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
@@ -161,9 +160,7 @@ def doesEntail(knowledge_base, antecedent, consequent=None):
 				break
 	else:
 		ENTAILS = False
-		print consequent
 		for triple in MATERIALISATION:
-			print triple
 			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "+ consequent + " ." in triple:
 				ENTAILS = True
 				break
@@ -277,7 +274,6 @@ Knowledge base is a datalog file (.dlog) and query is a datalog rule
 def rationalClosure(ranked_rules, query):
 	antecedent = getAntecedent(query)
 	consequent = getConsequent(query)
-	print "\nCURRENT CONSEQUENT: " + consequent
 	i = len(ranked_rules) - 1
 	ENTAILS = None
 
@@ -325,7 +321,6 @@ if __name__ == "__main__":
 	print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
 
 	K = initialise(TBOX_PATH)
-	#print K
 	C_TBOX = K[0]
 	D_TBOX = K[1]
 	print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
@@ -349,10 +344,12 @@ if __name__ == "__main__":
 			for rule in RANKED_RULES[level + 1]:
 				print("\t" + rule)
 
-	QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- animal:Penguin(?X)"
+	print("\nDOING QUERY...")
+	QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- <http://animals.test.example/hons/animal#Penguin>(?X)"
+	#QUERY = "<http://defeasibledatalog.org/hons/negation#False> :- <http://animals.test.example/hons/animal#Penguin>(?X), <http://animals.test.example/hons/ability#Fly>(?X)"
 	#QUERY = "<http://disease.test.example/hons/disease#Men>(?X) :- dis:VirMen(?X)"
 
-	print("\nDoes " + QUERY + " entail from the knowledge base?")
+	print("\nDOES '" + QUERY + "' ENTAIL FROM THE KNOWLEDGE BASE?")
 	ANSWER = rationalClosure(RANKED_RULES, QUERY)
 
 	if ANSWER:
