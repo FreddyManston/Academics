@@ -99,7 +99,7 @@ with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality
 	print("\nPRINTING TRIPLES...")
 	with TupleIterator(dataStore, 'select ?x ?y ?z where { ?x ?y ?z }', {'query.domain' : 'IDB'}) as allTupleIterator:
 		printQueryResult(allTupleIterator)
-'''
+
 	with TupleIterator(dataStore, "select distinct ?y where { ?x ?y ?z }") as predicateTupleIterator:
 		with TupleIterator(dataStore, "select distinct ?z where { ?x rdf:type ?z }", prefixes = prefixes) as conceptTupleIterator:
 			print("\nPRINTING THE LIST OF PREDIACTES...")
@@ -148,4 +148,3 @@ with DataStore(storeType = DataStoreType.PAR_COMPLEX_NN, parameters = {"equality
 		printQueryResult(mySubjectIterator)
 		print("A 'Dolphin' is " + checkIfBird(getQueryResult(mySubjectIterator)))
 		print("Done")
-	'''
