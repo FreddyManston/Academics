@@ -153,18 +153,19 @@ def doesEntail(knowledge_base, antecedent, consequent=None):
 
 	# CHECKING FOR ENTAILMENT
 	MATERIALISATION = performRDFoxMaterialisation(DD_TURTLE_FILE, DD_DATALOG_FILE)
-	#print("\nCURRENT MATERIALISATIONS")
-	#print MATERIALISATION
-
+	print consequent
 	if consequent is None:
 		for triple in MATERIALISATION:
 			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
 				ENTAILS = False
 				break
 	else:
+		ENTAILS = False
+		print consequent
 		for triple in MATERIALISATION:
+			print triple
 			if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "+ consequent + " ." in triple:
-				ENTAILS = False
+				ENTAILS = True
 				break
 
 	# CLEANING THE FILES AFTER USE:
@@ -188,7 +189,9 @@ Acquires the antecedent, given a single datalog rule
 def getAntecedent(dlog_rule):
 	# Text cleaning...
 	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
-	dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
+	dlog_rule = re.sub(" \.", "", dlog_rule)		# Getting rid of the last dot, i.e. " ."
+	dlog_rule = re.sub("\s", "", dlog_rule)			# Getting rid of all remainingwhite spaces
+	#dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
 	antecedent = dlog_rule.split(":-")[1]			# Getting rid of the consequent
 	antecedent = antecedent.split(",")[0]			# For rules such as: 'neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .'
 
@@ -200,7 +203,9 @@ Acquires the consequent, given a single datalog rule
 def getConsequent(dlog_rule):
 	# Text cleaning...
 	dlog_rule = re.sub("(\(\?.\))", "", dlog_rule)	# Getting rid of all variables (e.g. (?X))
-	dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
+	dlog_rule = re.sub(" \.", "", dlog_rule)		# Getting rid of the last dot, i.e. " ."
+	dlog_rule = re.sub("\s", "", dlog_rule)			# Getting rid of all remainingwhite spaces
+	#dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
 	consequent = dlog_rule.split(":-")[0]			# Getting rid of the antecedent
 
 	return consequent
@@ -213,12 +218,9 @@ def checkExceptionality(C_TBOX, D_TBOX):
 	EXCEPTIONS = []
 	FULL_TBOX = C_TBOX + D_TBOX
 
-	#print("\nTHE CURRENT TBOX:" + str(FULL_TBOX))
-
 	for rule in D_TBOX:
 		antecedent = getAntecedent(rule)
-		#print("\n" + str(antecedent) + " --> " + str(doesEntail(FULL_TBOX, antecedent)))
-		# Check if not the antecedent holds
+		# Check if not the antecedent holds, i.e. a clash w.r.t. the antecedent can be found
 		if not doesEntail(FULL_TBOX, antecedent):
 			EXCEPTIONS.append(rule)
 
@@ -275,41 +277,35 @@ Knowledge base is a datalog file (.dlog) and query is a datalog rule
 def rationalClosure(ranked_rules, query):
 	antecedent = getAntecedent(query)
 	consequent = getConsequent(query)
-	#print "\nTHE CURRENT ANTECEDENT IS: " + antecedent
-	#print "\nTHE CURRENT CONSEQUENT IS: " + consequent
+	print "\nCURRENT CONSEQUENT: " + consequent
 	i = len(ranked_rules) - 1
 	ENTAILS = None
 
-	while(i >= 0):
-		#print i
+	# Stop loop when only the infinite rank (i.e. classical rules) remains
+	while(i >= 1):
 		knowledge_base = []
 		for rank in ranked_rules:
 			for rule in rank:
 				knowledge_base.append(rule)
-		#print "\nCURRENT KB:"
-		#print knowledge_base
-		#print doesEntail(knowledge_base, antecedent)
-		#print antecedent
 
 		# FINDING THE CORRECT RANK
 		if not (doesEntail(knowledge_base, antecedent)):
-			#print("\n\t" + str(i))
-			#print query
-			#print knowledge_base
-			#print ranked_rules
 			del ranked_rules[i]
-			#print ranked_rules
-			#print"IM HEEERREE"
+
 		# CHECKING THE ENTAILMENT, ONCE THE CORRECT RANK HAS BEEN FOUND
 		else:
-			#print"NOOOWW IM HEEERREE"
 			ENTAILS = doesEntail(knowledge_base, antecedent, consequent)
 		i -= 1
-		#print "JUST FINISHED THE LOOP"
+
+	# i.e. all ranks have been eliminated, except for the infinite rank
+	if(i == 0):
+		ENTAILS = doesEntail(ranked_rules[0], antecedent, consequent)
 
 	return ENTAILS
 
-# Deletes all files and/or folders that were created by this program
+'''
+Deletes all files and/or folders that were created by this program
+'''
 def cleanUp():
 	print("\nCOMMENCING CLEAN UP...")
 	print("...")
@@ -322,46 +318,48 @@ def cleanUp():
 
 ### START OF MAIN ###
 
-TBOX_PATH = "data/test_rules3.dlog"
+if __name__ == "__main__":
+	TBOX_PATH = "data/test_rules2.dlog"
 
-print("\nSTARTING PROGRAMMING...")
-print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
+	print("\nSTARTING PROGRAMMING...")
+	print("\nIMPORTING THE TBox (i.e. the datalog/.dlog file)...")
 
-K = initialise(TBOX_PATH)
-#print K
-C_TBOX = K[0]
-D_TBOX = K[1]
-print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
-for rule in C_TBOX:
-	print("\t" + rule)
-print("THE IMPORTED DEFEASIBLE DATALOG RULES ARE:")
-for rule in D_TBOX:
-	print("\t" + rule)
+	K = initialise(TBOX_PATH)
+	#print K
+	C_TBOX = K[0]
+	D_TBOX = K[1]
+	print("\nTHE IMPORTED CLASSICAL DATALOG RULES ARE:")
+	for rule in C_TBOX:
+		print("\t" + rule)
+	print("THE IMPORTED DEFEASIBLE DATALOG RULES ARE:")
+	for rule in D_TBOX:
+		print("\t" + rule)
 
-print("\nRANKING THE RULES...")
-RANKED_RULES = rankRules(C_TBOX, D_TBOX)
+	print("\nRANKING THE RULES...")
+	RANKED_RULES = rankRules(C_TBOX, D_TBOX)
 
-print("\nRULES HAVE BEEN RANKED AS FOLLOWS:")
-RANKED_RULES.reverse()
-print("Level " + u"\u221E" + ":")						# Infinite/Classical level
-for rule in RANKED_RULES[0]:
-	print("\t" + rule)
-if (len(RANKED_RULES) > 1):
-	for level in range(len(RANKED_RULES) - 1):			# Exceptional/Defeasible levels
-		print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
-		for rule in RANKED_RULES[level + 1]:
-			print("\t" + rule)
+	print("\nRULES HAVE BEEN RANKED AS FOLLOWS:")
+	RANKED_RULES.reverse()
+	print("Level " + u"\u221E" + ":")						# Infinite/Classical level
+	for rule in RANKED_RULES[0]:
+		print("\t" + rule)
+	if (len(RANKED_RULES) > 1):
+		for level in range(len(RANKED_RULES) - 1):			# Exceptional/Defeasible levels
+			print("Level " + str(len(RANKED_RULES) - (level + 2)) + ":")
+			for rule in RANKED_RULES[level + 1]:
+				print("\t" + rule)
 
-#QUERY = "ability:Fly(?X) :- animal:Penguin(?X)"
-QUERY = "<http://disease.test.example/hons/disease#Men>(?X) :- dis:VirMen(?X)"
-print("\nDoes " + QUERY + " entail from the knowledge base?")
-ANSWER = rationalClosure(RANKED_RULES, QUERY)
+	QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- animal:Penguin(?X)"
+	#QUERY = "<http://disease.test.example/hons/disease#Men>(?X) :- dis:VirMen(?X)"
 
-if ANSWER:
-	print("YES")
-elif not ANSWER:
-	print("NO")
-else:
-	print("ERROR: Unexpected exit from rationalClosure() function.")
+	print("\nDoes " + QUERY + " entail from the knowledge base?")
+	ANSWER = rationalClosure(RANKED_RULES, QUERY)
 
-cleanUp()
+	if ANSWER:
+		print("YES")
+	elif not ANSWER:
+		print("NO")
+	else:
+		print("ERROR: Unexpected exit from rationalClosure() function.")
+
+	cleanUp()
