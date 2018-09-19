@@ -1,0 +1,15 @@
+PREFIX person: <http://persons.test.example/hons/person#>
+PREFIX tax: <http://persons.test.example/hons/tax#>
+PREFIX neg: <http://defeasibledatalog.org/hons/negation#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### CLASSICAL STATEMENTS ###
+
+
+### DEFEASIBLE STATEMENTS ###
+
+tax:isTaxed(?X) :- person:Worker(?X) .
+person:Worker(?X) :- person:Student(?X) .
+neg:False(?X) :- person:Student(?X), tax:isTaxed(?X) .
+tax:isTaxed(?X) :- person:Student(?X) .

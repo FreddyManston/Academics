@@ -1,3 +1,0 @@
-PREFIX a1: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#>
-
-a1:Bird(?X) :- can(?X, fly)
