@@ -316,7 +316,7 @@ class DefeasibleDatalog:
 ### START OF MAIN ###
 
 if __name__ == "__main__":
-	TBOX_PATH = "data/test_rules1.dlog"
+	TBOX_PATH = "data/TestCase1_1.dlog"
 	DDLOG = DefeasibleDatalog()
 
 	print("\nSTARTING PROGRAMMING...")

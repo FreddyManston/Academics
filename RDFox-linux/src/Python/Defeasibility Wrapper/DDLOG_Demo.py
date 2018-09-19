@@ -1,7 +1,7 @@
 from DefeasibleDatalog import DefeasibleDatalog
 
 if __name__ == "__main__":
-	TBOX_PATH = "data/test_rules6.dlog"
+	TBOX_PATH = "data/TestCase3_2.dlog"
 	DDLOG = DefeasibleDatalog()
 
 	print("\nSTARTING PROGRAMMING...")
