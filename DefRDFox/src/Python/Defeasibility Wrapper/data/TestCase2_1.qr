@@ -1,0 +1,2 @@
+<http://disease.test.example/hons/disease#BactMenStrain0>(?X) :- <http://disease.test.example/hons/mortality#Fatal>(?X)
+<http://defeasibledatalog.org/hons/negation#False> :- <http://disease.test.example/hons/disease#BactMenStrain0>(?X), <http://disease.test.example/hons/mortality#Fatal>(?X)

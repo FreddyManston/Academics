@@ -1,0 +1,2 @@
+<http://persons.test.example/hons/tax#isTaxed>(?X) :- <http://persons.test.example/hons/person#Student>(?X)
+<http://defeasibledatalog.org/hons/negation#False> :- <http://persons.test.example/hons/person#Student>(?X), <http://persons.test.example/hons/tax#isTaxed>(?X)

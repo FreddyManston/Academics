@@ -1,12 +1,17 @@
 '''
 # Author:		Joshua J. Abraham
-# Date:			July 2018
-#Description:	The implementation of the Rational Closure 
-#				  algorithm (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.) 
-#				  as a Python Wrapper for RDFox (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
+# Start Date:	July 2018
+# Last Edit:	Sept. 2018
+#Description:	The implementation of the Rational Closure algorithm,
+#				for defeasible reasoning (Introducing Defeasibility into OWL Ontologies, G. Casini et. al.), 
+#				as a Python Wrapper for the RDFox system (https://www.cs.ox.ac.uk/isg/tools/RDFox/).
+#				
+#				A demonstration of how one would use this DefeasibleDatalog reasoner is also provided
+#				in the main method.
+#
 # Licence:		RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
 # Note:			This program makes use of datalog (.dlog files) for the TBox, as well as 
-#				  the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
+#				 the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 '''
 
 import shutil, os, sys, platform, io, errno, re
@@ -80,7 +85,7 @@ class DefeasibleDatalog:
 
 	'''
 	Imports the rules from the datalog file and initialises DD_DATALOG_FILE and DD_TURTLE_FILE
-	with the PREFIXES so that they can be used for testing
+	with the PREFIXES so that they can be used for testing, given the path to said datalog file
 	'''
 	def initialise(self, PATH):
 		try:
@@ -126,10 +131,10 @@ class DefeasibleDatalog:
 			sys.exit(0)
 
 	'''
-	If no consequent is given then,
-			checks if the given antecedent can be entailed from the given knowledge base
-	If a consequent is given then,
-	 		checks if the consequent can be entailed from the the given antecedent
+	If only an antecedent is given then,
+			checks if the antecedent can be entailed from the given knowledge base
+	If an antecedent and a consequent are given then,
+	 		checks if the consequent can be entailed from the the antecedent
 	'''
 	def doesEntail(self, knowledge_base, antecedent, consequent=None):
 		ENTAILS = True
@@ -141,7 +146,16 @@ class DefeasibleDatalog:
 		for rule in knowledge_base:
 			DLOG_RANKS.append(rule)
 
-		TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + antecedent + " .")
+		# If multiple atoms exist in the antecent (e.g. from the datalog rule 'false :- penguin, fly'), then append both atoms
+		# Note: this should only occur when performing a query to an already ranked Knowledge Base and not when doing
+		# the ranking of the Knowledge Base
+		if(", " in antecedent):
+			antecedent = antecedent.split(", ")
+			TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + antecedent[0] + " .")
+			TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + antecedent[1] + " .")
+		# Else just append the single atom
+		else:
+			TURTLE_TEST.append("<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + antecedent + " .")
 
 		# ADDING RULES AND TEST TRIPLE TO THE FILES
 		with open(self.DD_DATALOG_FILE, "w+") as DLOG_RANK_FILE, open(self.DD_TURTLE_FILE, "w+") as TURTLE_TEST_FILE:
@@ -156,6 +170,7 @@ class DefeasibleDatalog:
 
 		# CHECKING FOR ENTAILMENT
 		MATERIALISATION = self.performRDFoxMaterialisation(self.DD_TURTLE_FILE, self.DD_DATALOG_FILE)
+		# Note: consequent should only be none when doing an entailment check for rankRules(), not for rationalClosure()
 		if consequent is None:
 			for triple in MATERIALISATION:
 				if "<http://ddlog.test.example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://defeasibledatalog.org/hons/negation#False> ." in triple:
@@ -193,7 +208,7 @@ class DefeasibleDatalog:
 		dlog_rule = re.sub("\s", "", dlog_rule)			# Getting rid of all remainingwhite spaces
 		#dlog_rule = re.sub("[\s\.]*", "", dlog_rule)	# Getting rid of all white space and dots.
 		antecedent = dlog_rule.split(":-")[1]			# Getting rid of the consequent
-		antecedent = antecedent.split(",")[0]			# For rules such as: 'neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .'
+		antecedent = antecedent.split(",")				# For rules like: 'neg:False(?X) :- animal:Penguin(?X), ability:Fly(?X) .'
 
 		return antecedent
 
@@ -219,7 +234,7 @@ class DefeasibleDatalog:
 		FULL_TBOX = C_TBOX + D_TBOX
 
 		for rule in D_TBOX:
-			antecedent = self.getAntecedent(rule)
+			antecedent = self.getAntecedent(rule)[0]		# i.e. for multiple atoms in the antecedent, take just the first one
 			# Check if not the antecedent holds, i.e. a clash w.r.t. the antecedent can be found
 			if not self.doesEntail(FULL_TBOX, antecedent):
 				EXCEPTIONS.append(rule)
@@ -272,12 +287,14 @@ class DefeasibleDatalog:
 		return RANKS
 
 	'''
-	Answers a query (classical or defeasible) to a defeasible knowledge base
-	Knowledge base is a datalog file (.dlog) and query is a datalog rule
+	Answers a query (classical or defeasible) to a defeasible knowledge base,
+	given the ranked Knowledge Base (i.e. after being put through rankRules()) and a query in the form of
+	a datalog rule
 	'''
 	def rationalClosure(self, ranked_rules, query):
 		antecedent = self.getAntecedent(query)
 		consequent = self.getConsequent(query)
+
 		i = len(ranked_rules) - 1
 		ENTAILS = None
 
@@ -289,16 +306,25 @@ class DefeasibleDatalog:
 					knowledge_base.append(rule)
 
 			# FINDING THE CORRECT RANK
-			if not (self.doesEntail(knowledge_base, antecedent)):
+			if not (self.doesEntail(knowledge_base, antecedent[0])):
 				del ranked_rules[i]
 
 			# CHECKING THE ENTAILMENT, ONCE THE CORRECT RANK HAS BEEN FOUND
 			else:
+				if(len(antecedent) == 2):								# e.g. for queries like False :- Penguin, Fly
+					antecedent = antecedent[0] + ", " + antecedent[1]
+				else:
+					antecedent = antecedent[0]
 				ENTAILS = self.doesEntail(knowledge_base, antecedent, consequent)
+				break
 			i -= 1
 
 		# i.e. all ranks have been eliminated, except for the infinite rank
 		if(i == 0):
+			if(len(antecedent) == 2):								# e.g. for queries like False :- Penguin, Fly
+				antecedent = antecedent[0] + ", " + antecedent[1]
+			else:
+				antecedent = antecedent[0]
 			ENTAILS = self.doesEntail(ranked_rules[0], antecedent, consequent)
 
 		return ENTAILS

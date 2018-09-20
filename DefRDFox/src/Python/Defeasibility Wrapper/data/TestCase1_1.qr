@@ -1,0 +1,2 @@
+<http://animals.test.example/hons/ability#Fly>(?X) :- <http://animals.test.example/hons/animal#Penguin>(?X)
+<http://defeasibledatalog.org/hons/negation#False> :- <http://animals.test.example/hons/animal#Penguin>(?X), <http://animals.test.example/hons/ability#Fly>(?X)

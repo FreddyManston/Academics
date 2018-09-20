@@ -2,35 +2,22 @@
 
 2018 Honours Project: Creating a Defeasible Datalog, using RDFox.
 
------------------------------------
-INITIAL PROCUREMENT OF SOURCE CODE:
------------------------------------
+-----------------
+ABOUT THE PROJECT
+-----------------
 
-All RDFox source code was downloaded from https://www.cs.ox.ac.uk/isg/tools/RDFox/ , between May and June of 2018.
-This was while the source code was open source under a free academic licenceand before development, by Oxford Semantic Technologies, for commercial use had begun.
+This project is meant to be a proof of concept. It shows that datalog can be extended to incorporate defeasible reasoning, using a modified version of the Rational Closure (RC) algorithm given by Britz et. al. [1]. Furthermore, this implementation was developed as such.
 
-The DefeasibleDatalog wrapper was written in Python and thus makes use of the main RDFox reasoner (written in C++) and its Python bridge, PRDFox. 
-Thus, the Java bridge, JRDFox has been removed from this repository's source code.
+RDFox was solely made use of to perform the reasoning and materialisation tasks needed by this project. This was possible since the RC algorithm reduces defeasibile inference checks to a series of classical inference checks. However, in doing this, this project also extends RDFox with the capability to reason with defeasible information
 
-
-
-------------------
-OPERATING SYSTEMS:
-------------------
-
-The Linux specific version of RDFox was made use of (as all development, for this project, was done on Linux systems).
-Thus most of the essential code in this repo has only been tested to run on Linux systems.
-
-Mac systems have also been catered for (by adding the Mac dependency library, libCppRDFox.dylib), however, not much testing has been done to show that the code will run flawlessly on all Mac systems.
-
-Note that there has been no support for Windows systems, as yet.
+[1] Katarina Britz, Thomas Meyer, and Ivan Varzinczak. 2011. Semantic Foundation for Preferential Description Logics. In Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), Vol. 7106 LNAI. 491–500.
 
 
 ---------------------
 STUCTURE OF THE REPO:
 ---------------------
 
-|-RDFox-linux
+|-DefRDFox
 |  |-src
 |  |  |-Python
 |  |  |  |-Defeasibility Wrapper
@@ -48,11 +35,33 @@ STUCTURE OF THE REPO:
 |  |  |-CppRDFox . . . . . . . . . . . 'the main RDFox system'
 
 
+-----------------------------------
+INITIAL PROCUREMENT OF SOURCE CODE:
+-----------------------------------
+
+All RDFox source code was downloaded from https://www.cs.ox.ac.uk/isg/tools/RDFox/ , between May and June of 2018.
+This was while the source code was open source under a free academic licenceand before development, by Oxford Semantic Technologies, for commercial use had begun.
+
+The DefeasibleDatalog wrapper was written in Python and thus makes use of the main RDFox reasoner (written in C++) and its Python bridge, PRDFox. 
+Thus, the Java bridge, JRDFox has been removed from this repository's source code.
+
+
+------------------
+OPERATING SYSTEMS:
+------------------
+
+The Linux specific version of RDFox was made use of (as all development, for this project, was done on Linux systems).
+Thus most of the essential code in this repo has only been tested to run on Linux systems.
+
+Mac systems have also been catered for (by adding the Mac dependency library, libCppRDFox.dylib), however, not much testing has been done to show that the code will run flawlessly on all Mac systems.
+
+Note that there has been no support for Windows systems, as yet.
+
 
 -------------
 FURTHER WORK:
 -------------
 
-This project was meant as a proof of concept, to prove that datalog could be extended to incorporate defeasible reasoning, and the implementation was developed as such.
-In other words, minor optimisations have been incorporated and minimal test cases have been provided.
-Development was undertaken without any intent of commercial use of the final product.
+Since this project was mainly a proof of concept, minor optimisations have been implemented and minimal test cases have been provided. Also, development was undertaken without any intent of commercial use for the final product.
+
+Thus, further work to be done could be increasing the efficiency and optimisation of the implementation, as well as purposing the defeasible reasoner for a more user-friendly environment.
