@@ -1,6 +1,6 @@
 # Author:		Joshua J. Abraham
 # Date:			July 2018
-#Description:	An exploration of the basic functions provided by the Python RDFox bridge - main concept in mind is to extend RDFox with the capability of defeasible reasoning.
+# Description:	An exploration of the basic functions provided by the Python RDFox bridge - main concept in mind is to extend RDFox with the capability of defeasible reasoning.
 # Licence: RDFox(c) Copyright University of Oxford, 2013. All Rights Reserved.
 
 

@@ -60,7 +60,7 @@ if __name__ == "__main__":
 				for rule in RANKED_RULES[level + 1]:
 					print("\t" + rule)
 
-		print("PERFORMING QUERIES...")
+		print("\n\nPERFORMING QUERIES...")
 
 		QUERY_FILE_PATH = DLOG_FILE_PATH[:-4] + "qr"	# changing the extension from .dlog to .qr
 		with open(QUERY_FILE_PATH, "r") as QUERY_FILE:
@@ -69,6 +69,7 @@ if __name__ == "__main__":
 
 			for QUERY in QFILE:
 				print("\nDOES '" + QUERY + "' ENTAIL FROM THE KNOWLEDGE BASE?")
+				print RANKED_RULES
 				ANSWER = DDLOG.rationalClosure(RANKED_RULES, QUERY)
 
 				if ANSWER:

@@ -295,19 +295,27 @@ class DefeasibleDatalog:
 		antecedent = self.getAntecedent(query)
 		consequent = self.getConsequent(query)
 
-		i = len(ranked_rules) - 1
+		# Moving ranked_rules into RANKING in this way is eccessary so as to maintain the 
+		#  original state of ranked_rules, outside of this function.
+		# If not done, the 'del' function will change the original list, since it manipulates the elements 
+		#  of the list and not the list as a whole
+		RANKING = []
+		for rank in ranked_rules:
+			RANKING.append(rank)
+
+		i = len(RANKING) - 1
 		ENTAILS = None
 
 		# Stop loop when only the infinite rank (i.e. classical rules) remains
 		while(i >= 1):
 			knowledge_base = []
-			for rank in ranked_rules:
+			for rank in RANKING:
 				for rule in rank:
 					knowledge_base.append(rule)
 
 			# FINDING THE CORRECT RANK
 			if not (self.doesEntail(knowledge_base, antecedent[0])):
-				del ranked_rules[i]
+				del RANKING[i]
 
 			# CHECKING THE ENTAILMENT, ONCE THE CORRECT RANK HAS BEEN FOUND
 			else:
@@ -325,7 +333,7 @@ class DefeasibleDatalog:
 				antecedent = antecedent[0] + ", " + antecedent[1]
 			else:
 				antecedent = antecedent[0]
-			ENTAILS = self.doesEntail(ranked_rules[0], antecedent, consequent)
+			ENTAILS = self.doesEntail(RANKING[0], antecedent, consequent)
 
 		return ENTAILS
 
@@ -342,7 +350,8 @@ class DefeasibleDatalog:
 ### START OF MAIN ###
 
 if __name__ == "__main__":
-	TBOX_PATH = "data/TestCase1_1.dlog"
+	#TBOX_PATH = 'data/TestCase1_1.dlog'
+	TBOX_PATH = 'LUBM_Test.dlog'
 	DDLOG = DefeasibleDatalog()
 
 	print("\nSTARTING PROGRAMMING...")
@@ -372,10 +381,12 @@ if __name__ == "__main__":
 				print("\t" + rule)
 
 	print("\nDOING QUERY...")
-	QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- <http://animals.test.example/hons/animal#Penguin>(?X)"
+	#QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- <http://animals.test.example/hons/animal#Penguin>(?X)"
 	#QUERY = "<http://defeasibledatalog.org/hons/negation#False> :- <http://animals.test.example/hons/animal#Penguin>(?X), <http://animals.test.example/hons/ability#Fly>(?X)"
+	#QUERY = "<http://animals.test.example/hons/ability#Fly>(?X) :- <http://animals.test.example/hons/animal#Robin>(?X)"
 	#QUERY = "<http://disease.test.example/hons/disease#Men>(?X) :- dis:VirMen(?X)"
 	#QUERY = "<http://persons.test.example/hons/tax#isTaxed>(?X) :- <http://persons.test.example/hons/person#Student>(?X)"
+	QUERY = "<http://swat.cse.lehigh.edu/onto/univ-bench.owl#Professor>(?X) :- <http://swat.cse.lehigh.edu/onto/univ-bench.owl#AssociateProfessor>(?X) ."
 
 	print("\nDOES '" + QUERY + "' ENTAIL FROM THE KNOWLEDGE BASE?")
 	ANSWER = DDLOG.rationalClosure(RANKED_RULES, QUERY)

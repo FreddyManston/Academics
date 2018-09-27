@@ -1,0 +1,1 @@
+<http://swat.cse.lehigh.edu/onto/univ-bench.owl#Professor>(?X) :- <http://swat.cse.lehigh.edu/onto/univ-bench.owl#AssociateProfessor>(?X) .
