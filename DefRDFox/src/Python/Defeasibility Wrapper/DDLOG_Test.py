@@ -21,7 +21,7 @@
 #				  the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 '''
 
-import os, glob
+import os, glob, time
 from DefeasibleDatalog import DefeasibleDatalog
 
 if __name__ == "__main__":
@@ -48,9 +48,10 @@ if __name__ == "__main__":
 			print("\t" + rule)
 
 		print("\nRANKING THE RULES...")
+		START = time.time()
 		RANKED_RULES = DDLOG.rankRules(C_TBOX, D_TBOX)
-
-		print("\nRULES HAVE BEEN RANKED AS FOLLOWS:")
+		print("\nRANKING TOOK %s seconds" % round((time.time() - START), 4))
+		print("RULES HAVE BEEN RANKED AS FOLLOWS:")
 		print("Level " + u"\u221E" + ":")						# Infinite/Classical level
 		for rule in RANKED_RULES[0]:
 			print("\t" + rule)
@@ -68,8 +69,7 @@ if __name__ == "__main__":
 			QFILE = QUERY_FILE.readlines()
 
 			for QUERY in QFILE:
-				print("\nDOES '" + QUERY + "' ENTAIL FROM THE KNOWLEDGE BASE?")
-				print RANKED_RULES
+				print("\nDOES '" + QUERY.replace("\n", "") + "' ENTAIL FROM THE KNOWLEDGE BASE?")
 				ANSWER = DDLOG.rationalClosure(RANKED_RULES, QUERY)
 
 				if ANSWER:

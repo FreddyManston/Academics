@@ -14,7 +14,7 @@
 #				 the Terse RDF Triple Language (Turtle, .ttl files) for the ABox.
 '''
 
-import shutil, os, sys, platform, io, errno, re
+import shutil, os, sys, platform, io, errno, re, time
 from PRDFox import DataStore, DataStoreType, TupleIterator, Datatype, ResourceType, UpdateType, Prefixes
 
 class DefeasibleDatalog:
@@ -368,9 +368,11 @@ if __name__ == "__main__":
 		print("\t" + rule)
 
 	print("\nRANKING THE RULES...")
+	START = time.time()
 	RANKED_RULES = DDLOG.rankRules(C_TBOX, D_TBOX)
 
-	print("\nRULES HAVE BEEN RANKED AS FOLLOWS:")
+	print("\nRANKING TOOK %s seconds" % round((time.time() - START), 4))
+	print("RULES HAVE BEEN RANKED AS FOLLOWS:")
 	print("Level " + u"\u221E" + ":")						# Infinite/Classical level
 	for rule in RANKED_RULES[0]:
 		print("\t" + rule)
