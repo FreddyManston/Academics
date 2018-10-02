@@ -46,16 +46,22 @@
             </div> <!--end sidebar-->
             <div class="content">
                 <div class="container">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="center headpiece horzshrink"><h2>Description</h2></div>
+                          <div class="pane-content">
+                              Datalog is a declarative logic programming language that uses propositional logic for querying.
+                              Defeasible reasoning allows us to reason with contingent statements. Datalog does not possess
+                              the expressivity to handle defeasible reasoning.
+                          </div>
+                      </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="center headpiece horzshrink"><h2>Motivation</h2></div>
+                            <div class="center headpiece horzshrink"><h2>Objectives</h2></div>
                             <div class="pane-content">
-                                The aim of the project is to implement an ontology editing environment for a form of non-classical
-                                reasoning known as preferential reasoning. Preferential reasoning is a logical system, based on classical
-                                reasoning, that is able to deal with inconsistent ontologies in a systematic and well defined manner.
-                                The system needs to allow the user to assign rankings to statements (based on exceptionality) and take
-                                these rankings into account when querying the knowledge base. This system would provide a basis for
-                                intelligent systems that are capable of dealing with preference.
+                                Enhance the expressivity of Datalog to allow for defeasible reasoning - Defeasible Datalog.
+                                 Ensure that Defeasible Datalog is theoretically sound. Implement Defeasible Datalog using RDFox.
                             </div>
                         </div>
                     </div>
@@ -65,48 +71,40 @@
                             <div class="center headpiece horzshrink"><h3 id="theory">Theory</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    The core of the theory section is a set of theorems detailing various characteristics of user-defined rankings. A more detailed overview can be found on the <a href="theory.html">Theory</a> page.
-
-                                    <i>Rational closure</i> is an algorithm designed by Lehmann and Magidor<sup><a href="#ref1">1</a></sup> to satisfy a set of postulates known as the KLM postulates and rational monotonicity, defined by Kraus, Lehmann and Magidor<sup><a href="#ref2">2</a></sup> and motivated to be rules that any rational non-monotonic reasoning system <i>should</i> satisfy. Rational closure automatically computes a ranking of statements for use in reasoning. A theorem presented in the paper, however, shows that the KLM postulates and rational monotonicity hold when reasoning with an arbitrary ranking of statements:<br/><br/>
-
-                                    <div class="theorem head">Theorems 4.5 &amp; 4.6:</div>
-                                    <div class="theorem">Any user-defined ranking satisfies the KLM postulates and rational monotonicity.</div>
-                                    <br/>
-                                    In the paper, dense rankings are defined, which are essentially user-defined rankings with the property that no two adjacent ranks are equivalent. It is shown that every user-defined ranking has an equivalent dense ranking, and an algorithm is given for finding this. A result is then presented about when two dense rankings entail the same set of statements: only when they have the same number of ranks, and corresponding ranks are equivalent. <br/><br/>
-
-                                    <div class="theorem head">Theorem 5.11</div>
-                                    <div class="theorem">Two dense rankings are equivalent if and only if they have the same number of ranks, and corresponding ranks are equivalent</div>
-                                    <br/>
-
-                                    Following this, the redundancy of statements in a ranking is discussed; in other words, identifying when statements can be removed from a ranking without effecting the set of statements it entails. A statement is <i>locally redundant</i> for a given rank if that rank is the same with or without the statement. A statement is <i>totally redundant</i> if it can be removed from the entire ranking without effecting the set of entailed statements. It is shown that for dense rankings, these can be related, because a statement is locally redundant at the highest rank at which it is present if and only if it is totally redundant.<br/><br/>
-
-                                    <div class="theorem head">Theorem 6.4</div>
-                                    <div class="theorem">A statement is totally redundant if and only if it is locally redundant at the highest rank at which it is present</div>
-                                    <br/>
-
-                                    The last core result of the paper is a result showing that Lehmann and Magidor's rational closure is essentially equivalent to reasoning with user-defined rankings, because given the right inputs, rankings can simulate rational closure, and rational closure can simulate any rankings.
-                                    <br/><br/>
-                                    <div class="theorem head">Theorem 7.1</div>
-                                    <div class="theorem">For every user-defined ranking, there exists a conditional knowledge base from which rational closure will construct an equivalent ranking.</div>
-                                    <br/>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- End theory details -->
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Implementation</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    Our implementation of preferential reasoning was carried out in the form of an independant ontology editor and reasoner. The aim of this was to create a tool specifically suited to creating, ranking, and querying defeasible knowledge bases.
-                                    <br /><br />
-                                    <div class="subheading"><h5>Ontology editor</h5></div>The software tool allows users to create new OWL ontologies using Manchester Syntax. An OWL ontology is equivalent to a Description Logics knowledge base. Manchester Syntax is similar to natural language, allowing a user to edit and query the ontology without knowledge of Description Logics.<br /><br />
-                                    <div class="subheading"><h5>Denoting defeasibility</h5></div>Users are able to denote whether a statement, or axiom, is strict or defeasible. A defeasible statement is weaker than a strict statement. The defeasible equivalent of <i>Birds always fly</i> is <i>Birds typically fly</i>. This allows for exceptions to be handled, whilst still maintaining a general rule.<br /><br />
-                                    <div class="subheading"><h5>Assigning rankings</h5></div>The interface allows users to rank defeasible statements in the ontology. This ability allows users to have a finer grained control on the ontology by being able to define levels of exceptionality amongst statements.<br /><br />
-                                    <div class="subheading"><h5>Querying the ontology</h5></div>The key function of the software tool is the ability to perform Preferential Reasoning. A user is able to enter a query in Manchester Syntax. The tool then checks if the query is in the Rational Closure of the ontology/knowledge base. If the query is in a Rational Closure of the knowledge base, then it is preferentially entailed by the knowledge base.
                                 </div>
                             </div>
-                        </div> <!-- End implementation details -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="center headpiece horzshrink"><h3 id="implementation">Results</h3></div>
+                            <div class="row pane-content">
+                                <div class="col-md-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="center headpiece horzshrink"><h3 id="implementation">Conclusions</h3></div>
+                            <div class="row pane-content">
+                                <div class="col-md-12">
+                                  We were able to enhance Datalog to allow for defeasible reasoning. This was done using
+                                  an adaptation of the rational closure algorithm. We were able to show that our adaptation
+                                  is theoretically sound. We were also able to implement our adaptation using RDFox and showed
+                                  its correctness with test cases.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
