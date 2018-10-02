@@ -5,23 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/sitestyles.css" rel="stylesheet">
-        <title>Preferential Reasoning for Ontologies</title>
+        <title>Defeasible Datalog</title>
         <style>
-            
+
         </style>
     </head>
     <body>
+        <!-- TITLE -->
         <div>
             <div class="title center">
                 <h1>
-                    Preferential Reasoning for Ontologies
+                    Defeasible Datalog
                 </h1>
                 <h3>
-                    Michael Harrison and Reid Swan
+                    Joshua Abraham and Thomas Pownall
                 </h3>
             </div>
-            
+
         </div>
+
+        <!-- SIDEBAR-->
         <div class="wrapper">
             <div class="sidebar">
                 <div id="sidebar"></div>
@@ -30,44 +33,50 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="center" style="padding-bottom: 1em;"><img height="100px" src="resources/uct_logo.gif"></div>
-                                <!--div class="headpiece center"--> <h3 class="center">Links</h3>
+                                <!--div class="headpiece center"--> <h3 class="center">Site</h3>
                                 <a class="current" href="#"><b>Home</b></a><br/>
-                                <a href="theory.html"><b>Theory</b></a><br/>
-                                <a href="implementation.html"><b>Implementation</b></a><br/>
                                 <a href="team.html"><b>Team</b></a>
                                 <hr/>
                                 <h3 class="center">Papers</h3>
-                                <a href="resources/rankings_implementation_paper.pdf"><!--small--><b>User-informed preferential reasoning for ontologies</b><br/><div class="right"><small><i>- Michael Harrison</i></small></div></a><br/>
-                                <a href="resources/rankings_theory_paper.pdf"><!--small--><b>Preferential reasoning for ontologies with a user-defined ranking of defeasible subsumption statements</b><div class="right"><small><i>- Reid Swan</i></small></div></a><br/>
-                                <a href="resources/proposal.pdf"><!--small--><b>Project proposal</b><div class="right"><small><i>- Michael Harrison and Reid Swan</i></small></div></a><br/>
+                                <a href="resources/DDLOG_implementation.pdf"><!--small--><b>Defeasible Datalog Implementation</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
+                                <a href="resources/DDLOG_theory.pdf"><!--small--><b>Defeasible Datalog Theory</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
+                                <a href="resources/DDLOG_proposal.pdf"><!--small--><b>Project Proposal</b><div class="right"><small><i>- Joshua Abraham and Thomas Pownall</i></small></div></a><br/>                                
+                                <hr/>
+                                <h3 class="center">Links</h3>
+                                <a href="https://github.com/FreddyManston/Honours-Project"><!--small--><b>DDLOG GitHub Repository</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
                                 <div class="center"><img width="50%" style="padding-right: 10px;" src="resources/cs_logo.png"><img width="50%" style="padding-left: 10px;" src="resources/cair-logo.png"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!--end sidebar-->
+            </div> 
+            
+            <!-- MAIN CONTENT -->
             <div class="content">
                 <div class="container">
+                    <!-- Motivation-->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h2>Motivation</h2></div>
                             <div class="pane-content">
-                                The aim of the project is to implement an ontology editing environment for a form of non-classical 
-                                reasoning known as preferential reasoning. Preferential reasoning is a logical system, based on classical 
-                                reasoning, that is able to deal with inconsistent ontologies in a systematic and well defined manner. 
-                                The system needs to allow the user to assign rankings to statements (based on exceptionality) and take 
-                                these rankings into account when querying the knowledge base. This system would provide a basis for 
+                                The aim of the project is to implement an ontology editing environment for a form of non-classical
+                                reasoning known as preferential reasoning. Preferential reasoning is a logical system, based on classical
+                                reasoning, that is able to deal with inconsistent ontologies in a systematic and well defined manner.
+                                The system needs to allow the user to assign rankings to statements (based on exceptionality) and take
+                                these rankings into account when querying the knowledge base. This system would provide a basis for
                                 intelligent systems that are capable of dealing with preference.
                             </div>
                         </div>
                     </div>
                     <br/>
+
+                    <!-- Theory-->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="theory">Theory</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    The core of the theory section is a set of theorems detailing various characteristics of user-defined rankings. A more detailed overview can be found on the <a href="theory.html">Theory</a> page. 
+                                    The core of the theory section is a set of theorems detailing various characteristics of user-defined rankings. A more detailed overview can be found on the <a href="theory.html">Theory</a> page.
 
                                     <i>Rational closure</i> is an algorithm designed by Lehmann and Magidor<sup><a href="#ref1">1</a></sup> to satisfy a set of postulates known as the KLM postulates and rational monotonicity, defined by Kraus, Lehmann and Magidor<sup><a href="#ref2">2</a></sup> and motivated to be rules that any rational non-monotonic reasoning system <i>should</i> satisfy. Rational closure automatically computes a ranking of statements for use in reasoning. A theorem presented in the paper, however, shows that the KLM postulates and rational monotonicity hold when reasoning with an arbitrary ranking of statements:<br/><br/>
 
@@ -93,23 +102,61 @@
                                     <br/>
                                 </div>
                             </div>
-                        </div> 
-                    </div><!-- End theory details -->
+                        </div>
+
+                    <!-- Implementation-->    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Implementation</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    Our implementation of preferential reasoning was carried out in the form of an independant ontology editor and reasoner. The aim of this was to create a tool specifically suited to creating, ranking, and querying defeasible knowledge bases.
-                                    <br /><br />
-                                    <div class="subheading"><h5>Ontology editor</h5></div>The software tool allows users to create new OWL ontologies using Manchester Syntax. An OWL ontology is equivalent to a Description Logics knowledge base. Manchester Syntax is similar to natural language, allowing a user to edit and query the ontology without knowledge of Description Logics.<br /><br />
-                                    <div class="subheading"><h5>Denoting defeasibility</h5></div>Users are able to denote whether a statement, or axiom, is strict or defeasible. A defeasible statement is weaker than a strict statement. The defeasible equivalent of <i>Birds always fly</i> is <i>Birds typically fly</i>. This allows for exceptions to be handled, whilst still maintaining a general rule.<br /><br />
-                                    <div class="subheading"><h5>Assigning rankings</h5></div>The interface allows users to rank defeasible statements in the ontology. This ability allows users to have a finer grained control on the ontology by being able to define levels of exceptionality amongst statements.<br /><br />
-                                    <div class="subheading"><h5>Querying the ontology</h5></div>The key function of the software tool is the ability to perform Preferential Reasoning. A user is able to enter a query in Manchester Syntax. The tool then checks if the query is in the Rational Closure of the ontology/knowledge base. If the query is in a Rational Closure of the knowledge base, then it is preferentially entailed by the knowledge base.
+                                    Defeasible Datalog was implemented as a wrapper for the <a href=http://www.cs.ox.ac.uk/isg/tools/RDFox/> RDFox system</a>.
+                                    RDFox is an RDF triple store that allows for classical datalog reasoning. 
+                                    It was chosen for its efficiency and its incredible materialisation capabilities.
+                                    It was possible to use RDFox in this project due to the way that the Rational Closure algorithm
+                                    elegantly turns a defeasible inference check into a series of classical inference checks, 
+                                    by means of ranking the knowledge base according to exceptionality.
+                                    <br/><br/>
+                                    
+                                    <div class="subheading"><h5>Extending Datalog</h5></div>
+                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
+                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
+                                    would be written as: <i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i>
+                                    <br/><br/>
+
+                                    <div class="subheading"><h5>Ranking Statements</h5></div>
+                                    The defeasible statements in the knowledge base are ranked according to exceptionality. A statement is said to be exceptional
+                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge. Defeasible statements are ranked from lowest
+                                    exceptionality to highest. The last rank consists of all the classical statements (i.e. unexceptional), as well as those
+                                    defeasible statements that are found to be implicitly unexceptional.
+                                    (insert pictures)
+                                    <br/><br/>
+                                    
+                                    <div class="subheading"><h5>Performing Queries</h5></div>
+                                    Once all the defeasible statments are ranked, queries are performed by checking whether or not they are in the Rational Closure of the knowledge base.
+                                    A query is said to be in the Rational Closure if it can be found in the materialisation of any of the subsets of the knowledge base.
+                                    Subsets are created by, starting with the entire knowledge base, iteratively removing the current lowest rank until the query can be satisfied or only the last rank (i.e. the infinite rank) remains.
+                                    The syntax of queries should conform to the syntax of our extended datalog.
+                                    (insert pictures) 
                                 </div>
                             </div>
-                        </div> <!-- End implementation details -->
+                        </div>
                     </div>
+                    <br/>
+
+                    <!-- Conclusion -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="center headpiece horzshrink"><h2>Conclusion</h2></div>
+                            <div class="pane-content">
+                                We were able to enhance Datalog to allow for defeasible reasoning. This was done using an adaptation of the rational closure algorithm. 
+                                We were able to show that our adaptation is theoretically sound. 
+                                We were also able to implement our adaptation using RDFox and showed its correctness with test cases.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- References-->
                     <div class="row">
                         <div class="col-md-12">
                             <hr/>
