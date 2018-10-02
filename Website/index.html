@@ -41,6 +41,8 @@
                                 <a href="resources/DDLOG_implementation.pdf"><!--small--><b>Defeasible Datalog Implementation</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
                                 <a href="resources/DDLOG_theory.pdf"><!--small--><b>Defeasible Datalog Theory</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
                                 <a href="resources/DDLOG_proposal.pdf"><!--small--><b>Project Proposal</b><div class="right"><small><i>- Joshua Abraham and Thomas Pownall</i></small></div></a><br/>                                
+                                <a href="resources/LitReview_abraham.pdf"><!--small--><b>Literature Review</b><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
+                                <a href="resources/LitReview_pownall.pdf"><!--small--><b>Literature Review</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
                                 <hr/>
                                 <h3 class="center">Links</h3>
                                 <a href="https://github.com/FreddyManston/Honours-Project"><!--small--><b>DDLOG GitHub Repository</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
@@ -55,16 +57,35 @@
             <div class="content">
                 <div class="container">
                     <!-- Motivation-->
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="center headpiece horzshrink"><h2>Description</h2></div>
+                          <div class="pane-content">
+                              Datalog is the programming language we have chosen for our project. It is a syntactical subset of Prolog, however
+                              unlike Prolog, statements may be evaluated in any order, finite statement sets are guaranteed to terminate and
+                              Datalog does not contain Prolog's cut operator. These differences make Datalog a fully declarative programming language.
+                              Furthermore, there are other restrictions that limit the expressivity of Datalog. Datalog is often used as a querying
+                              language for deductive databases as a result of allowing for efficient query resolution algorithms. This gives it wider
+                              application in security, program analysis, networking, cloud computing, information extraction and data integration. Despite this,
+                              the restrictions placed on Datalog limit its application in other areas. There exist several extensions of Datalog to address these
+                              limitations and our project plans to construct another extension that will allow it to handle defeasible reasoning.
+                              <br><br>
+                              Defeasible reasoning falls under non-monotonic logic - a form of logic that allows for the retraction of previously stated claims.
+                              Specifically, defeasible reasoning allows for contingent claims. That is, defeasible reasoning allows one to make a claim that may be
+                              incomplete and may be retracted given new claims. In this way, it awknowledges fallibility and corrigibility of claims.
+                              <br><br>
+                              Datalog does not possess the expressivity to handle refeasible reasoning. We aim to construct an extension of Datalog with
+                              defeasible reasoning called Defeasible Datalog. We hope this will encourage more systems to handle contingent claims, such
+                              as there importance in decision making.
+                          </div>
+                      </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="center headpiece horzshrink"><h2>Motivation</h2></div>
+                            <div class="center headpiece horzshrink"><h2>Objectives</h2></div>
                             <div class="pane-content">
-                                The aim of the project is to implement an ontology editing environment for a form of non-classical
-                                reasoning known as preferential reasoning. Preferential reasoning is a logical system, based on classical
-                                reasoning, that is able to deal with inconsistent ontologies in a systematic and well defined manner.
-                                The system needs to allow the user to assign rankings to statements (based on exceptionality) and take
-                                these rankings into account when querying the knowledge base. This system would provide a basis for
-                                intelligent systems that are capable of dealing with preference.
+                                Enhance the expressivity of Datalog to allow for defeasible reasoning - Defeasible Datalog.
+                                 Ensure that Defeasible Datalog is theoretically sound. Implement Defeasible Datalog using RDFox.
                             </div>
                         </div>
                     </div>
@@ -76,35 +97,12 @@
                             <div class="center headpiece horzshrink"><h3 id="theory">Theory</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    The core of the theory section is a set of theorems detailing various characteristics of user-defined rankings. A more detailed overview can be found on the <a href="theory.html">Theory</a> page.
-
-                                    <i>Rational closure</i> is an algorithm designed by Lehmann and Magidor<sup><a href="#ref1">1</a></sup> to satisfy a set of postulates known as the KLM postulates and rational monotonicity, defined by Kraus, Lehmann and Magidor<sup><a href="#ref2">2</a></sup> and motivated to be rules that any rational non-monotonic reasoning system <i>should</i> satisfy. Rational closure automatically computes a ranking of statements for use in reasoning. A theorem presented in the paper, however, shows that the KLM postulates and rational monotonicity hold when reasoning with an arbitrary ranking of statements:<br/><br/>
-
-                                    <div class="theorem head">Theorems 4.5 &amp; 4.6:</div>
-                                    <div class="theorem">Any user-defined ranking satisfies the KLM postulates and rational monotonicity.</div>
-                                    <br/>
-                                    In the paper, dense rankings are defined, which are essentially user-defined rankings with the property that no two adjacent ranks are equivalent. It is shown that every user-defined ranking has an equivalent dense ranking, and an algorithm is given for finding this. A result is then presented about when two dense rankings entail the same set of statements: only when they have the same number of ranks, and corresponding ranks are equivalent. <br/><br/>
-
-                                    <div class="theorem head">Theorem 5.11</div>
-                                    <div class="theorem">Two dense rankings are equivalent if and only if they have the same number of ranks, and corresponding ranks are equivalent</div>
-                                    <br/>
-
-                                    Following this, the redundancy of statements in a ranking is discussed; in other words, identifying when statements can be removed from a ranking without effecting the set of statements it entails. A statement is <i>locally redundant</i> for a given rank if that rank is the same with or without the statement. A statement is <i>totally redundant</i> if it can be removed from the entire ranking without effecting the set of entailed statements. It is shown that for dense rankings, these can be related, because a statement is locally redundant at the highest rank at which it is present if and only if it is totally redundant.<br/><br/>
-
-                                    <div class="theorem head">Theorem 6.4</div>
-                                    <div class="theorem">A statement is totally redundant if and only if it is locally redundant at the highest rank at which it is present</div>
-                                    <br/>
-
-                                    The last core result of the paper is a result showing that Lehmann and Magidor's rational closure is essentially equivalent to reasoning with user-defined rankings, because given the right inputs, rankings can simulate rational closure, and rational closure can simulate any rankings.
-                                    <br/><br/>
-                                    <div class="theorem head">Theorem 7.1</div>
-                                    <div class="theorem">For every user-defined ranking, there exists a conditional knowledge base from which rational closure will construct an equivalent ranking.</div>
-                                    <br/>
                                 </div>
                             </div>
                         </div>
 
                     <!-- Implementation-->    
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Implementation</h3></div>
@@ -144,14 +142,28 @@
                     </div>
                     <br/>
 
+                    <!-- Results -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="center headpiece horzshrink"><h3 id="implementation">Results</h3></div>
+                            <div class="row pane-content">
+                                <div class="col-md-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Conclusion -->
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="center headpiece horzshrink"><h2>Conclusion</h2></div>
-                            <div class="pane-content">
-                                We were able to enhance Datalog to allow for defeasible reasoning. This was done using an adaptation of the rational closure algorithm. 
-                                We were able to show that our adaptation is theoretically sound. 
-                                We were also able to implement our adaptation using RDFox and showed its correctness with test cases.
+                            <div class="center headpiece horzshrink"><h3 id="implementation">Conclusions</h3></div>
+                            <div class="row pane-content">
+                                <div class="col-md-12">
+                                  We were able to enhance Datalog to allow for defeasible reasoning. This was done using
+                                  an adaptation of the rational closure algorithm. We were able to show that our adaptation
+                                  is theoretically sound. We were also able to implement our adaptation using RDFox and showed
+                                  its correctness with test cases.
+                                </div>
                             </div>
                         </div>
                     </div>
