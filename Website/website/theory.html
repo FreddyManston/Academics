@@ -5,22 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/sitestyles.css" rel="stylesheet">
-        <title>Preferential Reasoning for Ontologies</title>
+        <title>Defeasible Datalog</title>
         <style>
-            
+
         </style>
     </head>
     <body>
         <div>
             <div class="title center">
                 <h1>
-                    Preferential Reasoning for Ontologies
+                    Defeasible Datalog
                 </h1>
                 <h3>
-                    Michael Harrison and Reid Swan
+                    Joshua Abraham and Thomas Pownall
                 </h3>
             </div>
-            
+
         </div>
         <div class="wrapper">
             <div class="sidebar">
@@ -37,9 +37,9 @@
                                 <a href="team.html"><b>Team</b></a>
                                 <hr/>
                                 <h3 class="center">Papers</h3>
-                                <a href="resources/rankings_implementation_paper.pdf"><!--small--><b>User-informed preferential reasoning for ontologies</b><br/><div class="right"><small><i>- Michael Harrison</i></small></div></a><br/>
-                                <a href="resources/rankings_theory_paper.pdf"><!--small--><b>Preferential reasoning for ontologies with a user-defined ranking of defeasible subsumption statements</b><div class="right"><small><i>- Reid Swan</i></small></div></a><br/>
-                                <a href="resources/proposal.pdf"><!--small--><b>Project proposal</b><div class="right"><small><i>- Michael Harrison and Reid Swan</i></small></div></a><br/>
+                                <a href="resources/DDLOG_implementation.pdf"><!--small--><b>Defeasible Datalog Implementation</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
+                                <a href="resources/DDLOG_theory.pdf"><!--small--><b>Defeasible Datalog Theory</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
+                                <a href="resources/DDLOG_proposal.pdf"><!--small--><b>Project Proposal</b><div class="right"><small><i>- Joshua Abraham and Thomas Pownall</i></small></div></a><br/>
                                 <div class="center"><img width="50%" style="padding-right: 10px;" src="resources/cs_logo.png"><img width="50%" style="padding-left: 10px;" src="resources/cair-logo.png"></div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h2>Theory</h2></div>
                             <div class="pane-content">
-                                What follows is a high-level overview of the theory section of the project. The paper linked in the sidebar presents a rigorous discussion of everything presented on this page, as well as containing an appendix with proofs of all claims presented here. It should be the first reference for clearer or more in-depth discussions on the content of this page. 
+                                What follows is a high-level overview of the theory section of the project. The paper linked in the sidebar presents a rigorous discussion of everything presented on this page, as well as containing an appendix with proofs of all claims presented here. It should be the first reference for clearer or more in-depth discussions on the content of this page.
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 
                             The solution to this is to use a non-monotonic reasoning system. One such system is preferential reasoning, proposed by Kraus, Lehmann and Magidor<sup><a href="#ref1">1</a></sup>. Instead of defining an entailment procedure, they proposed how any rational non-monotonic reasoner <i>should</i> behave in a set of inference rules known as the KLM postulates and rational monotonicity. Rational closure was defined in a follow up paper by Lehmann and Magidor<sup><a href="#ref2">2</a></sup> to be the minimum set of statements entailed by any non-monotonic reasoning system. The algorithm to compute rational closure constructs a ranking of a given set of defeasible axioms based on their exceptionality, and uses this construction to determine if statements are entailed.<br/>
 
-                            It is possible, however, to supply a user-defined ranking to this entailment procedure. The goal of the theoretical part of this project was to characterize what happens when a user-defined ranking is supplied to this procedure. 
+                            It is possible, however, to supply a user-defined ranking to this entailment procedure. The goal of the theoretical part of this project was to characterize what happens when a user-defined ranking is supplied to this procedure.
                         </div>
                     </div>
                     <div class="center headpiece horzshrink"><h3 id="rational">User-defined rankings are rational</h3></div>
@@ -77,38 +77,38 @@
                             <div class="theorem">Any user-defined ranking satisfies the KLM postulates and rational monotonicity.</div>
                             <br/>
 
-                            This means that it is possible for a user to define their own ranking of statements and reason with it without any changes, without losing out on the desirable properties of the KLM postulates and rational monotonicity. This ranking allows the user to indicate a preference on statements - in other words, to define which statements they view as the most important - and the reasoner will respect this preference while adhering to the KLM postulates and rational monotonicity. This results in more intuitive modelling, and allows the user to communicate some knowledge of the situation being modelled which is not easily communicated using only rational closure. 
+                            This means that it is possible for a user to define their own ranking of statements and reason with it without any changes, without losing out on the desirable properties of the KLM postulates and rational monotonicity. This ranking allows the user to indicate a preference on statements - in other words, to define which statements they view as the most important - and the reasoner will respect this preference while adhering to the KLM postulates and rational monotonicity. This results in more intuitive modelling, and allows the user to communicate some knowledge of the situation being modelled which is not easily communicated using only rational closure.
                         </div>
                     </div>
                     <div class="center headpiece horzshrink"><h3 id="equivalence">Equivalence of user-defined rankings</h3></div>
                     <div class="row pane-content">
-                        <div class="col-md-12"> 
+                        <div class="col-md-12">
                             Two rankings are defined to be equivalent if and only if they entail the same sets of statements. In order to present a strong result about when two rankings are equivalent, the concept of a <i>dense</i> ranking is introduced. A dense ranking is one in which no two adjacent ranks are equivalent to each other. It is also shown that every ranking has an equivalent dense ranking, and an algorithm is presented for finding this dense ranking. The major result in this section is theorem 5.11 <br/><br/>
 
                             <div class="theorem head">Theorem 5.11</div>
                             <div class="theorem">Two dense rankings are equivalent if and only if they have the same number of ranks, and corresponding ranks are equivalent</div>
                             <br/>
 
-                            This results shows that beyond finding a dense ranking, not much can be done to reduce the size of a given ranking without changing the set of entailed statements in some way. Since the running time and complexity of the entailment algorithm is (exponentially) proportional to the size of the ranking, we would wish to reduce these sizes as much as possible. However, this result shows that beyond finding the dense ranking, there is little that can be done in this regard while also preserving the set of entailed statements. 
+                            This results shows that beyond finding a dense ranking, not much can be done to reduce the size of a given ranking without changing the set of entailed statements in some way. Since the running time and complexity of the entailment algorithm is (exponentially) proportional to the size of the ranking, we would wish to reduce these sizes as much as possible. However, this result shows that beyond finding the dense ranking, there is little that can be done in this regard while also preserving the set of entailed statements.
                         </div>
                     </div>
                     <div class="center headpiece horzshrink"><h3 id="redundancy">Redundancy of statements</h3></div>
                     <div class="row pane-content">
-                        <div class="col-md-12"> 
-                            The discussion then moves to redundant statements; in other words, those statements which can be removed from a ranking without effecting the set of statements it entails. By identifying those statements which can be safely removed from a ranking, we can reduce the size of the ranks themselves. The complexity of classical entailment checking is ExpTime-complete as per Lutz<sup><a href="#ref3">3</a></sup>, and our non-monotonic entailment checking reduces to a set of classical entailment checks with the given ranks, so reducing the size of these ranks will effect the algoriths running time. <br/> 
-                            
+                        <div class="col-md-12">
+                            The discussion then moves to redundant statements; in other words, those statements which can be removed from a ranking without effecting the set of statements it entails. By identifying those statements which can be safely removed from a ranking, we can reduce the size of the ranks themselves. The complexity of classical entailment checking is ExpTime-complete as per Lutz<sup><a href="#ref3">3</a></sup>, and our non-monotonic entailment checking reduces to a set of classical entailment checks with the given ranks, so reducing the size of these ranks will effect the algoriths running time. <br/>
+
                             A statement is <i>locally redundant</i> for a given rank if that rank is the same with or without the statement. A statement is <i>totally redundant</i> if it can be removed from the entire ranking without effecting the set of entailed statements. <br/><br/>
 
                             <div class="theorem head">Theorem 6.4</div>
                             <div class="theorem">A statement is totally redundant if and only if it is locally redundant at the highest rank at which it is present</div>
                             <br/>
 
-                            Due to this result, we can determine if a statement can be safely removed by performing a single check for local redundancy at the highest level at which a statement is present in a dense ranking. 
+                            Due to this result, we can determine if a statement can be safely removed by performing a single check for local redundancy at the highest level at which a statement is present in a dense ranking.
                         </div>
                     </div>
                     <div class="center headpiece horzshrink"><h3 id="rationalclosure">Rankings are as powerful as rational closure</h3></div>
                     <div class="row pane-content">
-                        <div class="col-md-12"> 
+                        <div class="col-md-12">
                             The last core result of the paper is a result showing that Lehmann and Magidor's rational closure is essentially equivalent to reasoning with user-defined rankings, because given the right inputs, rankings can simulate rational closure, and rational closure can simulate any rankings.
                             <br/><br/>
                             <div class="theorem head">Theorem 7.1</div>
@@ -128,7 +128,7 @@
                             reasoning, preferential models and cumulative logics. Artificial intelligence 44, 1-2 (1990), 167–207.</small><br/>
                             <small><sup id="ref2">2</sup>Daniel Lehmann and Menachem Magidor. 1992. What does a conditional knowledge base entail? Artificial intelligence 55, 1 (1992), 1–60.</small><br/>
                             <small><sup id="ref3">3</sup>Carsten Lutz. 2008. The complexity of conjunctive query answering in expressive description logics. Automated Reasoning (2008), 179–193.</small>
-                            
+
                         </div>
                     </div>
                 </div> <!-- End container -->
