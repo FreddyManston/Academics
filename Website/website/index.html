@@ -11,7 +11,6 @@
         </style>
     </head>
     <body>
-        <!-- TITLE -->
         <div>
             <div class="title center">
                 <h1>
@@ -23,8 +22,6 @@
             </div>
 
         </div>
-
-        <!-- SIDEBAR-->
         <div class="wrapper">
             <div class="sidebar">
                 <div id="sidebar"></div>
@@ -33,30 +30,24 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="center" style="padding-bottom: 1em;"><img height="100px" src="resources/uct_logo.gif"></div>
-                                <!--div class="headpiece center"--> <h3 class="center">Menu</h3>
+                                <!--div class="headpiece center"--> <h3 class="center">Links</h3>
                                 <a class="current" href="#"><b>Home</b></a><br/>
                                 <a href="team.html"><b>Team</b></a>
                                 <hr/>
                                 <h3 class="center">Papers</h3>
-                                <a href="resources/DDLOG_implementation.pdf"><!--small--><b>Defeasible Datalog Implementation</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
+                                <a href="resources/DDLOG_implementation"><!--small--><b>Defeasible Datalog Implementation</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
                                 <a href="resources/LitReview_abraham.pdf"><!--small--><b>Literature Review</b><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
                                 <a href="resources/DDLOG_theory.pdf"><!--small--><b>Defeasible Datalog Theory</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
                                 <a href="resources/LitReview_pownall.pdf"><!--small--><b>Literature Review</b><div class="right"><small><i>- Thomas Pownall</i></small></div></a><br/>
                                 <a href="resources/DDLOG_proposal.pdf"><!--small--><b>Project Proposal</b><div class="right"><small><i>- Joshua Abraham and Thomas Pownall</i></small></div></a><br/>
-                                <hr/>
-                                <h3 class="center">Links</h3>
-                                <a href="https://github.com/FreddyManston/Honours-Project"><!--small--><b>DDLOG GitHub Repository</b><br/><div class="right"><small><i>- Joshua Abraham</i></small></div></a><br/>
                                 <div class="center"><img width="50%" style="padding-right: 10px;" src="resources/cs_logo.png"><img width="50%" style="padding-left: 10px;" src="resources/cair-logo.png"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- MAIN CONTENT -->
+            </div> <!--end sidebar-->
             <div class="content">
                 <div class="container">
-                    <!-- Motivation-->
                   <div class="row">
                       <div class="col-md-12">
                           <div class="center headpiece horzshrink"><h2>Description</h2></div>
@@ -72,14 +63,11 @@
                               <br><br>
                               Defeasible reasoning falls under non-monotonic logic - a form of logic that allows for the retraction of previously stated claims.
                               Specifically, defeasible reasoning allows for contingent claims. That is, defeasible reasoning allows one to make a claim that may be
-                              incomplete and may be retracted given new claims. In this way, it awknowledges fallibility and corrigibility of claims. Defeasible reasoning
-                              is important in the field of artificial intelligence (AI) and finds its fullest expression in knowledge representation and planning.
+                              incomplete and may be retracted given new claims. In this way, it awknowledges fallibility and corrigibility of claims.
                               <br><br>
-                              Datalog does not possess the expressivity to handle refeasible reasoning. Our project aim to construct an extension of Datalog with
-                              defeasible reasoning called Defeasible Datalog. Our project is split into two main parts: (i) the theoretical construction of Defeasible
-                              Datalog as well as the proof for theoretical correctness. (ii) the implementation of Defeasible Datalog as a proof of concept. Both parts
-                              will be discussed in more detail below and in full detail in the papers linked. We hope our project will encourage more systems to
-                              handle defeasible reasoning, such as its importance in AI.
+                              Datalog does not possess the expressivity to handle refeasible reasoning. We aim to construct an extension of Datalog with
+                              defeasible reasoning called Defeasible Datalog. We hope this will encourage more systems to handle contingent claims, such
+                              as there importance in decision making.
                           </div>
                       </div>
                     </div>
@@ -93,8 +81,6 @@
                         </div>
                     </div>
                     <br/>
-
-                    <!-- Theory-->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="theory">Theory</h3></div>
@@ -103,49 +89,16 @@
                                 </div>
                             </div>
                         </div>
-
-                    <!-- Implementation-->
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Implementation</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                    Defeasible Datalog was implemented as a wrapper for the <a href=http://www.cs.ox.ac.uk/isg/tools/RDFox/> RDFox system</a>.
-                                    RDFox is an RDF triple store that allows for classical datalog reasoning.
-                                    It was chosen for its efficiency and its incredible materialisation capabilities.
-                                    It was possible to use RDFox in this project due to the way that the Rational Closure algorithm
-                                    elegantly turns a defeasible inference check into a series of classical inference checks,
-                                    by means of ranking the knowledge base according to exceptionality.
-                                    <br/><br/>
-
-                                    <div class="subheading"><h5>Extending Datalog</h5></div>
-                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
-                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
-                                    would be written as: <i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i>
-                                    <br/><br/>
-
-                                    <div class="subheading"><h5>Ranking Statements</h5></div>
-                                    The defeasible statements in the knowledge base are ranked according to exceptionality. A statement is said to be exceptional
-                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge. Defeasible statements are ranked from lowest
-                                    exceptionality to highest. The last rank consists of all the classical statements (i.e. unexceptional), as well as those
-                                    defeasible statements that are found to be implicitly unexceptional.
-                                    (insert pictures)
-                                    <br/><br/>
-
-                                    <div class="subheading"><h5>Performing Queries</h5></div>
-                                    Once all the defeasible statments are ranked, queries are performed by checking whether or not they are in the Rational Closure of the knowledge base.
-                                    A query is said to be in the Rational Closure if it can be found in the materialisation of any of the subsets of the knowledge base.
-                                    Subsets are created by, starting with the entire knowledge base, iteratively removing the current lowest rank until the query can be satisfied or only the last rank (i.e. the infinite rank) remains.
-                                    The syntax of queries should conform to the syntax of our extended datalog.
-                                    (insert pictures)
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br/>
-
-                    <!-- Results -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Results</h3></div>
@@ -155,8 +108,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Conclusion -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h3 id="implementation">Conclusions</h3></div>
@@ -170,8 +121,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- References-->
                     <div class="row">
                         <div class="col-md-12">
                             <hr/>
