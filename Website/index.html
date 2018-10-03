@@ -99,12 +99,7 @@
                               </ul>
                               <b>Implementation</b>
                               <ul>
-                                <li> Extend datalog with negation, to allow for defeasible reasoning. </li>
-                                <li> Allow for the input of defeasible statements in RDFox. </li>
-                                <li> Adapt the description logic version of the Rational Closure algorithm to a declarative programming language logic. </li>
-                                <li> Implement the Defeasible Datalog reasoner, using RDFox as the classical reasoner. </li>
-                                <li> Provide test cases to verify the correctness of the reasoner. </li>
-                                <li> Run tests on the Defeasible Datalog reasoner, using the provided test cases. </li>
+                                <!-- FILL IN YOUR OBJECTIVE -->
                               </ul>
                                 </div>
                         </div>
@@ -117,6 +112,40 @@
                             <div class="center headpiece horzshrink"><h3 id="theory">Theory</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
+                                  In order to construct Defeasible Datalog we first decided upon the procedure for which defeasible reasoning will
+                                  be done. The algorithm we aim to use is known as the Rational Closure algorithm. However, in order to use this
+                                  algorithm we need to enhance the expressivity of Datalog. In particular, we require Datalog to handle rules that
+                                  may use negation and disjunction.
+                                  <br><br>
+                                  <div class="subheading"><h5>Syntax and Semantics</h5></div>
+                                  With these requirements in mind, we analysed the current syntax and semantics of Datalog using a bottom-up
+                                  approach. Using this analysis we constructing the syntax and semantics of Defeasible Datalog, again using a
+                                  bottom-up approach. This allowed us to incorporate negation and disjunction into Datalog rules.
+                                  <br><br>
+                                  <div class="subheading"><h5>Rational Closure</h5></div>
+                                  Once the syntax and semantics of Defeasible Datalog were constructed we needed to address the Rational
+                                  Closure algorithm. There are many descriptions of the Rational Closure algorithm, however, we needed to
+                                  adapt it for Defeasible Datalog. Furthermore, the Rational Closure algorithm requires a procedure for
+                                  ranking the defeasible statements in order to work. Below we show our adapted Rational Closure algorithm
+                                  as well as our Exceptionality Ranking algorithm.
+
+                                  <!--Rational Closure + Exceptionality algorithms-->
+
+                                  Now that we have defined our Rational Closure algorithm we will now be able to handle reasoning with both
+                                  classical and defeasible Datalog rules. We are able to do this by making the defeasible rules into
+                                  classical rules and ranking them according to exceptionality. Then when presented with a query we are
+                                  able to reason using a number of classical entailment checks.
+                                  <br><br>
+                                  <div class="subheading"><h5>KLM Postulates</h5></div>
+                                  It was stated in the literature that in order for a procedure to be a reasonable non-monotonic reasoner it
+                                  must satisfy a number of properties. These properties define what is known as a rational relation.
+
+                                  <!--Properties-->
+
+                                  For us to be satisfied with our construction of Defeasible Datalog we must show that our definition
+                                  of Rational Closure reflected a rational relation. That is it possessed each of the properties above.
+                                  Fortunately, we were able to show that our Rational Closure algorithm does in fact satisfy these properties.
+                                  Thus our construction of Defeasible Datalog is complete.
                                 </div>
                             </div>
                         </div>
@@ -179,10 +208,13 @@
                             <div class="center headpiece horzshrink"><h3 id="implementation">Conclusions</h3></div>
                             <div class="row pane-content">
                                 <div class="col-md-12">
-                                  We were able to enhance Datalog to allow for defeasible reasoning. This was done using
-                                  an adaptation of the rational closure algorithm. We were able to show that our adaptation
-                                  is theoretically sound. We were also able to implement our adaptation using RDFox and showed
-                                  its correctness with test cases.
+                                  We set out to construct Defeasible Datalog, a programming language for reasoning with defeasible statements.
+                                  We completed two parts: (i) We showed that we could theoretically construct such a language. This was done
+                                  by enhancing the syntax and semantics of Datalog. Adapting the Rational Closure algorithm to be used as our
+                                  reasoning procedure. Showing that our Rational Closure algorithm represents a rational relation, making it a
+                                  reasonable procedure for non-monotonic reasoning. (ii) We were able to construct a proof of concept. This was
+                                  done by extending RDFox with our syntax as well as implementing our Rational Closure algorithm as part of the
+                                  reasoning procedure.
                                 </div>
                             </div>
                         </div>
