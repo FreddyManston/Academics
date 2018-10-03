@@ -56,7 +56,7 @@
             <!-- MAIN CONTENT -->
             <div class="content">
                 <div class="container">
-                    <!-- Motivation-->
+                    <!-- Description-->
                   <div class="row">
                       <div class="col-md-12">
                           <div class="center headpiece horzshrink"><h2>Description</h2></div>
@@ -76,13 +76,19 @@
                               is important in the field of artificial intelligence (AI) and finds its fullest expression in knowledge representation and planning.
                               <br><br>
                               Datalog does not possess the expressivity to handle refeasible reasoning. Our project aim to construct an extension of Datalog with
-                              defeasible reasoning called Defeasible Datalog. Our project is split into two main parts: (i) the theoretical construction of Defeasible
-                              Datalog as well as the proof for theoretical correctness. (ii) the implementation of Defeasible Datalog as a proof of concept. Both parts
+                              defeasible reasoning called Defeasible Datalog. Our project is split into two main parts: 
+                              </br>
+                              (i) the theoretical construction of Defeasible
+                              Datalog as well as the proof for theoretical correctness.
+                              </br>
+                              (ii) the implementation of Defeasible Datalog as a proof of concept. Both parts
                               will be discussed in more detail below and in full detail in the papers linked. We hope our project will encourage more systems to
                               handle defeasible reasoning, such as its importance in AI.
                           </div>
                       </div>
                     </div>
+                    
+                    <!-- Objectives -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="center headpiece horzshrink"><h2>Objectives</h2></div>
@@ -99,7 +105,12 @@
                               </ul>
                               <b>Implementation</b>
                               <ul>
-                                <!-- FILL IN YOUR OBJECTIVE -->
+                                <li> Extend datalog with negation, to allow for defeasible reasoning. </li>
+                                <li> Allow for the input of defeasible statements in RDFox. </li>
+                                <li> Adapt the description logic version of the Rational Closure algorithm to a declarative programming language logic. </li>
+                                <li> Implement the Defeasible Datalog reasoner, using RDFox as the classical reasoner. </li>
+                                <li> Provide test cases to verify the correctness of the reasoner. </li>
+                                <li> Run tests on the Defeasible Datalog reasoner, using the provided test cases. </li>
                               </ul>
                                 </div>
                         </div>
@@ -209,10 +220,14 @@
                             <div class="row pane-content">
                                 <div class="col-md-12">
                                   We set out to construct Defeasible Datalog, a programming language for reasoning with defeasible statements.
-                                  We completed two parts: (i) We showed that we could theoretically construct such a language. This was done
+                                  We completed two parts:
+                                  </br>
+                                  (i) We showed that we could theoretically construct such a language. This was done
                                   by enhancing the syntax and semantics of Datalog. Adapting the Rational Closure algorithm to be used as our
                                   reasoning procedure. Showing that our Rational Closure algorithm represents a rational relation, making it a
-                                  reasonable procedure for non-monotonic reasoning. (ii) We were able to construct a proof of concept. This was
+                                  reasonable procedure for non-monotonic reasoning.
+                                  </br>
+                                  (ii) We were able to construct a proof of concept. This was
                                   done by extending RDFox with our syntax as well as implementing our Rational Closure algorithm as part of the
                                   reasoning procedure.
                                 </div>
