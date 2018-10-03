@@ -143,7 +143,7 @@ div.wrapper {
 
     .content {
         z-index: 0;
-        /*margin-top: -28em;*/
+        /*margin-top: 6.5em;*/
         margin-left: 20%;
         padding-bottom: 2em;
         /*padding-right: 2.5%;*/
@@ -189,3 +189,9 @@ a.current {
     text-decoration: bold;
     color: #6666dd;
 }
+
+/*.stickyheader {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}*/
