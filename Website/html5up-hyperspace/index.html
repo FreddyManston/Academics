@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Defeasible Datalog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Description</a></li>
+							<li><a href="#two">Objectives</a></li>
+							<li><a href="#three">Theory</a></li>
+							<li><a href="#four">Implementation</a></li>
+							<li><a href="#five">Results</a></li>
+							<li><a href="#six">Conclusion</a></li>
+							<li><a href="#seven">Team</a></li>
+							<li><a href="#eight">Links</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>Defeasible Datalog</h1>
+							<h3>Joshua Abraham and Thomas Pownall</h3>
+							<br>
+							<br>
+							<p>Defeasible Datalog is an extension to the expressivity of classical datalog, which will allow it to
+							reason with knowledge bases of a defeasible nature. It is written as a Python wrapper for the RDFox system.</p>
+							<ul class="actions">
+								<li><a href="#one" class="button scrolly">Learn more</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style2 spotlights">
+						<section>
+							<div class="content">
+								<div class="inner">
+									<h2>Description</h2>
+									<p>
+										  Datalog is the declarative programming language we have chosen for our project. It is a syntactical subset of Prolog. However
+										  unlike Prolog, statements may be evaluated in any order, finite statement sets are guaranteed to terminate and
+										  Datalog does not contain Prolog's cut operator. These differences make Datalog a fully declarative programming language.
+										  Furthermore, there are other restrictions that limit the expressivity of Datalog. Datalog is often used as a querying
+										  language for deductive databases as a result of allowing for efficient query resolution algorithms. This gives it wider
+										  application in security, program analysis, networking, cloud computing, information extraction and data integration. Despite this,
+										  the restrictions placed on Datalog limit its application in other areas. There exist several extensions of Datalog to address these
+										  limitations and our project plans to construct another extension that will allow it to handle defeasible reasoning.
+										  <br><br>
+										  Defeasible reasoning falls under non-monotonic logic - a form of logic that allows for the retraction of previously stated claims.
+										  Specifically, defeasible reasoning allows for contingent claims. That is, defeasible reasoning allows one to make a claim that may be
+										  incomplete and may be retracted given new claims. In this way, it awknowledges fallibility and corrigibility of claims. Defeasible reasoning
+										  is important in the field of artificial intelligence (AI) and finds its fullest expression in knowledge representation and planning.
+										  <br><br>
+										  Datalog does not possess the expressivity to handle refeasible reasoning. Our project aim to construct an extension of Datalog with
+										  defeasible reasoning called Defeasible Datalog. Our project is split into two main parts:
+										  </br>
+										  (i) the theoretical construction of Defeasible
+										  Datalog as well as the proof for theoretical correctness.
+										  </br>
+										  (ii) the implementation of Defeasible Datalog as a proof of concept. Both parts
+										  will be discussed in more detail below and in full detail in the papers linked. We hope our project will encourage more systems to
+										  handle defeasible reasoning, such as its importance in AI.
+									</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper style1 spotlights">
+						<section>
+							<div class="content">
+								<div class="inner">
+									<h2>Objectives</h2>
+									<p>
+										We briefly mention above the premise of our project. Here we outline our main objectives in achieving this premise. Again, as mentioned
+										above, our project is split into two main parts and as a result the objectives fall into one of these two parts.
+										<br><br>
+										<b>Theory</b>
+										<ul>
+											<li>Introduce extended syntax that will be required to construct Defeasible Datalog.</li>
+											<li>Describe the semantics related to the this syntax. </li>
+											<li>Describe and adapt the rational closure algorithm for Defeasible Datalog. </li>
+											<li>Show that our adapted rational closure algorithm satisfies the KLM postulates that are required for a reasonable non-monotonic reasoning procedure.</li>
+										</ul>
+										<b>Implementation</b>
+										<ul>
+											<li> Extend datalog with negation, to allow for defeasible reasoning. </li>
+											<li> Allow for the input of defeasible statements in RDFox. </li>
+											<li> Adapt the description logic version of the Rational Closure algorithm to a declarative programming language logic. </li>
+											<li> Implement the Defeasible Datalog reasoner, using RDFox as the classical reasoner. </li>
+											<li> Provide test cases to verify the correctness of the reasoner. </li>
+											<li> Run tests on the Defeasible Datalog reasoner, using the provided test cases. </li>
+										</ul>
+									</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				<!-- Three -->
+					<section id="three" class="wrapper style2 spotlights">
+						<section>
+							<div class="content">
+								<div class="inner">
+									<h2>Theory</h2>
+									<p>
+										In order to construct Defeasible Datalog we first decided upon the procedure for which defeasible reasoning will
+										be done. The algorithm we aim to use is known as the Rational Closure algorithm. However, in order to use this
+										algorithm we need to enhance the expressivity of Datalog. In particular, we require Datalog to handle rules that
+										may use negation and disjunction.
+										<br><br>
+										<div class="subheading"><h5>Syntax and Semantics</h5></div>
+										With these requirements in mind, we analysed the current syntax and semantics of Datalog using a bottom-up
+										approach. Using this analysis we constructing the syntax and semantics of Defeasible Datalog, again using a
+										bottom-up approach. This allowed us to incorporate negation and disjunction into Datalog rules.
+										<br><br>
+										<div class="subheading"><h5>Rational Closure</h5></div>
+										Once the syntax and semantics of Defeasible Datalog were constructed we needed to address the Rational
+										Closure algorithm. There are many descriptions of the Rational Closure algorithm, however, we needed to
+										adapt it for Defeasible Datalog. Furthermore, the Rational Closure algorithm requires a procedure for
+										ranking the defeasible statements in order to work. Below we show our adapted Rational Closure algorithm
+										as well as our Exceptionality Ranking algorithm.
+
+										<br><br>
+										<!--Rational Closure + Exceptionality algorithms-->
+										<pre><code><b>Algorithm 1:</b> <i>BaseRank</i>
+<hr/>
+<b>INPUT:</b> A knowledge base <i>K</i>
+<b>OUTPUT:</b> An ordered tuple (R<sub>0</sub>,...,R<sub>n-1</sub>, R<sub>&infin;</sub>, n)
+
+1  i := 0;
+2  E<sub>0</sub> := ??
+3  
+4  <b>repeat</b>
+5  	E<sub>i+1</sub> := {A(x) ?? B(x) ?? E<sub>i</sub> ?? E<sub>i</sub> ?? ??A(x)};
+6  	R<sub>i</sub> := E<sub>i</sub> \ E<sub>i+1</sub>;
+7  	i := i + 1;
+8  <b>until</b> E<sub>i-1</sub> = E<sub>i</sub>;
+9  
+10  R<sub>&infin;</sub> := E<sub>i-1</sub>;
+11  
+12  <b>if</b> E<sub>i-1</sub> = ?? <b>then</b>
+13  	n := i - 1;
+14  
+15  <b>else</b>
+16  	n := i;
+17  
+18  <b>return</b> (R<sub>0</sub>,...,R<sub>n-1</sub>,R<sub>&infin;</sub>,n)
+</code></pre>
+
+										<div class="justify-content-center" style="text-align:center">
+										<img width="40%" style="padding-right: 10px;" src="resources/ranking.png">
+										</div>
+										<br><br>
+										
+										<pre><code><b>Algorithm 2:</b> <i>RationalClosure</i>
+<hr/>
+<b>INPUT:</b> A knowledge base <i>K</i> and a defeasible rule A(x) ?? B(x)
+<b>OUTPUT:</b> <b>true</b> if <i>K</i> ?? A(x) ?? B(x) and <b>false</b> otherwise
+
+1  (R<sub>0</sub>,...,R<sub>n-1</sub>, R<sub>&infin;</sub>, n) := <i>BaseRank</i>(<i>K</i>);
+2  i := 0;
+3  R := &#8899;?? R<sub>j</sub>;
+4  <b>while</b> R<sub>&infin;</sub> ?? R ?? ??A(x) <b>and</b> R ?? ?? <b>do</b>
+5	R := R \ R<sub>i</sub>;
+6  	i := i + 1
+7  <b>return</b> R<sub>&infin;</sub> ?? R ?? A(x) &rarr; B(x)
+</code></pre>
+										<div class="justify-content-center" style="text-align:center">
+										<img width="40%" style="padding-right: 10px;" src="resources/rationalclosure.png">
+										</div>
+										<br><br>
+
+
+										Now that we have defined our Rational Closure algorithm we will now be able to handle reasoning with both
+										classical and defeasible Datalog rules. We are able to do this by making the defeasible rules into
+										classical rules and ranking them according to exceptionality. Then when presented with a query we are
+										able to reason using a number of classical entailment checks.
+										<br><br>
+										<div class="subheading"><h5>KLM Postulates</h5></div>
+										It was stated in the literature that in order for a procedure to be a reasonable non-monotonic reasoner it
+										must satisfy a number of properties. These properties define what is known as a rational relation.
+
+										<br><br>
+										<!--Properties-->
+										<div class="justify-content-center" style="text-align:center">
+										<img width="40%" style="padding-right: 10px;" src="resources/properties.png">
+										</div>
+										<br><br>
+
+										For us to be satisfied with our construction of Defeasible Datalog we must show that our definition
+										of Rational Closure reflected a rational relation. That is it possessed each of the properties above.
+										Fortunately, we were able to show that our Rational Closure algorithm does in fact satisfy these properties.
+										Thus our construction of Defeasible Datalog is complete.
+									</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+
+					<!-- Four -->
+						<section id="four" class="wrapper style1 spotlights">
+							<section>
+								<div class="content">
+									<div class="inner">
+										<h2>Implementation</h2>
+										<p>
+											Defeasible Datalog was implemented as a wrapper for the <a href=http://www.cs.ox.ac.uk/isg/tools/RDFox/> RDFox system</a>.
+											RDFox is an RDF triple store that allows for classical datalog reasoning.
+											It was chosen for its efficiency and its incredible materialisation capabilities.
+		                                    It was possible to use RDFox in this project due to the way that the Rational Closure algorithm
+		                                    elegantly turns a defeasible inference check into a series of classical inference checks,
+		                                    by means of ranking the knowledge base according to exceptionality.
+		                                    <br/><br/>
+
+		                                    <div class="subheading"><h5>Extending Datalog</h5></div>
+		                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
+		                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
+		                                    would be written as: 
+		                                    <pre><code><i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i></code></pre>
+		                                    <br/><br/>
+
+		                                    <div class="subheading"><h5>Ranking Statements</h5></div>
+		                                    The defeasible statements in the knowledge base are ranked according to exceptionality. A statement is said to be exceptional
+		                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge. Defeasible statements are ranked from lowest
+		                                    exceptionality to highest. The last rank consists of all the classical statements (i.e. unexceptional), as well as those
+		                                    defeasible statements that are found to be implicitly unexceptional.
+		                                    (insert pictures)
+		                                    <br/><br/>
+
+		                                    <div class="subheading"><h5>Performing Queries</h5></div>
+		                                    Once all the defeasible statments are ranked, queries are performed by checking whether or not they are in the Rational Closure of the knowledge base.
+		                                    A query is said to be in the Rational Closure if it can be found in the materialisation of any of the subsets of the knowledge base.
+		                                    Subsets are created by, starting with the entire knowledge base, iteratively removing the current lowest rank until the query can be satisfied or only the last rank (i.e. the infinite rank) remains.
+		                                    The syntax of queries should conform to the syntax of our extended datalog.
+		                                    (insert pictures)
+										</p>
+										<ul class="actions">
+											<li><a href="generic.html" class="button">Learn more</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+						</section>
+
+
+					<!-- Five -->
+						<section id="five" class="wrapper style2 spotlights">
+							<section>
+								<div class="content">
+									<div class="inner">
+										<h2>Results</h2>
+										<p>
+											(1.1)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog1_1.png">
+											<br><br>
+											(1.2)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog1_2.png">
+											<br><br>
+											(1.3)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog1_3.png">
+											<br><br>
+											(1.4)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog1_4.png">
+											<br><br>
+											(2.1)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog2_1.png">
+											<br><br>
+											(2.2)
+											<img width="100%" style="padding-right: 10px;" src="resources/dlog2_2.png">
+										</p>
+										<ul class="actions">
+											<li><a href="generic.html" class="button">Learn more</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+						</section>
+
+					<!-- Six -->
+						<section id="six" class="wrapper style1 spotlights">
+							<section>
+								<div class="content">
+									<div class="inner">
+										<h2>Conclusion</h2>
+										<p>
+											We set out to construct Defeasible Datalog, a programming language for reasoning with defeasible statements.
+											We completed two parts:
+											</br>
+											(i) We showed that we could theoretically construct such a language. This was done
+											by enhancing the syntax and semantics of Datalog. Adapting the Rational Closure algorithm to be used as our
+											reasoning procedure. Showing that our Rational Closure algorithm represents a rational relation, making it a
+											reasonable procedure for non-monotonic reasoning.
+											</br>
+											(ii) We were able to construct a proof of concept. This was
+											done by extending RDFox with our syntax as well as implementing our Rational Closure algorithm as part of the
+											reasoning procedure.
+										</p>
+										<ul class="actions">
+											<li><a href="generic.html" class="button">Learn more</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+						</section>
+
+				<!-- ? -->
+					<section id="?" class="wrapper style3 fade-up">
+						<div class="inner">
+							<h2>What we do</h2>
+							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<div class="features">
+								<section>
+									<span class="icon major fa-code"></span>
+									<h3>Lorem ipsum amet</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+								<section>
+									<span class="icon major fa-lock"></span>
+									<h3>Aliquam sed nullam</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+								<section>
+									<span class="icon major fa-cog"></span>
+									<h3>Sed erat ullam corper</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+								<section>
+									<span class="icon major fa-desktop"></span>
+									<h3>Veroeros quis lorem</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+								<section>
+									<span class="icon major fa-chain"></span>
+									<h3>Urna quis bibendum</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+								<section>
+									<span class="icon major fa-diamond"></span>
+									<h3>Aliquam urna dapibus</h3>
+									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+								</section>
+							</div>
+							<ul class="actions">
+								<li><a href="generic.html" class="button">Learn more</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- ? -->
+					<section id="?" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Get in touch</h2>
+							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<div class="split style1">
+								<section>
+									<form method="post" action="#">
+										<div class="fields">
+											<div class="field half">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name" />
+											</div>
+											<div class="field half">
+												<label for="email">Email</label>
+												<input type="text" name="email" id="email" />
+											</div>
+											<div class="field">
+												<label for="message">Message</label>
+												<textarea name="message" id="message" rows="5"></textarea>
+											</div>
+										</div>
+										<ul class="actions">
+											<li><a href="" class="button submit">Send Message</a></li>
+										</ul>
+									</form>
+								</section>
+								<section>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<span>12345 Somewhere Road #654<br />
+											Nashville, TN 00000-0000<br />
+											USA</span>
+										</li>
+										<li>
+											<h3>Email</h3>
+											<a href="#">user@untitled.tld</a>
+										</li>
+										<li>
+											<h3>Phone</h3>
+											<span>(000) 000-0000</span>
+										</li>
+										<li>
+											<h3>Social</h3>
+											<ul class="icons">
+												<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+												<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
+												<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
