@@ -1,0 +1,197 @@
+.center {
+    text-align: center;
+    align-content: center;
+}
+
+.middle {
+    /*position: relative;*/
+    margin-right: 25%;
+    margin-left: 20%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin-bottom: -15%;
+}
+
+.shortmiddle {
+    /*position: relative;*/
+    margin-right: 25%;
+    margin-left: 23%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin-bottom: -18%;
+}
+
+.left {
+    text-align: left;
+    align-content: left;
+}
+
+.profilecolumn {
+    width: 50%;
+    padding-left: 10%;
+    /*padding-right: 10%;*/
+}
+
+.topspace {
+    padding-top: 2%;
+    margin-bottom: -40%;
+}
+
+.queryspace {
+    padding-top: 2%;
+    margin-bottom: -15%;
+}
+
+.wideprofilecolumn {
+    width: 75%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.headpiece {
+    /*color: white;
+    background-color: #5c76e9;
+    border-top: 1px solid #d0d0d0;*/
+    border-bottom: 1px solid #d0d0d0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.title {
+    padding-top: 0.25em;
+    padding-bottom: 1em;
+    /*margin-bottom: -1em;*/
+    background-color: #f5f5f5;
+    color: black;
+    padding-left: 20%;
+}
+
+.logo {
+    margin-left: 1em;
+    position: absolute;
+    width: 20% !important;
+    height: 100px;
+}
+
+.logo.right {
+    position: relative;
+    float: right;
+}
+
+div.logo img{
+    height: 100px;
+    padding-right: 2em;
+}
+
+.headpiece.horzshrink {
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    margin-top: 0.5%;
+}
+
+.right-border {
+    border-right: 1px solid black;
+}
+
+.theorem {
+    margin-right: 25%;
+    margin-left: 25%;
+    border: 1px solid black;
+    width: 50%;
+    min-width: 350px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.push-down {
+    margin-top: 8%;
+}
+
+.theorem.head {
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px solid black;
+    font-size: 14pt;
+}
+
+.subheading {
+    padding-top: 0.1em;
+}
+
+/** adaptive sidebar **/
+div.wrapper {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        overflow-y: auto;
+        width: 20%;
+        height: 100%;
+        background-color: #f5f5f5;
+        padding: 0.5%;
+    }
+    
+    .sidebar-inner {
+        /*position: sticky !important;*/
+        top: 0;
+        overflow-y: none;
+    }
+
+    .content {
+        z-index: 0;
+        /*margin-top: 6.5em;*/
+        margin-left: 20%;
+        padding-bottom: 2em;
+        /*padding-right: 2.5%;*/
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        padding-top: 1.5%;
+        position: relative;
+        bottom: 0;
+        background-color: #f5f5f5;
+    }
+}
+
+.pane-content {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+a {
+    color: #202060;
+}
+
+a:hover {
+    color: #5c76e9;
+    text-decoration: none;
+}
+
+h3.a {
+    color: black;
+}
+
+h3.a:hover {
+    color: black;
+}
+
+a.current {
+    text-decoration: bold;
+    color: #6666dd;
+}
+
+/*.stickyheader {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}*/
