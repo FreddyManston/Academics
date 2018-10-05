@@ -19,7 +19,7 @@
 				<a href="index.html" class="title">DDLOG</a>
 				<nav>
 					<ul>
-						<li><a href="home.html" class="active">Home</a></li>
+						<li><a href="index.html" class="active">Home</a></li>
 						<li><a href="team.html">Team</a></li>
 						<li><a href="links.html">Links</a></li>
 					</ul>
@@ -152,64 +152,10 @@
 										Once the syntax and semantics of Defeasible Datalog were constructed we needed to address the Rational
 										Closure algorithm. There are many descriptions of the Rational Closure algorithm, however, we needed to
 										adapt it for Defeasible Datalog. Furthermore, the Rational Closure algorithm requires a procedure for
-										ranking the defeasible statements in order to work. Below we show our adapted Rational Closure algorithm
-										as well as our Exceptionality Ranking algorithm.
-
-										<br><br>
-										<!--Rational Closure + Exceptionality algorithms-->
-										<pre><code><b>Algorithm 1:</b> <i>BaseRank</i>
-<hr/>
-<b>INPUT:</b> A knowledge base <i>K</i>
-<b>OUTPUT:</b> An ordered tuple (R<sub>0</sub>,...,R<sub>n-1</sub>, R<sub>&infin;</sub>, n)
-
-1  i := 0;
-2  E<sub>0</sub> := ??
-3  
-4  <b>repeat</b>
-5  	E<sub>i+1</sub> := {A(x) ?? B(x) ?? E<sub>i</sub> ?? E<sub>i</sub> ?? ??A(x)};
-6  	R<sub>i</sub> := E<sub>i</sub> \ E<sub>i+1</sub>;
-7  	i := i + 1;
-8  <b>until</b> E<sub>i-1</sub> = E<sub>i</sub>;
-9  
-10  R<sub>&infin;</sub> := E<sub>i-1</sub>;
-11  
-12  <b>if</b> E<sub>i-1</sub> = ?? <b>then</b>
-13  	n := i - 1;
-14  
-15  <b>else</b>
-16  	n := i;
-17  
-18  <b>return</b> (R<sub>0</sub>,...,R<sub>n-1</sub>,R<sub>&infin;</sub>,n)
-</code></pre>
-
-										<div class="justify-content-center" style="text-align:center">
-										<img width="40%" style="padding-right: 10px;" src="resources/ranking.png">
-										</div>
-										<br><br>
-										
-										<pre><code><b>Algorithm 2:</b> <i>RationalClosure</i>
-<hr/>
-<b>INPUT:</b> A knowledge base <i>K</i> and a defeasible rule A(x) ?? B(x)
-<b>OUTPUT:</b> <b>true</b> if <i>K</i> ?? A(x) ?? B(x) and <b>false</b> otherwise
-
-1  (R<sub>0</sub>,...,R<sub>n-1</sub>, R<sub>&infin;</sub>, n) := <i>BaseRank</i>(<i>K</i>);
-2  i := 0;
-3  R := &#8899;?? R<sub>j</sub>;
-4  <b>while</b> R<sub>&infin;</sub> ?? R ?? ??A(x) <b>and</b> R ?? ?? <b>do</b>
-5	R := R \ R<sub>i</sub>;
-6  	i := i + 1
-7  <b>return</b> R<sub>&infin;</sub> ?? R ?? A(x) &rarr; B(x)
-</code></pre>
-										<div class="justify-content-center" style="text-align:center">
-										<img width="40%" style="padding-right: 10px;" src="resources/rationalclosure.png">
-										</div>
-										<br><br>
-
-
-										Now that we have defined our Rational Closure algorithm we will now be able to handle reasoning with both
-										classical and defeasible Datalog rules. We are able to do this by making the defeasible rules into
-										classical rules and ranking them according to exceptionality. Then when presented with a query we are
-										able to reason using a number of classical entailment checks.
+										ranking the defeasible statements in order to work. Once we have defined our Rational Closure algorithm we are 
+										able to handle reasoning with both classical and defeasible Datalog rules.
+										We are able to do this by making the defeasible rules into classical rules and ranking them according to exceptionality. 
+										Then when presented with a query we are able to reason using a number of classical entailment checks.
 										<br><br>
 										<div class="subheading"><h5>KLM Postulates</h5></div>
 										It was stated in the literature that in order for a procedure to be a reasonable non-monotonic reasoner it
@@ -238,37 +184,90 @@
 								<div class="content">
 									<div class="inner" style="width:1215px;">
 										<h2>Implementation</h2>
-										<p>
 											Defeasible Datalog was implemented as a wrapper for the <a href=http://www.cs.ox.ac.uk/isg/tools/RDFox/> RDFox system</a>.
 											RDFox is an RDF triple store that allows for classical datalog reasoning.
 											It was chosen for its efficiency and its incredible materialisation capabilities.
 		                                    It was possible to use RDFox in this project due to the way that the Rational Closure algorithm
 		                                    elegantly turns a defeasible inference check into a series of classical inference checks,
 		                                    by means of ranking the knowledge base according to exceptionality.
-		                                    <br/><br/>
 
 		                                    <div class="subheading"><h5>Extending Datalog</h5></div>
 		                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
 		                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
 		                                    would be written as: 
 		                                    <pre><code><i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i></code></pre>
-		                                    <br/><br/>
 
 		                                    <div class="subheading"><h5>Ranking Statements</h5></div>
 		                                    The defeasible statements in the knowledge base are ranked according to exceptionality. A statement is said to be exceptional
-		                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge. Defeasible statements are ranked from lowest
-		                                    exceptionality to highest. The last rank consists of all the classical statements (i.e. unexceptional), as well as those
-		                                    defeasible statements that are found to be implicitly unexceptional.
-		                                    (insert pictures)
-		                                    <br/><br/>
+		                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge base. Defeasible statements are ranked from lowest
+		                                    exceptionality, to highest. The last rank consists of all the classical statements (i.e. unexceptional statements), as well as those
+											defeasible statements that are found to be implicitly unexceptional. Below is the adapted version of the <i>Exceptional</i> and <i>Ranking</i> algorithms
+											that were used:
+											<br/><br/>
+											
+											<!--Exceptionality algorithm-->
+											<pre><code><b>Algorithm 1:</b> <i>Exceptional</i>
+											<hr/>
+<b>INPUT:</b> <i><b>T</b></i>, the TBox (i.e. the classical datalog rules); <i><b>D'</b></i>, the defeasible TBox (i.e. the defeasible datalog rules)
+<b>OUTPUT:</b> <i><b>E</b></i>, the list of exceptional rules with respect to the given knowledge base
 
+1  <b>let</b> K' = T + D'
+2  <b>let</b> E = []
+3
+4  <b>for</b> A ?? B in D' <b>do</b>
+5  	<b>if</b> K' ?? ??A <b>then</b>
+6  		extend E by [A ?? B]
+7  <b>return</b> E	
+</code></pre>
+
+											<!--Ranking algorithm-->
+											<pre><code><b>Algorithm 2:</b> <i>Ranking</i>
+											<hr/>
+<b>INPUT:</b> <i><b>T</b></i>, the TBox (i.e. the classical datalog rules); <i><b>D</b></i>, the defeasible TBox (i.e. the defeasible datalog rules)
+<b>OUTPUT:</b> <i><b>R</b></i>, the ranking of the given knowledge base
+
+1  <b>let</b> R = []
+2  <b>let</b> E0 = D
+3  <b>let</b> E1 = <i>Exceptional</i>(T, E0)
+4
+5  <b>while</b> E1 = [] <b>or</b> E0 ?? E1 <b>do</b>
+6  	extend R by E1
+7  	<b>let</b> E0 = E1
+8  	<b>let</b> E1 = <i>Exceptional</i>(T, E0)
+9
+10  <b>if</b> E0 = E1 <b>then</b>
+11  	extend R by [E1 + T]
+12  <b>else</b>
+13  	extend R by E0
+14  	extend R by T
+15	
+16  <b>return</b> R
+</code></pre>
+
+											<br><br>
 		                                    <div class="subheading"><h5>Performing Queries</h5></div>
 		                                    Once all the defeasible statments are ranked, queries are performed by checking whether or not they are in the Rational Closure of the knowledge base.
 		                                    A query is said to be in the Rational Closure if it can be found in the materialisation of any of the subsets of the knowledge base.
 		                                    Subsets are created by, starting with the entire knowledge base, iteratively removing the current lowest rank until the query can be satisfied or only the last rank (i.e. the infinite rank) remains.
-		                                    The syntax of queries should conform to the syntax of our extended datalog.
-		                                    (insert pictures)
-										</p>
+											The syntax of queries should conform to the syntax of our extended datalog. The adapted version of the <i>RationalClosure</i> algorithm
+											is shown below:
+											<br><br>
+
+											<!-- Rational Closure algorithm-->
+											<pre><code><b>Algorithm 3:</b> <i>RationalClosure</i>
+											<hr/>
+<b>INPUT:</b> <i><b>R</b></i>, the ranked knowledge base; <i><b>A ?? B</b></i>, the query to the knowledge base (typically typical)
+<b>OUTPUT:</b> <b>True</b>, if <i>R</i> ?? A ?? B and <b>False</b> if not
+	
+1  <b>let</b> i = 0
+2  <b>while</b> R ?? ??A <b>or</b> length of R > 1 <b>do</b>
+3  	remove R[i] from R
+4  	<b>let</b> i = i + 1
+5  <b>if</b> R ?? A ?? B <b>then</b>
+6  	<b>return</b> True
+7  <b>else</b>
+8  	<b>return</b> False
+</code></pre>
 									</div>
 								</div>
 							</section>
