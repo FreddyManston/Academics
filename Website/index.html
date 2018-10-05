@@ -14,18 +14,6 @@
 	</head>
 	<body class="is-preload">
 
-		<!-- Header -->
-            <header id="header">
-                <a href="index.html" class="title">DDLOG</a>
-                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-                    <ul>
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="team.html">Team</a></li>
-                        <li><a href="links.html">Links</a></li>
-                    </ul>
-                </nav>
-            </header>
-
 		<!-- Sidebar -->
 			<section id="sidebar">
 				<div class="inner">
@@ -50,6 +38,17 @@
 
 				<!-- Intro -->
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<!-- Header -->
+							<header id="header" style="margin-top:-15%">
+								<a href="index.html" class="title">DDLOG</a>
+								<nav>
+									<ul>
+										<li><a href="index.html" class="active">Home</a></li>
+										<li><a href="team.html">Team</a></li>
+										<li><a href="links.html">Links</a></li>
+									</ul>
+								</nav>
+							</header>
 						<div class="inner">
 							<h1>Defeasible Datalog</h1>
 							<h3>Joshua Abraham and Thomas Pownall</h3>
@@ -90,7 +89,7 @@
 										  	<li>the theoretical construction of Defeasible Datalog as well as the proof for theoretical correctness. </li>
 											<li>the implementation of Defeasible Datalog as a proof of concept. </li>
 										</ol>
-										Both parts will be discussed in more detail below and in full detail in the <a href="links.html">linked papers</a>. 
+										Both parts will be discussed in more detail below and in full detail in the <a href="links.html">linked papers</a>.
                                         We hope that our project will encourage more systems to handle defeasible reasoning, such as is its importance in AI.
 </p>
 								</div>
@@ -151,9 +150,9 @@
 										Once the syntax and semantics of Defeasible Datalog were constructed we needed to address the Rational
 										Closure algorithm. There are many descriptions of the Rational Closure algorithm, however, we needed to
 										adapt it for Defeasible Datalog. Furthermore, the Rational Closure algorithm requires a procedure for
-										ranking the defeasible statements in order to work. Once we have defined our Rational Closure algorithm we are 
+										ranking the defeasible statements in order to work. Once we have defined our Rational Closure algorithm we are
 										able to handle reasoning with both classical and defeasible Datalog rules.
-										We are able to do this by making the defeasible rules into classical rules and ranking them according to exceptionality. 
+										We are able to do this by making the defeasible rules into classical rules and ranking them according to exceptionality.
 										Then when presented with a query we are able to reason using a number of classical entailment checks.
 										<br><br>
 										<div class="subheading"><h3><u>KLM Postulates</u></h3></div>
@@ -194,7 +193,7 @@
 		                                    <div class="subheading"><h3><u>Extending Datalog</u></h3></div>
 		                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
 		                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
-		                                    would be written as: 
+		                                    would be written as:
 		                                    <pre><code><i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i></code></pre>
 
 		                                    <div class="subheading"><h3><u>Ranking Statements</u></h3></div>
@@ -204,7 +203,7 @@
 											defeasible statements that are found to be implicitly unexceptional. Below is the adapted version of the <i>Exceptional</i> and <i>Ranking</i> algorithms
 											that were used:
 											<br/><br/>
-											
+
 											<!--Exceptionality algorithm-->
 											<pre><code><b>Algorithm 1:</b> <i>Exceptional</i>
 											<hr/>
@@ -217,7 +216,7 @@
 4  <b>for</b> A ?? B in D' <b>do</b>
 5  	<b>if</b> K' ?? ??A <b>then</b>
 6  		extend E by [A ?? B]
-7  <b>return</b> E	
+7  <b>return</b> E
 </code></pre>
 
 											<!--Ranking algorithm-->
@@ -240,7 +239,7 @@
 12  <b>else</b>
 13  	extend R by E0
 14  	extend R by T
-15	
+15
 16  <b>return</b> R
 </code></pre>
 
@@ -257,7 +256,7 @@
 											<hr/>
 <b>INPUT:</b> <i><b>R</b></i>, the ranked knowledge base; <i><b>A ?? B</b></i>, the query to the knowledge base (typically typical)
 <b>OUTPUT:</b> <b>True</b>, if <i>R</i> ?? A ?? B and <b>False</b> if not
-	
+
 1  <b>let</b> i = 0
 2  <b>while</b> R ?? ??A <b>or</b> length of R > 1 <b>do</b>
 3  	remove R[i] from R
@@ -268,11 +267,11 @@
 8  	<b>return</b> False
 </code></pre>
                                             <br><br>
-                                            
+
                                             Our imlpementation of Defeasible Datalog only serves as a prototype to practically show that Datalog can be correctly extended to express
-                                            and reason with defeasible statements. There are still a lot of improvements that can be made to the system, such as optimisations and 
+                                            and reason with defeasible statements. There are still a lot of improvements that can be made to the system, such as optimisations and
                                             the inclusion of various other RDF syntaxes, other than the <i>rdf:type</i> operator that has already been included.
-                                        </p>           
+                                        </p>
 									</div>
 								</div>
 							</section>
@@ -349,7 +348,7 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>Copyright &copy; 2018 Defeasible Datalog. All rights reserved.</li><li>Designed with a lottle help from <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>Copyright &copy; 2018 Defeasible Datalog. All rights reserved.</li><li>Designed with a <i>lottle</i> help from <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 				</div>
 			</footer>
