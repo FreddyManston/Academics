@@ -15,16 +15,16 @@
 	<body class="is-preload">
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="title">DDLOG</a>
-				<nav>
-					<ul>
-						<li><a href="index.html" class="active">Home</a></li>
-						<li><a href="team.html">Team</a></li>
-						<li><a href="links.html">Links</a></li>
-					</ul>
-				</nav>
-			</header>
+            <header id="header">
+                <a href="index.html" class="title">DDLOG</a>
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="links.html">Links</a></li>
+                    </ul>
+                </nav>
+            </header>
 
 		<!-- Sidebar -->
 			<section id="sidebar">
@@ -39,7 +39,6 @@
 							<li><a href="#four">Implementation</a></li>
 							<li><a href="#five">Results</a></li>
 							<li><a href="#six">Conclusion</a></li>
-							<!--<li><a href="#seven">Papers and Links</a></li>-->
 						</ul>
 					</nav>
 					<div class="center"><img width="25%" style="padding-right: 20px;" src="resources/cs_logo.png"><img width="25%" style="padding-left: 10px;" src="resources/cair-logo.png"></div>
@@ -80,7 +79,7 @@
 										the restrictions placed on Datalog limit its application in other areas. There exist several extensions of Datalog to address these
 										limitations and our project plans to construct another extension that will allow it to handle defeasible reasoning.
 										<br><br>
-										Defeasible reasoning falls under non-monotonic logic - a form of logic that allows for the retraction of previously stated claims.
+										Defeasible reasoning falls under non-monotonic logic, which is a form of logic that allows for the retraction of previously stated claims.
 										Specifically, defeasible reasoning allows for contingent claims. That is, defeasible reasoning allows one to make a claim that may be
 										incomplete and may be retracted given new claims. In this way, it awknowledges fallibility and corrigibility of claims. Defeasible reasoning
 										is important in the field of artificial intelligence (AI) and finds its fullest expression in knowledge representation and planning.
@@ -91,9 +90,9 @@
 										  	<li>the theoretical construction of Defeasible Datalog as well as the proof for theoretical correctness. </li>
 											<li>the implementation of Defeasible Datalog as a proof of concept. </li>
 										</ol>
-										Both parts will be discussed in more detail below and in full detail in the linked papers. We hope that our project will encourage more systems to
-										handle defeasible reasoning, such as is its importance in AI.
-									</p>
+										Both parts will be discussed in more detail below and in full detail in the <a href="links.html">linked papers</a>. 
+                                        We hope that our project will encourage more systems to handle defeasible reasoning, such as is its importance in AI.
+</p>
 								</div>
 							</div>
 						</section>
@@ -109,14 +108,14 @@
 										We briefly mention above the premise of our project. Here we outline our main objectives in achieving this premise. Again, as mentioned
 										above, our project is split into two main parts and as a result the objectives fall into one of these two parts.
 										<br><br>
-										<b>Theory</b>
+										<h3><u>Theory</u></h3>
 										<ul>
 											<li>Introduce extended syntax that will be required to construct Defeasible Datalog.</li>
 											<li>Describe the semantics related to the this syntax. </li>
 											<li>Describe and adapt the rational closure algorithm for Defeasible Datalog. </li>
 											<li>Show that our adapted rational closure algorithm satisfies the KLM postulates that are required for a reasonable non-monotonic reasoning procedure.</li>
 										</ul>
-										<b>Implementation</b>
+										<h3><u>Implementation</u></h3>
 										<ul>
 											<li> Extend datalog with negation, to allow for defeasible reasoning. </li>
 											<li> Allow for the input of defeasible statements in RDFox. </li>
@@ -143,12 +142,12 @@
 										algorithm we need to enhance the expressivity of Datalog. In particular, we require Datalog to handle rules that
 										may use negation and disjunction.
 										<br><br>
-										<div class="subheading"><h5>Syntax and Semantics</h5></div>
+										<div class="subheading"><h3><u>Syntax and Semantics</u></h3></div>
 										With these requirements in mind, we analysed the current syntax and semantics of Datalog using a bottom-up
 										approach. Using this analysis we constructing the syntax and semantics of Defeasible Datalog, again using a
 										bottom-up approach. This allowed us to incorporate negation and disjunction into Datalog rules.
 										<br><br>
-										<div class="subheading"><h5>Rational Closure</h5></div>
+										<div class="subheading"><h3><u>Rational Closure</u></h3></div>
 										Once the syntax and semantics of Defeasible Datalog were constructed we needed to address the Rational
 										Closure algorithm. There are many descriptions of the Rational Closure algorithm, however, we needed to
 										adapt it for Defeasible Datalog. Furthermore, the Rational Closure algorithm requires a procedure for
@@ -157,7 +156,7 @@
 										We are able to do this by making the defeasible rules into classical rules and ranking them according to exceptionality. 
 										Then when presented with a query we are able to reason using a number of classical entailment checks.
 										<br><br>
-										<div class="subheading"><h5>KLM Postulates</h5></div>
+										<div class="subheading"><h3><u>KLM Postulates</u></h3></div>
 										It was stated in the literature that in order for a procedure to be a reasonable non-monotonic reasoner it
 										must satisfy a number of properties. These properties define what is known as a rational relation.
 
@@ -168,10 +167,10 @@
 										</div>
 										<br><br>
 
-										For us to be satisfied with our construction of Defeasible Datalog we must show that our definition
-										of Rational Closure reflected a rational relation. That is it possessed each of the properties above.
+										To truly call our construction of Defeasible Datalog sound and complete, we had to show that our definition
+										of Rational Closure reflected a rational relation. That is, it possessed each of the properties shown above.
 										Fortunately, we were able to show that our Rational Closure algorithm does in fact satisfy these properties.
-										Thus our construction of Defeasible Datalog is complete.
+										Thus, our construction of Defeasible Datalog is sound and complete.
 									</p>
 								</div>
 							</div>
@@ -184,20 +183,21 @@
 								<div class="content">
 									<div class="inner" style="width:150%;">
 										<h2>Implementation</h2>
+                                        <p>
 											Defeasible Datalog was implemented as a wrapper for the <a href=http://www.cs.ox.ac.uk/isg/tools/RDFox/> RDFox system</a>.
 											RDFox is an RDF triple store that allows for classical datalog reasoning.
 											It was chosen for its efficiency and its incredible materialisation capabilities.
 		                                    It was possible to use RDFox in this project due to the way that the Rational Closure algorithm
 		                                    elegantly turns a defeasible inference check into a series of classical inference checks,
 		                                    by means of ranking the knowledge base according to exceptionality.
-
-		                                    <div class="subheading"><h5>Extending Datalog</h5></div>
+										    <br><br>
+		                                    <div class="subheading"><h3><u>Extending Datalog</u></h3></div>
 		                                    In order to represent defeasible statements/rules classical datalog had to be extended to allow for negation.
 		                                    This was done by adding a standard negation atom to the datalog language. Using this, a datalog rule to represent that penguins don't fly
 		                                    would be written as: 
 		                                    <pre><code><i>&lthttp://defeasibledatalog.org/hons/negation#False&gt :- &lthttp://animal#Penguin&gt(?X), &lthttp://ability#Fly&gt(?X)</i></code></pre>
 
-		                                    <div class="subheading"><h5>Ranking Statements</h5></div>
+		                                    <div class="subheading"><h3><u>Ranking Statements</u></h3></div>
 		                                    The defeasible statements in the knowledge base are ranked according to exceptionality. A statement is said to be exceptional
 		                                    if its antecedent doesn't produce a clash or contradiction in the current knowledge base. Defeasible statements are ranked from lowest
 		                                    exceptionality, to highest. The last rank consists of all the classical statements (i.e. unexceptional statements), as well as those
@@ -244,8 +244,7 @@
 16  <b>return</b> R
 </code></pre>
 
-											<br><br>
-		                                    <div class="subheading"><h5>Performing Queries</h5></div>
+		                                    <div class="subheading"><h3><u>Performing Queries</u></h3></div>
 		                                    Once all the defeasible statments are ranked, queries are performed by checking whether or not they are in the Rational Closure of the knowledge base.
 		                                    A query is said to be in the Rational Closure if it can be found in the materialisation of any of the subsets of the knowledge base.
 		                                    Subsets are created by, starting with the entire knowledge base, iteratively removing the current lowest rank until the query can be satisfied or only the last rank (i.e. the infinite rank) remains.
@@ -268,6 +267,12 @@
 7  <b>else</b>
 8  	<b>return</b> False
 </code></pre>
+                                            <br><br>
+                                            
+                                            Our imlpementation of Defeasible Datalog only serves as a prototype to practically show that Datalog can be correctly extended to express
+                                            and reason with defeasible statements. There are still a lot of improvements that can be made to the system, such as optimisations and 
+                                            the inclusion of various other RDF syntaxes, other than the <i>rdf:type</i> operator that has already been included.
+                                        </p>           
 									</div>
 								</div>
 							</section>
@@ -315,7 +320,7 @@
 						</section>
 
 					<!-- Six -->
-						<section id="six" class="wrapper style3 spotlights">
+						<section id="six" class="wrapper style1-alt spotlights">
 							<section>
 								<div class="content">
 									<div class="inner" style="width:150%;">
@@ -344,7 +349,7 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>Copyright &copy; 2018 Defeasible Datalog. All rights reserved.</li><li>Designed with a lottle help from <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 				</div>
 			</footer>
